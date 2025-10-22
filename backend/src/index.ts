@@ -52,24 +52,21 @@ app.get(
 			`${TMDB_BASE_URL}/person/popular?page=${page}&api_key=${TMDB_KEY}`
 		);
 		const data = await resp.json() as { results: Actor[] };
-		setCache(cacheKey, data.results, 3600); // cache page for 1 hour
 
-		for (const actor of data.results.sort(() => Math.random() - 0.5)) {
-			const creditsResp = await fetch(
-				`${TMDB_BASE_URL}/person/${actor.id}/combined_credits?api_key=${TMDB_KEY}`
-			);
-			const creditsData = await creditsResp.json() as { cast: any[] };
-
-			const movieCount = creditsData.cast.filter(
-				(c: any) => c.media_type === "movie" && c.original_language === "en"
-			).length;
-
-			if (movieCount >= 5) {
-				return res.json(actor);
-			}
-		}
-
-		res.status(500).json({ error: "No suitable actor found" });
+		// Only consider actors known for English movie credits with decent ratings
+		const actors = data.results.filter(
+			(a: Actor) =>
+				a.known_for.filter(
+					(m: Movie) =>
+						m.media_type === "movie" &&
+						m.original_language === "en" &&
+						m.vote_average >= 6 &&
+						m.vote_count >= 3000
+				).length >= 1
+		);
+		setCache(cacheKey, actors, 3600); // cache page for 1 hour
+		console.log(actors.length);
+		res.json(actors[Math.floor(Math.random() * actors.length)]);
 	})
 );
 
