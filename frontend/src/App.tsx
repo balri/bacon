@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import type { Actor, Movie } from "./api"; // note `import type`
+import type { Actor, Movie } from "./api";
 import { getRandomActor, getMoviesForActor } from "./api";
+import "./index.css";
 
 function App() {
   const [actor, setActor] = useState<Actor | null>(null);
