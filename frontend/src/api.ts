@@ -12,6 +12,7 @@ export interface Movie {
 	poster_path?: string;
 	vote_average?: number;
 	vote_count?: number;
+	release_date?: string;
 }
 
 export async function getRandomActor(): Promise<Actor> {

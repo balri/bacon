@@ -52,7 +52,7 @@ app.get(
 		const actors = data.results.filter(
 			(a: Actor) =>
 				a.profile_path &&
-				a.known_for.filter(movieFilter).length >= 1
+				a.known_for.filter(movieFilter).length >= 3
 		);
 		setCache(cacheKey, actors, 3600);
 		console.log(`Page: ${page}, actors: ${actors.length}`);
