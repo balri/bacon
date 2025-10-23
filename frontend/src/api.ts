@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000/api"; // backend URL
+const BASE_URL = "http://localhost:3000/api";
 
 export interface Actor {
 	id: number;

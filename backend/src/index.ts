@@ -2,7 +2,7 @@ import express, { Request, Response, NextFunction } from "express";
 import dotenv from "dotenv";
 import fetch from "node-fetch";
 import cors from "cors";
-import { Actor, Movie } from "./types";
+import { Actor, Movie, movieFilter } from "./types";
 import { getCache, setCache } from "./cache";
 import rateLimit from "express-rate-limit";
 
@@ -13,30 +13,26 @@ const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 const TMDB_KEY = process.env.TMDB_API_KEY!;
 const PORT = process.env.PORT || 3000;
 
-// Enable CORS for your frontend
 app.use(
 	cors({
 		origin: "*", // change to your frontend URL later, e.g. "http://localhost:5173"
 	})
 );
 
-// 🚦 Global rate limiter
 const limiter = rateLimit({
-	windowMs: 60 * 1000, // 1 minute
-	max: 60, // limit each IP to 60 requests per minute
+	windowMs: 60 * 1000,
+	max: 60,
 	message: {
 		error: "Too many requests, please try again later.",
 	},
 });
 app.use(limiter);
 
-// Helper wrapper for async routes
 const asyncHandler =
 	(fn: any) =>
 		(req: Request, res: Response, next: NextFunction) =>
 			Promise.resolve(fn(req, res, next)).catch(next);
 
-// 🧍 Random actor
 app.get(
 	"/api/random-actor",
 	asyncHandler(async (_req: Request, res: Response) => {
@@ -53,24 +49,17 @@ app.get(
 		);
 		const data = await resp.json() as { results: Actor[] };
 
-		// Only consider actors known for English movie credits with decent ratings
 		const actors = data.results.filter(
 			(a: Actor) =>
-				a.known_for.filter(
-					(m: Movie) =>
-						m.media_type === "movie" &&
-						m.original_language === "en" &&
-						m.vote_average >= 6 &&
-						m.vote_count >= 3000
-				).length >= 1
+				a.profile_path &&
+				a.known_for.filter(movieFilter).length >= 1
 		);
-		setCache(cacheKey, actors, 3600); // cache page for 1 hour
-		console.log(actors.length);
+		setCache(cacheKey, actors, 3600);
+		console.log(`Page: ${page}, actors: ${actors.length}`);
 		res.json(actors[Math.floor(Math.random() * actors.length)]);
 	})
 );
 
-// 🎬 Movies for actor
 app.get(
 	"/api/movies/:actorId",
 	asyncHandler(async (req: Request, res: Response) => {
@@ -83,12 +72,13 @@ app.get(
 			`${TMDB_BASE_URL}/person/${actorId}/movie_credits?api_key=${TMDB_KEY}`
 		);
 		const data = (await resp.json()) as { cast: Movie[] };
-		setCache(cacheKey, data.cast, 3600);
-		res.json(data.cast);
+		const movies = data.cast.filter(movieFilter);
+		setCache(cacheKey, movies, 3600);
+		console.log(`ActorID: ${actorId}, movies: ${movies.length}`);
+		res.json(movies);
 	})
 );
 
-// 🧑‍🤝‍🧑 Actors in movie
 app.get(
 	"/api/actors/:movieId",
 	asyncHandler(async (req: Request, res: Response) => {
@@ -106,7 +96,6 @@ app.get(
 	})
 );
 
-// 🎯 Centralized error handler
 app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
 	console.error("Error:", err);
 	res.status(500).json({
