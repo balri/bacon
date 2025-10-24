@@ -36,27 +36,48 @@ const asyncHandler =
 app.get(
 	"/api/random-actor",
 	asyncHandler(async (_req: Request, res: Response) => {
-		const page = Math.floor(Math.random() * 500);
-		const cacheKey = "random-actor-page-" + page;
-		const cached = getCache(cacheKey);
-		if (cached) {
-			const actor = cached[Math.floor(Math.random() * cached.length)];
-			return res.json(actor);
+		const MAX_RETRIES = 10;
+		let retries = 0;
+		let actors: Actor[] = [];
+
+		while (retries < MAX_RETRIES) {
+			const page = Math.floor(Math.random() * 500);
+			const cacheKey = "random-actor-page-" + page;
+			const cached = getCache(cacheKey);
+			if (cached) {
+				actors = cached.filter(
+					(a: Actor) =>
+						a.profile_path &&
+						a.known_for_department === "Acting" &&
+						a.known_for.filter(movieFilter).length >= 3
+				);
+			} else {
+				const resp = await fetch(
+					`${TMDB_BASE_URL}/person/popular?page=${page}&api_key=${TMDB_KEY}`
+				);
+				const data = await resp.json() as { results: Actor[] };
+				actors = data.results.filter(
+					(a: Actor) =>
+						a.profile_path &&
+						a.known_for_department === "Acting" &&
+						a.known_for.filter(movieFilter).length >= 3
+				);
+				setCache(cacheKey, data.results, 3600);
+			}
+
+			if (actors.length > 0) {
+				console.log(`Page: ${page}, actors: ${actors.length}`);
+				return res.json(actors[Math.floor(Math.random() * actors.length)]);
+			}
+
+			retries++;
 		}
 
-		const resp = await fetch(
-			`${TMDB_BASE_URL}/person/popular?page=${page}&api_key=${TMDB_KEY}`
-		);
-		const data = await resp.json() as { results: Actor[] };
-
-		const actors = data.results.filter(
-			(a: Actor) =>
-				a.profile_path &&
-				a.known_for.filter(movieFilter).length >= 3
-		);
-		setCache(cacheKey, actors, 3600);
-		console.log(`Page: ${page}, actors: ${actors.length}`);
-		res.json(actors[Math.floor(Math.random() * actors.length)]);
+		return res
+			.status(404)
+			.json({
+				error: "No suitable actor found after several attempts.",
+			});
 	})
 );
 
@@ -91,8 +112,13 @@ app.get(
 			`${TMDB_BASE_URL}/movie/${movieId}/credits?api_key=${TMDB_KEY}`
 		);
 		const data = (await resp.json()) as { cast: Actor[] };
-		setCache(cacheKey, data.cast, 3600);
-		res.json(data.cast);
+		const actors = data.cast.filter(
+			(a: Actor) =>
+				a.profile_path &&
+				a.known_for_department === "Acting"
+		);
+		setCache(cacheKey, actors, 3600);
+		res.json(actors);
 	})
 );
 

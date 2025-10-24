@@ -3,6 +3,7 @@ export interface Actor {
 	name: string;
 	profile_path?: string;
 	known_for: Movie[];
+	known_for_department: string;
 }
 
 export interface Movie {
