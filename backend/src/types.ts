@@ -1,3 +1,5 @@
+export const TMDB_BASE_URL = "https://api.themoviedb.org/3";
+
 export interface Actor {
 	id: number;
 	name: string;
@@ -18,30 +20,51 @@ export interface Movie {
 	popularity: number;
 	genre_ids: number[];
 	release_date?: string;
+	overview?: string;
 }
 
-const GENRE_ID_DOCUMENTARY = 99;
-const GENRE_ID_MUSIC = 10402;
-const GENRE_ID_NEWS = 10763;
-const GENRE_ID_REALITY = 10764;
-const GENRE_ID_TV_MOVIE = 10770;
-const MEDIA_TYPE_MOVIE = "movie";
-const LANGUAGE_ENGLISH = "en";
+const GENRE_DOCUMENTARY = 99;
+const GENRE_MUSIC = 10402;
+const GENRE_NEWS = 10763;
+const GENRE_REALITY = 10764;
+const GENRE_TV_MOVIE = 10770;
+const GENRE_ACTION = 28;
+const GENRE_ADVENTURE = 12;
+const GENRE_ANIMATION = 16;
+const GENRE_COMEDY = 35;
+const GENRE_CRIME = 80;
+const GENRE_DRAMA = 18;
+const GENRE_FAMILY = 10751;
+const GENRE_FANTASY = 14;
+const GENRE_HISTORY = 36;
+const GENRE_HORROR = 27;
+const GENRE_ROMANCE = 10749;
+const GENRE_SCI_FI = 878;
+const GENRE_THRILLER = 53;
+const GENRE_WESTERN = 37;
+const GENRE_MYSTERY = 9648;
 
-const EXCLUDED_GENRE_IDS = [
-	GENRE_ID_DOCUMENTARY,
-	GENRE_ID_MUSIC,
-	GENRE_ID_NEWS,
-	GENRE_ID_REALITY,
-	GENRE_ID_TV_MOVIE,
+export const EXCLUDED_GENRES = [
+	GENRE_DOCUMENTARY,
+	GENRE_MUSIC,
+	GENRE_NEWS,
+	GENRE_REALITY,
+	GENRE_TV_MOVIE,
 ];
-
-export const movieFilter = (m: Movie) =>
-	!m.adult &&
-	(!m.media_type || m.media_type === MEDIA_TYPE_MOVIE) &&
-	m.original_language === LANGUAGE_ENGLISH &&
-	m.genre_ids.length > 0 &&
-	!!m.release_date &&
-	m.genre_ids.every((id) => !EXCLUDED_GENRE_IDS.includes(id)) &&
-	m.vote_average > 0 &&
-	m.vote_count > 0;
+export const MAINSTREAM_GENRES = [
+	GENRE_ACTION,
+	GENRE_ADVENTURE,
+	GENRE_ANIMATION,
+	GENRE_COMEDY,
+	GENRE_CRIME,
+	GENRE_DRAMA,
+	GENRE_FAMILY,
+	GENRE_FANTASY,
+	GENRE_HISTORY,
+	GENRE_HORROR,
+	GENRE_MYSTERY,
+	GENRE_ROMANCE,
+	GENRE_SCI_FI,
+	GENRE_THRILLER,
+	GENRE_WESTERN,
+];

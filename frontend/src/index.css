@@ -168,6 +168,17 @@ body {
   letter-spacing: 1px;
 }
 
+.error-message {
+  color: #b91c1c;
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 2rem 0;
+  text-align: center;
+  font-weight: 500;
+}
+
 @media (max-width: 600px) {
   .app-container {
     padding: 8px 2vw;

@@ -15,8 +15,11 @@ export interface Movie {
 	release_date?: string;
 }
 
-export async function getRandomActor(): Promise<Actor> {
+export async function getRandomActor(): Promise<Actor | null> {
 	const res = await fetch(`${BASE_URL}/random-actor`);
+	if (!res.ok) {
+		return null;
+	}
 	return res.json();
 }
 

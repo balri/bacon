@@ -2,15 +2,15 @@ import express, { Request, Response, NextFunction } from "express";
 import dotenv from "dotenv";
 import fetch from "node-fetch";
 import cors from "cors";
-import { Actor, Movie, movieFilter } from "./types";
+import { Actor, TMDB_BASE_URL } from "./types";
 import { getCache, setCache } from "./cache";
 import rateLimit from "express-rate-limit";
+import { movieCredits } from "./movieCredits";
 
 dotenv.config();
 
 const app = express();
-const TMDB_BASE_URL = "https://api.themoviedb.org/3";
-const TMDB_KEY = process.env.TMDB_API_KEY!;
+export const TMDB_KEY = process.env.TMDB_API_KEY!;
 const PORT = process.env.PORT || 3000;
 
 app.use(
@@ -38,36 +38,34 @@ app.get(
 	asyncHandler(async (_req: Request, res: Response) => {
 		const MAX_RETRIES = 10;
 		let retries = 0;
-		let actors: Actor[] = [];
 
 		while (retries < MAX_RETRIES) {
 			const page = Math.floor(Math.random() * 500);
 			const cacheKey = "random-actor-page-" + page;
+			let data: { results: Actor[] };
+
 			const cached = getCache(cacheKey);
 			if (cached) {
-				actors = cached.filter(
-					(a: Actor) =>
-						a.profile_path &&
-						a.known_for_department === "Acting" &&
-						a.known_for.filter(movieFilter).length >= 3
-				);
+				data = { results: cached };
 			} else {
 				const resp = await fetch(
 					`${TMDB_BASE_URL}/person/popular?page=${page}&api_key=${TMDB_KEY}`
 				);
-				const data = await resp.json() as { results: Actor[] };
-				actors = data.results.filter(
-					(a: Actor) =>
-						a.profile_path &&
-						a.known_for_department === "Acting" &&
-						a.known_for.filter(movieFilter).length >= 3
-				);
+				data = await resp.json() as { results: Actor[] };
 				setCache(cacheKey, data.results, 3600);
 			}
 
-			if (actors.length > 0) {
-				console.log(`Page: ${page}, actors: ${actors.length}`);
-				return res.json(actors[Math.floor(Math.random() * actors.length)]);
+			const shuffled = data.results.sort(() => 0.5 - Math.random());
+
+			for (const person of shuffled) {
+				if (!person.profile_path || person.known_for_department !== "Acting") {
+					continue;
+				}
+
+				const movies = await movieCredits(person.id).then(movies => movies);
+				if (movies.length > 0) {
+					return res.json(person);
+				}
 			}
 
 			retries++;
@@ -85,16 +83,7 @@ app.get(
 	"/api/movies/:actorId",
 	asyncHandler(async (req: Request, res: Response) => {
 		const { actorId } = req.params;
-		const cacheKey = `movies-${actorId}`;
-		const cached = getCache(cacheKey);
-		if (cached) return res.json(cached);
-
-		const resp = await fetch(
-			`${TMDB_BASE_URL}/person/${actorId}/movie_credits?api_key=${TMDB_KEY}`
-		);
-		const data = (await resp.json()) as { cast: Movie[] };
-		const movies = data.cast.filter(movieFilter);
-		setCache(cacheKey, movies, 3600);
+		const movies = await movieCredits(Number(actorId)).then(movies => movies);
 		console.log(`ActorID: ${actorId}, movies: ${movies.length}`);
 		res.json(movies);
 	})

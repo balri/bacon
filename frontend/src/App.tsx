@@ -11,8 +11,8 @@ function App() {
 
   async function loadActor() {
     setLoading(true);
-    const a = await getRandomActor();
-    setActor(a);
+    const actor = await getRandomActor();
+    setActor(actor);
     setLoading(false);
   }
 
@@ -30,7 +30,13 @@ function App() {
       <button className="random-actor-btn" onClick={loadActor}>
         🔀 Start Again
       </button>
-      {actor && <Actor actor={actor} />}
+      {actor ? (
+        <Actor actor={actor} />
+      ) : (
+        <div className="error-message">
+          ❌ No actor found. Please try again.
+        </div>
+      )}
     </div>
   );
 }
