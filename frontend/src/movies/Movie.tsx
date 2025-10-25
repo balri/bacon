@@ -31,7 +31,7 @@ export default function Movie({ movie, onActorClick }: MovieProps) {
 	return (
 		<div>
 			<MovieCard movie={movie} />
-			<h3 className="actors-title">Cast:</h3>
+			<h3 className="actors-title">Select an actor:</h3>
 			{actors && actors.length > 0 ? (
 				<ActorList actors={actors} onActorClick={onActorClick} />
 			) : (

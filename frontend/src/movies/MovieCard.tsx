@@ -11,7 +11,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
 			{movie.poster_path && (
 				<MovieImage {...movie} />
 			)}
-			<h2 className="movie-title">{movie.title}</h2>
+			<h2 className="movie-title" title={movie.title}>{movie.title}</h2>
 			{movie.release_date && (
 				<p>
 					Release year: {new Date(movie.release_date).getFullYear()}

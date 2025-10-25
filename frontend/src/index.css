@@ -87,14 +87,26 @@ body {
   align-items: center;
   font-size: 1.1rem;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  min-width: 0;
 }
 
-.actor-item-name,
+.movie-thumbnail {
+  flex-shrink: 0;
+}
+
+.movie-meta {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+
 .movie-title {
   font-weight: 500;
   color: #1e293b;
-  max-width: 60vw;
+  max-width: 40vw;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -102,15 +114,21 @@ body {
   vertical-align: middle;
 }
 
-.movie-year {
-  color: #6366f1;
-  margin-left: 8px;
+.movie-card .movie-title {
+  max-width: 90%;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  display: block;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
+.movie-year,
 .movie-rating {
-  color: #f59e42;
+  white-space: nowrap;
   margin-left: 8px;
-  font-weight: 500;
 }
 
 .loading-container {
@@ -220,6 +238,15 @@ body {
   color: #f59e42;
 }
 
+.breadcrumb-movie-truncate {
+  max-width: 160px;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: bottom;
+}
+
 .back-btn {
   margin-bottom: 1rem;
   padding: 0.4rem 1rem;
@@ -243,6 +270,12 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
+}
+
+.movie-card .movie-title,
+.movie-card p {
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
 }
 
 @media (max-width: 600px) {

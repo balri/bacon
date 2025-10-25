@@ -17,7 +17,12 @@ export default function Breadcrumbs({
 			{movie && (
 				<>
 					<span className="breadcrumb-sep"> &gt; </span>
-					<span className="breadcrumb-movie">{movie.title}</span>
+					<span
+						className="breadcrumb-movie breadcrumb-movie-truncate"
+						title={movie.title}
+					>
+						{movie.title}
+					</span>
 				</>
 			)}
 		</nav>
