@@ -1,5 +1,5 @@
 import type { Movie } from "../api";
-import Img from "../utils/Image";
+import Image from "../utils/Image";
 
 export default function MovieThumbnail(movie: Movie) {
 	if (!movie.poster_path) {
@@ -8,10 +8,11 @@ export default function MovieThumbnail(movie: Movie) {
 
 	return (
 		<>
-			<Img
+			<Image
 				url={`https://image.tmdb.org/t/p/w45${movie.poster_path}`}
 				alt={movie.title}
 				className="movie-thumbnail"
+				isThumbnail={true}
 			/>
 		</>
 	);

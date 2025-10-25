@@ -1,13 +1,14 @@
 import type { Actor } from "../api";
-import Img from "../utils/Image";
+import Image from "../utils/Image";
 
 export default function ActorThumbnail(actor: Actor) {
 	return (
 		<>
-			<Img
+			<Image
 				url={`https://image.tmdb.org/t/p/w45${actor.profile_path}`}
 				alt={actor.name}
 				className="actor-thumbnail"
+				isThumbnail={true}
 			/>
 		</>
 	);

@@ -5,14 +5,25 @@ interface ImageProps {
 	url: string;
 	alt: string;
 	className?: string;
+	isThumbnail: boolean;
 }
 
-export default function Image({ url, alt, className }: ImageProps) {
+export default function Image({
+	url,
+	alt,
+	className,
+	isThumbnail = false,
+}: ImageProps) {
 	const [imgLoaded, setImgLoaded] = useState(false);
 
 	return (
 		<>
-			{!imgLoaded && <Loading small />}
+			{!imgLoaded && (
+				<Loading
+					small={!isThumbnail}
+					tiny={isThumbnail}
+				/>
+			)}
 			<img
 				src={url}
 				alt={alt}
