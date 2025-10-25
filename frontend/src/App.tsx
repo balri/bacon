@@ -7,43 +7,114 @@ import "./index.css";
 import Movie from "./movies/Movie";
 import Breadcrumbs from "./utils/Breadcrumbs";
 
+export const KEVIN_BACON_ID = 4724;
+
+function isActor(item: { type: string, data: any }): item is { type: "actor", data: ActorType } {
+  return item.type === "actor";
+}
+
 function App() {
-  const [actor, setActor] = useState<ActorType | null>(null);
+  const [stack, setStack] = useState<Array<{ type: "actor" | "movie", data: ActorType | MovieType }>>([]);
   const [loading, setLoading] = useState(true);
-  const [movie, setMovie] = useState<MovieType | null>(null);
+  const [endMessage, setEndMessage] = useState<null | React.ReactNode>(null);
 
   async function loadActor() {
     setLoading(true);
-    setMovie(null);
     const actor = await getRandomActor();
-    setActor(actor);
+    if (actor) {
+      setStack([{ type: "actor", data: actor }]);
+      setEndMessage(null);
+    }
     setLoading(false);
   }
 
-  async function handleMovieClick(movie: MovieType) {
-    setMovie(movie);
+  function handleMovieClick(movie: MovieType) {
+    if (gameEnded) return;
+    setStack(prev => [...prev, { type: "movie", data: movie }]);
   }
 
-  async function handleActorClick(actor: ActorType) {
-    setMovie(null);
-    setActor(actor);
+  function handleActorClick(actor: ActorType) {
+    if (gameEnded) return;
+    setStack(prev => [...prev, { type: "actor", data: actor }]);
   }
 
   function handleBack() {
-    setMovie(null);
+    if (gameEnded) return;
+    setStack(prev => prev.slice(0, -1));
   }
 
   useEffect(() => {
     loadActor();
+    // eslint-disable-next-line
   }, []);
+
+  // Find all actors in the stack
+  const actorsInStack = stack.filter(isActor);
+
+  // Game end logic
+  const lastActor = actorsInStack[actorsInStack.length - 1];
+  const reachedSixActors = actorsInStack.length === 6;
+  const isKevinBacon = lastActor && lastActor.data.id === KEVIN_BACON_ID;
+  const gameEnded = reachedSixActors || isKevinBacon || !!endMessage;
 
   // Breadcrumbs
   const breadcrumbs = (
-    <Breadcrumbs actor={actor!} movie={movie!} />
+    <Breadcrumbs stack={stack} onCrumbClick={index => !gameEnded && setStack(stack.slice(0, index + 1))} />
   );
 
+  const current = stack[stack.length - 1];
+
+  // Show full-screen overlay if game ended
+  let overlay = null;
+  if (reachedSixActors && !isKevinBacon) {
+    overlay = (
+      <div className="end-overlay">
+        <div className="end-message">
+          <span role="img" aria-label="sad">😢</span> Better luck next time!
+        </div>
+        <button className="random-actor-btn" onClick={loadActor}>
+          🔀 Start Again
+        </button>
+      </div>
+    );
+  } else if (isKevinBacon) {
+    overlay = (
+      <div className="end-overlay">
+        <div className="end-message">
+          <span role="img" aria-label="trophy">🏆</span> Congratulations! You found Kevin Bacon!
+        </div>
+        <button className="random-actor-btn" onClick={loadActor}>
+          🔀 Start Again
+        </button>
+      </div>
+    );
+  } else if (endMessage) {
+    overlay = (
+      <div className="end-overlay">
+        <div className="end-message">{endMessage}</div>
+        <button className="random-actor-btn" onClick={loadActor}>
+          🔀 Start Again
+        </button>
+      </div>
+    );
+  }
+
   if (loading) {
-    return <Loading />;
+    return (
+      <div className="app-container">
+        <h1 className="main-title">🎬 Mmmm, Bacon 🥓</h1>
+        <Loading />
+      </div>
+    );
+  }
+
+  if (overlay) {
+    return (
+      <div className="app-container">
+        <h1 className="main-title">🎬 Mmmm, Bacon 🥓</h1>
+        {overlay}
+      </div>
+    );
   }
 
   return (
@@ -53,24 +124,32 @@ function App() {
         <button className="random-actor-btn" onClick={loadActor}>
           🔀 Start Again
         </button>
-        {movie && actor && (
+        {stack.length > 1 && !gameEnded && (
           <button className="back-btn" onClick={handleBack}>
-            ← Back to {actor.name}
+            ← Back
           </button>
         )}
       </div>
       {breadcrumbs}
-      {actor ? (
-        movie ? (
-          <Movie movie={movie} onActorClick={handleActorClick} />
+      {current ? (
+        !endMessage && current.type === "actor" ? (
+          <Actor
+            actor={current.data as ActorType}
+            onMovieClick={handleMovieClick}
+            stack={stack}
+          />
         ) : (
-          <Actor actor={actor} onMovieClick={handleMovieClick} />
+          <Movie
+            movie={current.data as MovieType}
+            onActorClick={handleActorClick}
+            stack={stack}
+            onGameEnd={setEndMessage}
+          />
         )
       ) : (
-        <div className="error-message">
-          ❌ No actor found. Please try again.
-        </div>
+        <div className="error-message">❌ An error occurred. Please try again.</div>
       )}
+      {gameEnded && overlay}
     </div>
   );
 }

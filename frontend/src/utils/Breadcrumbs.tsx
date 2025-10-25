@@ -1,30 +1,42 @@
 import type { Actor, Movie } from "../api";
 
 interface BreadcrumbsProps {
-	actor: Actor;
-	movie: Movie;
+	stack: Array<{ type: "actor" | "movie"; data: Actor | Movie }>;
+	onCrumbClick: (index: number) => void;
 }
 
 export default function Breadcrumbs({
-	actor,
-	movie,
+	stack,
+	onCrumbClick,
 }: BreadcrumbsProps) {
 	return (
 		<nav className="breadcrumb">
-			{actor && (
-				<span className="breadcrumb-actor">{actor.name}</span>
-			)}
-			{movie && (
-				<>
-					<span className="breadcrumb-sep"> &gt; </span>
+			{stack.map((item, idx) => (
+				<span key={idx}>
+					{idx > 0 && <span className="breadcrumb-sep"> &gt; </span>}
 					<span
-						className="breadcrumb-movie breadcrumb-movie-truncate"
-						title={movie.title}
+						className={
+							item.type === "actor"
+								? "breadcrumb-actor"
+								: "breadcrumb-movie breadcrumb-movie-truncate"
+						}
+						title={
+							item.type === "movie"
+								? (item.data as Movie).title
+								: undefined
+						}
+						style={{
+							cursor:
+								idx < stack.length - 1 ? "pointer" : "default",
+						}}
+						onClick={() => idx < stack.length - 1 && onCrumbClick(idx)}
 					>
-						{movie.title}
+						{item.type === "actor"
+							? (item.data as Actor).name
+							: (item.data as Movie).title}
 					</span>
-				</>
-			)}
+				</span>
+			))}
 		</nav>
 	);
 }
