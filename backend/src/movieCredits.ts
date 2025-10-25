@@ -25,12 +25,34 @@ function isSafeActor(movies: Movie[], originalLength: number): boolean {
 export const movieCredits = async (actorId: number): Promise<Movie[]> => {
 	const cacheKey = `movies-${actorId}`;
 	const cached = getCache(cacheKey);
-	if (cached) return cached;
+	if (cached) {
+		console.log(`Cached movies for actor ID: ${actorId}`);
+		return cached;
+	}
 
-	const resp = await fetch(
-		`${TMDB_BASE_URL}/person/${actorId}/movie_credits?api_key=${TMDB_KEY}`
-	);
-	const data = (await resp.json()) as { cast: Movie[] };
+	console.log(`Uncached movies for actor ID: ${actorId}`);
+	let resp;
+	try {
+		resp = await fetch(
+			`${TMDB_BASE_URL}/person/${actorId}/movie_credits?api_key=${TMDB_KEY}`
+		);
+	} catch (error) {
+		console.error("Network error fetching TMDB:", error);
+		return [];
+	}
+	if (!resp.ok) {
+		const errorText = await resp.text();
+		console.error("TMDB error:", resp.status, errorText);
+		return [];
+	}
+
+	let data: { cast: Movie[] };
+	try {
+		data = (await resp.json());
+	} catch (error) {
+		console.error("Invalid JSON from TMDB:", error);
+		return [];
+	}
 
 	const movies = data.cast.filter(isMainstreamMovie);
 	if (!isSafeActor(movies, data.cast.length)) {
@@ -38,6 +60,6 @@ export const movieCredits = async (actorId: number): Promise<Movie[]> => {
 		return [];
 	}
 	setCache(cacheKey, movies, 3600);
-	console.log(`ActorID: ${actorId}, movies: ${movies.length}`);
+
 	return movies;
 };

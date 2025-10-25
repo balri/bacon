@@ -8,13 +8,13 @@ interface ActorProps {
 }
 
 export default function Actor({ actor }: ActorProps) {
-	const [movies, setMovies] = useState<Movie[]>([]);
+	const [movies, setMovies] = useState<Movie[] | null>(null);
 	const [loading, setLoading] = useState(true);
 
 	async function loadMovies() {
 		setLoading(true);
-		const m = await getMoviesForActor(actor.id);
-		setMovies(m);
+		const movies = await getMoviesForActor(actor.id);
+		setMovies(movies);
 		setLoading(false);
 	}
 
@@ -36,7 +36,7 @@ export default function Actor({ actor }: ActorProps) {
 			</div>
 			<h3 className="movies-title">Select a movie:</h3>
 			<ul className="movie-list">
-				{movies.map((m) => (
+				{movies && movies.length > 0 ? movies.map((m) => (
 					<li key={m.id} className="movie-item">
 						<span className="movie-title">{m.title}</span>
 						{m.release_date && (
@@ -52,7 +52,11 @@ export default function Actor({ actor }: ActorProps) {
 							</span>
 						)}
 					</li>
-				))}
+				)) : (
+					<li className="error-message">
+						❌ No movies found for this actor.
+					</li>
+				)}
 			</ul>
 		</div>
 	);

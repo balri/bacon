@@ -46,12 +46,33 @@ app.get(
 
 			const cached = getCache(cacheKey);
 			if (cached) {
+				console.log(`Cached popular actors for page ${page}`);
 				data = { results: cached };
 			} else {
-				const resp = await fetch(
-					`${TMDB_BASE_URL}/person/popular?page=${page}&api_key=${TMDB_KEY}`
-				);
-				data = await resp.json() as { results: Actor[] };
+				console.log(`Uncached popular actors for page ${page}`);
+				let resp;
+				try {
+					resp = await fetch(
+						`${TMDB_BASE_URL}/person/popular?page=${page}&api_key=${TMDB_KEY}`
+					);
+				} catch (err) {
+					console.error("Network error fetching TMDB:", err);
+					return res.status(502).json({ error: "Failed to reach TMDB." });
+				}
+				if (!resp.ok) {
+					const errorText = await resp.text();
+					console.error("TMDB error:", resp.status, errorText);
+					return res.status(resp.status).json({
+						error: `TMDB error: ${resp.status}`,
+						message: errorText,
+					});
+				}
+				try {
+					data = await resp.json() as { results: Actor[] };
+				} catch (err) {
+					console.error("Invalid JSON from TMDB:", err);
+					return res.status(502).json({ error: "Invalid response from TMDB." });
+				}
 				setCache(cacheKey, data.results, 3600);
 			}
 
@@ -84,7 +105,6 @@ app.get(
 	asyncHandler(async (req: Request, res: Response) => {
 		const { actorId } = req.params;
 		const movies = await movieCredits(Number(actorId)).then(movies => movies);
-		console.log(`ActorID: ${actorId}, movies: ${movies.length}`);
 		res.json(movies);
 	})
 );
@@ -95,12 +115,36 @@ app.get(
 		const { movieId } = req.params;
 		const cacheKey = `actors-${movieId}`;
 		const cached = getCache(cacheKey);
-		if (cached) return res.json(cached);
+		if (cached) {
+			console.log(`Cached actors for movie ID: ${movieId}`);
+			return res.json(cached);
+		}
 
-		const resp = await fetch(
-			`${TMDB_BASE_URL}/movie/${movieId}/credits?api_key=${TMDB_KEY}`
-		);
-		const data = (await resp.json()) as { cast: Actor[] };
+		console.log(`Uncached actors for movie ID: ${movieId}`);
+		let resp;
+		try {
+			resp = await fetch(
+				`${TMDB_BASE_URL}/movie/${movieId}/credits?api_key=${TMDB_KEY}`
+			);
+		} catch (error) {
+			console.error("Network error fetching TMDB:", error);
+			return res.status(502).json({ error: "Failed to reach TMDB." });
+		}
+		if (!resp.ok) {
+			const errorText = await resp.text();
+			console.error("TMDB error:", resp.status, errorText);
+			return res.status(resp.status).json({
+				error: `TMDB error: ${resp.status}`,
+				message: errorText,
+			});
+		}
+		let data: { cast: Actor[] };
+		try {
+			data = (await resp.json()) as { cast: Actor[] };
+		} catch (error) {
+			console.error("Invalid JSON from TMDB:", error);
+			return res.status(502).json({ error: "Invalid response from TMDB." });
+		}
 		const actors = data.cast.filter(
 			(a: Actor) =>
 				a.profile_path &&

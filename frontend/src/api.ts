@@ -23,12 +23,18 @@ export async function getRandomActor(): Promise<Actor | null> {
 	return res.json();
 }
 
-export async function getMoviesForActor(actorId: number): Promise<Movie[]> {
+export async function getMoviesForActor(actorId: number): Promise<Movie[] | null> {
 	const res = await fetch(`${BASE_URL}/movies/${actorId}`);
+	if (!res.ok) {
+		return null;
+	}
 	return res.json();
 }
 
-export async function getActorsForMovie(movieId: number): Promise<Actor[]> {
+export async function getActorsForMovie(movieId: number): Promise<Actor[] | null> {
 	const res = await fetch(`${BASE_URL}/actors/${movieId}`);
+	if (!res.ok) {
+		return null;
+	}
 	return res.json();
 }
