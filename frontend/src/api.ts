@@ -3,6 +3,7 @@ const BASE_URL = "http://localhost:3000/api";
 export interface Actor {
 	id: number;
 	name: string;
+	character?: string;
 	profile_path?: string;
 }
 
