@@ -5,7 +5,7 @@ interface ImageProps {
 	url: string;
 	alt: string;
 	className?: string;
-	isThumbnail: boolean;
+	isThumbnail?: boolean;
 }
 
 export default function Image({
@@ -17,20 +17,19 @@ export default function Image({
 	const [imgLoaded, setImgLoaded] = useState(false);
 
 	return (
-		<>
-			{!imgLoaded && (
-				<Loading
-					small={!isThumbnail}
-					tiny={isThumbnail}
-				/>
-			)}
+		<div className={`image-wrapper${className ? " " + className : ""}`}>
 			<img
 				src={url}
 				alt={alt}
-				className={className}
-				style={{ display: imgLoaded ? "block" : "none" }}
+				className={`image-img${imgLoaded ? " loaded" : ""}`}
 				onLoad={() => setImgLoaded(true)}
+				loading="lazy"
 			/>
-		</>
+			{!imgLoaded && (
+				<div className="image-loading-overlay">
+					<Loading small={!isThumbnail} tiny={isThumbnail} />
+				</div>
+			)}
+		</div>
 	);
 }

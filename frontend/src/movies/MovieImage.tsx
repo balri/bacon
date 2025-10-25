@@ -1,5 +1,5 @@
 import type { Movie } from "../api";
-import Img from "../utils/Image";
+import Image from "../utils/Image";
 
 const movieContainerStyle = {
 	minHeight: 130,
@@ -11,7 +11,7 @@ const movieContainerStyle = {
 export default function MovieImage(movie: Movie) {
 	return (
 		<div style={movieContainerStyle}>
-			<Img
+			<Image
 				url={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
 				alt={movie.title}
 				className="movie-image"

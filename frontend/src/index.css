@@ -300,6 +300,54 @@ body {
   display: none;
 }
 
+.image-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.image-img {
+  opacity: 0;
+  transition: opacity 0.2s;
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.image-img.loaded {
+  opacity: 1;
+}
+
+.image-loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}
+
+.image-wrapper.movie-thumbnail,
+.image-wrapper.actor-thumbnail,
+.image-wrapper.movie-image,
+.image-wrapper.actor-image {
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.image-wrapper.movie-image,
+.image-wrapper.actor-image {
+  border-radius: 8px;
+}
+
+.image-img,
+.image-loading-overlay {
+  border-radius: inherit;
+}
+
 @media (max-width: 600px) {
   .app-container {
     padding: 8px 2vw;

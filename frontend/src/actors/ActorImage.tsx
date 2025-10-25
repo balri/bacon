@@ -1,5 +1,5 @@
 import type { Actor } from "../api";
-import Img from "../utils/Image";
+import Image from "../utils/Image";
 
 const actorContainerStyle = {
 	minHeight: 130,
@@ -11,7 +11,7 @@ const actorContainerStyle = {
 export default function ActorImage(actor: Actor) {
 	return (
 		<div style={actorContainerStyle}>
-			<Img
+			<Image
 				url={`https://image.tmdb.org/t/p/w200${actor.profile_path}`}
 				alt={actor.name}
 				className="actor-image"
