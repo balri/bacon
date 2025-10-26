@@ -397,6 +397,38 @@ body {
   font-weight: 600;
 }
 
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(30, 41, 59, 0.97);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.intro-message {
+  background: #fff;
+  color: #1e293b;
+  border-radius: 12px;
+  padding: 2.5rem 2rem 2rem 2rem;
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.18);
+  text-align: center;
+  max-width: 90vw;
+  width: 400px;
+}
+
+.intro-message h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.intro-message p {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
 @media (max-width: 600px) {
   .app-container {
     padding: 8px 2vw;

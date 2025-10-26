@@ -7,6 +7,7 @@ import "./index.css";
 import Movie from "./movies/Movie";
 import Breadcrumbs from "./utils/Breadcrumbs";
 import EndMessage from "./utils/EndMessage";
+import IntroMessage from "./utils/IntroMessage";
 
 export const KEVIN_BACON_ID = 4724;
 
@@ -15,6 +16,7 @@ function isActor(item: { type: string, data: any }): item is { type: "actor", da
 }
 
 function App() {
+  const [showIntro, setShowIntro] = useState(true);
   const [stack, setStack] = useState<Array<{ type: "actor" | "movie", data: ActorType | MovieType }>>([]);
   const [loading, setLoading] = useState(true);
   const [endMessage, setEndMessage] = useState<null | React.ReactNode>(null);
@@ -44,11 +46,6 @@ function App() {
     setStack(prev => prev.slice(0, -1));
   }
 
-  useEffect(() => {
-    loadActor();
-    // eslint-disable-next-line
-  }, []);
-
   // Find all actors in the stack
   const actorsInStack = stack.filter(isActor);
 
@@ -64,6 +61,16 @@ function App() {
   );
 
   const current = stack[stack.length - 1];
+
+  if (showIntro) {
+    return (
+      <IntroMessage onStart={() => {
+        setShowIntro(false);
+        loadActor();
+      }}
+      />
+    );
+  }
 
   if (loading) {
     return (
