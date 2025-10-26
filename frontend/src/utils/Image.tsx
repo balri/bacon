@@ -21,6 +21,7 @@ export default function Image({
 			<img
 				src={url}
 				alt={alt}
+				title={alt}
 				className={`image-img${imgLoaded ? " loaded" : ""}`}
 				onLoad={() => setImgLoaded(true)}
 				loading="lazy"

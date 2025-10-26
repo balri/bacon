@@ -6,6 +6,7 @@ import Loading from "./utils/Loading";
 import "./index.css";
 import Movie from "./movies/Movie";
 import Breadcrumbs from "./utils/Breadcrumbs";
+import EndMessage from "./utils/EndMessage";
 
 export const KEVIN_BACON_ID = 4724;
 
@@ -64,16 +65,6 @@ function App() {
 
   const current = stack[stack.length - 1];
 
-  // Show full-screen overlay if game ended
-  let overlay = null;
-  if (endMessage) {
-    overlay = (
-      <div className="end-overlay">
-        <div className="end-message">{endMessage}</div>
-      </div>
-    );
-  }
-
   if (loading) {
     return (
       <div className="app-container">
@@ -83,19 +74,8 @@ function App() {
     );
   }
 
-  if (overlay) {
-    return (
-      <div className="app-container">
-        <h1 className="main-title">🎬 Mmmm, Bacon 🥓</h1>
-        <div className="top-bar">
-          <button className="random-actor-btn" onClick={loadActor}>
-            🔀 Start Again
-          </button>
-        </div>
-        {breadcrumbs}
-        {overlay}
-      </div>
-    );
+  if (endMessage) {
+    return <EndMessage endMessage={endMessage as string} loadActor={loadActor} breadcrumbs={breadcrumbs} />;
   }
 
   return (

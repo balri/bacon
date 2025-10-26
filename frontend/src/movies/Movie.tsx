@@ -4,6 +4,7 @@ import Loading from "../utils/Loading";
 import ActorList from "../actors/ActorList";
 import MovieCard from "./MovieCard";
 import { KEVIN_BACON_ID } from "../App";
+import SuccessMessage from "../utils/SuccessMessage";
 
 interface MovieProps {
 	movie: Movie;
@@ -56,18 +57,11 @@ export default function Movie({ movie, onActorClick, stack, onGameEnd }: MoviePr
 	} else if (
 		actors && kevinBaconInCast
 	) {
-		const lastActor = actors.find(a => a.id === KEVIN_BACON_ID);
-		const firstActor = stack.find(item => item.type === "actor")?.data as Actor | undefined;
-		const character = lastActor?.character || "an unknown character";
-		const lastActorName = lastActor?.name || "Kevin Bacon";
-		const firstActorName = firstActor?.name || "Unknown Actor";
+		const lastActor = actors.find(a => a.id === KEVIN_BACON_ID) ?? null;
+		const firstActor = (stack.find(item => item.type === "actor")?.data as Actor) ?? null;
 
 		onGameEnd?.(
-			<div>
-				<span role="img" aria-label="trophy">🏆</span>{" "}
-				{lastActorName} played {character} in <b>{movie.title}</b>.<br />
-				You linked {firstActorName} to {lastActorName} with {actorsInStackCount} degrees of separation!
-			</div>
+			<SuccessMessage firstActor={firstActor} lastActor={lastActor} movie={movie} degrees={actorsInStackCount} />
 		);
 		return null;
 	}
