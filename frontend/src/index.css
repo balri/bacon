@@ -217,34 +217,58 @@ body {
 }
 
 .breadcrumb {
-  margin: 1rem 0 1.5rem 0;
+  margin: 1.5rem 0 2rem 0;
   font-size: 1.1rem;
   color: #6366f1;
   font-weight: 500;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  gap: 0.2em;
+}
+
+.breadcrumb-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+  margin: 1.5rem 0 2rem 0;
+}
+
+.breadcrumb-vertical-item {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  padding-right: 0.7em;
+  padding-left: 0.7em;
+  /* or your preferred value */
+  border-radius: 6px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background 0.2s;
 }
 
 .breadcrumb-actor {
   color: #3730a3;
-}
-
-.breadcrumb-sep {
-  margin: 0 0.5em;
+  background: #e0e7ff;
 }
 
 .breadcrumb-movie {
   color: #f59e42;
+  background: #fff7ed;
 }
 
 .breadcrumb-movie-truncate {
-  max-width: 160px;
-  display: inline-block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  vertical-align: bottom;
+  max-width: 100%;
+}
+
+.breadcrumb-vertical-item:hover {
+  background: #c7d2fe;
+  color: #1e293b;
 }
 
 .back-btn {

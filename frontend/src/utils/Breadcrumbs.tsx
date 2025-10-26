@@ -10,22 +10,24 @@ export default function Breadcrumbs({
 	onCrumbClick,
 }: BreadcrumbsProps) {
 	return (
-		<nav className="breadcrumb">
-			{stack.map((item, idx) => (
-				<span key={idx}>
-					{idx > 0 && <span className="breadcrumb-sep"> &gt; </span>}
-					<span
-						className={
-							item.type === "actor"
-								? "breadcrumb-actor"
-								: "breadcrumb-movie breadcrumb-movie-truncate"
-						}
+		<nav className="breadcrumb-vertical">
+			{stack.map((item, idx) => {
+				const indent = idx * 6;
+				return (
+					<div
+						key={idx}
+						className={`breadcrumb-vertical-item ${item.type === "actor"
+							? "breadcrumb-actor"
+							: "breadcrumb-movie breadcrumb-movie-truncate"
+							}`}
 						title={
 							item.type === "movie"
 								? (item.data as Movie).title
 								: undefined
 						}
 						style={{
+							marginLeft: `${indent}px`,
+							width: `calc(100% - ${indent}px)`,
 							cursor:
 								idx < stack.length - 1 ? "pointer" : "default",
 						}}
@@ -34,9 +36,9 @@ export default function Breadcrumbs({
 						{item.type === "actor"
 							? (item.data as Actor).name
 							: (item.data as Movie).title}
-					</span>
-				</span>
-			))}
+					</div>
+				);
+			})}
 		</nav>
 	);
 }

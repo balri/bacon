@@ -56,9 +56,17 @@ export default function Movie({ movie, onActorClick, stack, onGameEnd }: MoviePr
 	} else if (
 		actors && kevinBaconInCast
 	) {
+		const lastActor = actors.find(a => a.id === KEVIN_BACON_ID);
+		const firstActor = stack.find(item => item.type === "actor")?.data as Actor | undefined;
+		const character = lastActor?.character || "an unknown character";
+		const lastActorName = lastActor?.name || "Kevin Bacon";
+		const firstActorName = firstActor?.name || "Unknown Actor";
+
 		onGameEnd?.(
 			<div>
-				<span role="img" aria-label="trophy">🏆</span> Congratulations! You found Kevin Bacon!
+				<span role="img" aria-label="trophy">🏆</span>{" "}
+				{lastActorName} played {character} in <b>{movie.title}</b>.<br />
+				You linked {firstActorName} to {lastActorName} with {actorsInStackCount} degrees of separation!
 			</div>
 		);
 		return null;

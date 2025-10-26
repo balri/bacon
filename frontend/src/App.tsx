@@ -66,35 +66,10 @@ function App() {
 
   // Show full-screen overlay if game ended
   let overlay = null;
-  if (reachedSixActors && !isKevinBacon) {
-    overlay = (
-      <div className="end-overlay">
-        <div className="end-message">
-          <span role="img" aria-label="sad">😢</span> Better luck next time!
-        </div>
-        <button className="random-actor-btn" onClick={loadActor}>
-          🔀 Start Again
-        </button>
-      </div>
-    );
-  } else if (isKevinBacon) {
-    overlay = (
-      <div className="end-overlay">
-        <div className="end-message">
-          <span role="img" aria-label="trophy">🏆</span> Congratulations! You found Kevin Bacon!
-        </div>
-        <button className="random-actor-btn" onClick={loadActor}>
-          🔀 Start Again
-        </button>
-      </div>
-    );
-  } else if (endMessage) {
+  if (endMessage) {
     overlay = (
       <div className="end-overlay">
         <div className="end-message">{endMessage}</div>
-        <button className="random-actor-btn" onClick={loadActor}>
-          🔀 Start Again
-        </button>
       </div>
     );
   }
@@ -112,6 +87,12 @@ function App() {
     return (
       <div className="app-container">
         <h1 className="main-title">🎬 Mmmm, Bacon 🥓</h1>
+        <div className="top-bar">
+          <button className="random-actor-btn" onClick={loadActor}>
+            🔀 Start Again
+          </button>
+        </div>
+        {breadcrumbs}
         {overlay}
       </div>
     );
@@ -149,7 +130,6 @@ function App() {
       ) : (
         <div className="error-message">❌ An error occurred. Please try again.</div>
       )}
-      {gameEnded && overlay}
     </div>
   );
 }
