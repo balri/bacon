@@ -44,7 +44,7 @@ export default function Movie({ movie, onActorClick, stack, onGameEnd }: MoviePr
 	const kevinBaconInCast = actors && actors.some((a) => a.id === KEVIN_BACON_ID);
 
 	if (
-		actorsInStackCount === 5 &&
+		actorsInStackCount >= 6 &&
 		actors &&
 		!kevinBaconInCast
 	) {
