@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.TMDB_BACKEND_URL || "http://localhost:3000/bacon/api";
+const BASE_URL = "https://busstop-ufgc.onrender.com/bacon/api";
 
 export interface Actor {
 	id: number;
