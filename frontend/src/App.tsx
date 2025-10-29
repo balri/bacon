@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { Actor as ActorType, Movie as MovieType } from "./api";
 import { getRandomActor } from "./api";
 import Actor from "./actors/Actor";
