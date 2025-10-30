@@ -2,12 +2,10 @@ import type { Actor, Movie } from "../api";
 
 interface BreadcrumbsProps {
 	stack: Array<{ type: "actor" | "movie"; data: Actor | Movie }>;
-	onCrumbClick: (index: number) => void;
 }
 
 export default function Breadcrumbs({
 	stack,
-	onCrumbClick,
 }: BreadcrumbsProps) {
 	return (
 		<nav className="breadcrumb-vertical">
@@ -31,7 +29,6 @@ export default function Breadcrumbs({
 							cursor:
 								idx < stack.length - 1 ? "pointer" : "default",
 						}}
-						onClick={() => idx < stack.length - 1 && onCrumbClick(idx)}
 					>
 						{item.type === "actor"
 							? (item.data as Actor).name

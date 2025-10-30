@@ -1,4 +1,5 @@
 import type { Movie } from "../api";
+
 import MovieThumbnail from "./MovieThumbnail";
 
 interface MovieListItemProps {

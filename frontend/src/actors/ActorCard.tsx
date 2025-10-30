@@ -1,4 +1,5 @@
 import type { Actor } from "../api";
+
 import ActorImage from "./ActorImage";
 
 interface ActorCardProps {

@@ -1,4 +1,5 @@
 import type { Actor } from "../api";
+
 import ActorThumbnail from "./ActorThumbnail";
 
 interface ActorListItemProps {

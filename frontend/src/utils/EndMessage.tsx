@@ -1,3 +1,5 @@
+import React from "react";
+
 interface EndMessageProps {
 	endMessage: string | React.ReactNode;
 	loadActor: () => void;

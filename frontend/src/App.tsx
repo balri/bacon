@@ -1,10 +1,11 @@
-import { useState } from "react";
+import React, { useState } from "react";
+
 import type { Actor as ActorType, Movie as MovieType } from "./api";
 import { getRandomActor } from "./api";
-import Actor from "./actors/Actor";
+import ActorView from "./actors/ActorView";
 import Loading from "./utils/Loading";
 import "./index.css";
-import Movie from "./movies/Movie";
+import MovieView from "./movies/MovieView";
 import Breadcrumbs from "./utils/Breadcrumbs";
 import EndMessage from "./utils/EndMessage";
 import IntroMessage from "./utils/IntroMessage";
@@ -58,7 +59,7 @@ function App() {
 
   // Breadcrumbs
   const breadcrumbs = (
-    <Breadcrumbs stack={stack} onCrumbClick={index => !gameEnded && setStack(stack.slice(0, index + 1))} />
+    <Breadcrumbs stack={stack} />
   );
 
   const current = stack[stack.length - 1];
@@ -111,13 +112,13 @@ function App() {
       {breadcrumbs}
       {current ? (
         !endMessage && current.type === "actor" ? (
-          <Actor
+          <ActorView
             actor={current.data as ActorType}
             onMovieClick={handleMovieClick}
             stack={stack}
           />
         ) : (
-          <Movie
+          <MovieView
             movie={current.data as MovieType}
             onActorClick={handleActorClick}
             stack={stack}

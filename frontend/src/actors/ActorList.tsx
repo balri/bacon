@@ -1,4 +1,5 @@
 import type { Actor } from "../api";
+
 import ActorListItem from "./ActorListItem";
 
 interface ActorListProps {

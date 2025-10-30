@@ -1,4 +1,5 @@
 import type { Movie } from "../api";
+
 import MovieImage from "./MovieImage";
 
 interface MovieCardProps {

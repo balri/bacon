@@ -1,4 +1,5 @@
 import type { Movie } from "../api";
+
 import MovieListItem from "./MovieListItem";
 
 interface MovieListProps {

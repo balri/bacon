@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+
 import { getMoviesForActor, type Actor, type Movie } from "../api";
 import Loading from "../utils/Loading";
-import ActorCard from "./ActorCard";
 import MovieList from "../movies/MovieList";
+
+import ActorCard from "./ActorCard";
 
 interface ActorProps {
 	actor: Actor;
@@ -10,7 +12,7 @@ interface ActorProps {
 	stack: Array<{ type: "actor" | "movie"; data: Actor | Movie }>;
 }
 
-export default function Actor({ actor, onMovieClick, stack }: ActorProps) {
+export default function ActorView({ actor, onMovieClick, stack }: ActorProps) {
 	const [movies, setMovies] = useState<Movie[] | null>(null);
 	const [loading, setLoading] = useState(true);
 

@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+
 import { getActorsForMovie, type Actor, type Movie } from "../api";
 import Loading from "../utils/Loading";
 import ActorList from "../actors/ActorList";
-import MovieCard from "./MovieCard";
 import { KEVIN_BACON_ID, SIX_DEGREES } from "../App";
 import SuccessMessage from "../utils/SuccessMessage";
+
+import MovieCard from "./MovieCard";
 
 interface MovieProps {
 	movie: Movie;
@@ -13,7 +15,7 @@ interface MovieProps {
 	onGameEnd?: (msg: { type: string; node: React.ReactNode }) => void;
 }
 
-export default function Movie({ movie, onActorClick, stack, onGameEnd }: MovieProps) {
+export default function MovieView({ movie, onActorClick, stack, onGameEnd }: MovieProps) {
 	const [actors, setActors] = useState<Actor[] | null>(null);
 	const [loading, setLoading] = useState(false);
 
