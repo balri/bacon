@@ -3,7 +3,7 @@ import { getActorsForMovie, type Actor, type Movie } from "../api";
 import Loading from "../utils/Loading";
 import ActorList from "../actors/ActorList";
 import MovieCard from "./MovieCard";
-import { KEVIN_BACON_ID } from "../App";
+import { KEVIN_BACON_ID, SIX_DEGREES } from "../App";
 import SuccessMessage from "../utils/SuccessMessage";
 
 interface MovieProps {
@@ -44,13 +44,17 @@ export default function Movie({ movie, onActorClick, stack, onGameEnd }: MoviePr
 	const kevinBaconInCast = actors && actors.some((a) => a.id === KEVIN_BACON_ID);
 
 	if (
-		actorsInStackCount >= 6 &&
+		actorsInStackCount >= SIX_DEGREES &&
 		actors &&
 		!kevinBaconInCast
 	) {
+		const firstActor = (stack.find(item => item.type === "actor")?.data as Actor) ?? null;
+
 		onGameEnd?.(
 			<div>
-				<span role="img" aria-label="sad">😢</span> Better luck next time!
+				<span role="img" aria-label="sad">😢</span>
+				You have failed to link {firstActor.name} to Kevin Bacon with 6 degrees of separation!<br />
+				Go back or start again.
 			</div>
 		);
 		return null;

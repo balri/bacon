@@ -1,10 +1,12 @@
 interface EndMessageProps {
-	endMessage: string;
+	endMessage: string | React.ReactNode;
 	loadActor: () => void;
+	handleBack: () => void;
 	breadcrumbs: React.ReactNode;
+	showBackButton?: boolean;
 }
 
-export default function EndMessage({ endMessage, loadActor, breadcrumbs }: EndMessageProps) {
+export default function EndMessage({ endMessage, loadActor, handleBack, breadcrumbs, showBackButton }: EndMessageProps) {
 	return (
 		<div className="app-container">
 			<h1 className="main-title">🎬 Mmmm, Bacon 🥓</h1>
@@ -12,6 +14,11 @@ export default function EndMessage({ endMessage, loadActor, breadcrumbs }: EndMe
 				<button className="random-actor-btn" onClick={loadActor}>
 					🔀 Play Again
 				</button>
+				{showBackButton && (
+					<button className="back-btn" onClick={handleBack}>
+						← Back
+					</button>
+				)}
 			</div>
 			{breadcrumbs}
 			<div className="end-overlay">

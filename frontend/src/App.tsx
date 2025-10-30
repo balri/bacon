@@ -10,6 +10,7 @@ import EndMessage from "./utils/EndMessage";
 import IntroMessage from "./utils/IntroMessage";
 
 export const KEVIN_BACON_ID = 4724;
+export const SIX_DEGREES = 6;
 
 function isActor(item: { type: string, data: any }): item is { type: "actor", data: ActorType } {
   return item.type === "actor";
@@ -42,8 +43,8 @@ function App() {
   }
 
   function handleBack() {
-    if (gameEnded) return;
     setStack(prev => prev.slice(0, -1));
+    setEndMessage(null);
   }
 
   // Find all actors in the stack
@@ -51,7 +52,7 @@ function App() {
 
   // Game end logic
   const lastActor = actorsInStack[actorsInStack.length - 1];
-  const reachedSixActors = actorsInStack.length === 6;
+  const reachedSixActors = actorsInStack.length > SIX_DEGREES;
   const isKevinBacon = lastActor && lastActor.data.id === KEVIN_BACON_ID;
   const gameEnded = reachedSixActors || isKevinBacon || !!endMessage;
 
@@ -82,7 +83,16 @@ function App() {
   }
 
   if (endMessage) {
-    return <EndMessage endMessage={endMessage as string} loadActor={loadActor} breadcrumbs={breadcrumbs} />;
+    const isSuccess = !!(endMessage && (endMessage as any).type && (endMessage as any).type.name === "SuccessMessage");
+    return (
+      <EndMessage
+        endMessage={endMessage as string}
+        loadActor={loadActor}
+        handleBack={handleBack}
+        breadcrumbs={breadcrumbs}
+        showBackButton={!isSuccess}
+      />
+    );
   }
 
   return (
