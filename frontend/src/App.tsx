@@ -20,7 +20,7 @@ function App() {
   const [showIntro, setShowIntro] = useState(true);
   const [stack, setStack] = useState<Array<{ type: "actor" | "movie", data: ActorType | MovieType }>>([]);
   const [loading, setLoading] = useState(true);
-  const [endMessage, setEndMessage] = useState<null | React.ReactNode>(null);
+  const [endMessage, setEndMessage] = useState<null | { type: string; node: React.ReactNode }>(null);
 
   async function loadActor() {
     setLoading(true);
@@ -83,10 +83,10 @@ function App() {
   }
 
   if (endMessage) {
-    const isSuccess = !!(endMessage && (endMessage as any).type && (endMessage as any).type.name === "SuccessMessage");
+    const isSuccess = endMessage.type === "success";
     return (
       <EndMessage
-        endMessage={endMessage as string}
+        endMessage={endMessage.node}
         loadActor={loadActor}
         handleBack={handleBack}
         breadcrumbs={breadcrumbs}
