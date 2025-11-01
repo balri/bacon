@@ -15,7 +15,12 @@ interface MovieProps {
 	onGameEnd?: (msg: { type: string; node: React.ReactNode }) => void;
 }
 
-export default function MovieView({ movie, onActorClick, stack, onGameEnd }: MovieProps) {
+export default function MovieView({
+	movie,
+	onActorClick,
+	stack,
+	onGameEnd,
+}: MovieProps) {
 	const [actors, setActors] = useState<Actor[] | null>(null);
 	const [loading, setLoading] = useState(false);
 
@@ -43,37 +48,45 @@ export default function MovieView({ movie, onActorClick, stack, onGameEnd }: Mov
 		: [];
 
 	const actorsInStackCount = actorIdsInStack.length;
-	const kevinBaconInCast = actors && actors.some((a) => a.id === KEVIN_BACON_ID);
+	const kevinBaconInCast =
+		actors && actors.some((a) => a.id === KEVIN_BACON_ID);
 
-	if (
-		actorsInStackCount >= SIX_DEGREES &&
-		actors &&
-		!kevinBaconInCast
-	) {
-		const firstActor = (stack.find(item => item.type === "actor")?.data as Actor) ?? null;
+	if (actorsInStackCount >= SIX_DEGREES && actors && !kevinBaconInCast) {
+		const firstActor =
+			(stack.find((item) => item.type === "actor")?.data as Actor) ??
+			null;
 
 		onGameEnd?.({
 			type: "failure",
 			node: (
 				<div>
-					<span role="img" aria-label="sad">😢</span>
-					You have failed to link {firstActor.name} to Kevin Bacon with 6 degrees of separation!<br />
+					<span role="img" aria-label="sad">
+						😢
+					</span>
+					You have failed to link {firstActor.name} to Kevin Bacon
+					with 6 degrees of separation!
+					<br />
 					Go back or start again.
 				</div>
-			)
+			),
 		});
 		return null;
-	} else if (
-		actors && kevinBaconInCast
-	) {
-		const lastActor = actors.find(a => a.id === KEVIN_BACON_ID) ?? null;
-		const firstActor = (stack.find(item => item.type === "actor")?.data as Actor) ?? null;
+	} else if (actors && kevinBaconInCast) {
+		const lastActor = actors.find((a) => a.id === KEVIN_BACON_ID) ?? null;
+		const firstActor =
+			(stack.find((item) => item.type === "actor")?.data as Actor) ??
+			null;
 
 		onGameEnd?.({
 			type: "success",
 			node: (
-				<SuccessMessage firstActor={firstActor} lastActor={lastActor} movie={movie} degrees={actorsInStackCount} />
-			)
+				<SuccessMessage
+					firstActor={firstActor}
+					lastActor={lastActor}
+					movie={movie}
+					degrees={actorsInStackCount}
+				/>
+			),
 		});
 		return null;
 	}
@@ -83,9 +96,14 @@ export default function MovieView({ movie, onActorClick, stack, onGameEnd }: Mov
 			<MovieCard movie={movie} />
 			<h3 className="actors-title">Select an actor:</h3>
 			{filteredActors.length > 0 ? (
-				<ActorList actors={filteredActors} onActorClick={onActorClick} />
+				<ActorList
+					actors={filteredActors}
+					onActorClick={onActorClick}
+				/>
 			) : (
-				<div className="error-message">❌ No cast found for this movie.</div>
+				<div className="error-message">
+					❌ No cast found for this movie.
+				</div>
 			)}
 		</div>
 	);

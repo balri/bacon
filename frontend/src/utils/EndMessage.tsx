@@ -8,7 +8,13 @@ interface EndMessageProps {
 	showBackButton?: boolean;
 }
 
-export default function EndMessage({ endMessage, loadActor, handleBack, breadcrumbs, showBackButton }: EndMessageProps) {
+export default function EndMessage({
+	endMessage,
+	loadActor,
+	handleBack,
+	breadcrumbs,
+	showBackButton,
+}: EndMessageProps) {
 	return (
 		<div className="app-container">
 			<h1 className="main-title">🎬 Mmmm, Bacon 🥓</h1>

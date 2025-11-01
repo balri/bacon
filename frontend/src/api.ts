@@ -1,4 +1,5 @@
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/bacon/api";
+const BASE_URL =
+	import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/bacon/api";
 
 export interface Actor {
 	id: number;
@@ -24,7 +25,9 @@ export async function getRandomActor(): Promise<Actor | null> {
 	return res.json();
 }
 
-export async function getMoviesForActor(actorId: number): Promise<Movie[] | null> {
+export async function getMoviesForActor(
+	actorId: number,
+): Promise<Movie[] | null> {
 	const res = await fetch(`${BASE_URL}/movies/${actorId}`);
 	if (!res.ok) {
 		return null;
@@ -32,7 +35,9 @@ export async function getMoviesForActor(actorId: number): Promise<Movie[] | null
 	return res.json();
 }
 
-export async function getActorsForMovie(movieId: number): Promise<Actor[] | null> {
+export async function getActorsForMovie(
+	movieId: number,
+): Promise<Actor[] | null> {
 	const res = await fetch(`${BASE_URL}/actors/${movieId}`);
 	if (!res.ok) {
 		return null;

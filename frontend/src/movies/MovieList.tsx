@@ -10,9 +10,11 @@ interface MovieListProps {
 export default function MovieList({ movies, onMovieClick }: MovieListProps) {
 	return (
 		<ul className="movie-list">
-			{movies && movies.length > 0 ? movies.map((movie: Movie) => (
-				<MovieListItem movie={movie} onMovieClick={onMovieClick} />
-			)) : (
+			{movies && movies.length > 0 ? (
+				movies.map((movie: Movie) => (
+					<MovieListItem movie={movie} onMovieClick={onMovieClick} />
+				))
+			) : (
 				<li className="error-message">
 					❌ No movies found for this actor.
 				</li>

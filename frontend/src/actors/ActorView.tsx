@@ -44,9 +44,14 @@ export default function ActorView({ actor, onMovieClick, stack }: ActorProps) {
 			<ActorCard actor={actor} />
 			<h3 className="movies-title">Select a movie:</h3>
 			{filteredMovies.length > 0 ? (
-				<MovieList movies={filteredMovies} onMovieClick={onMovieClick} />
+				<MovieList
+					movies={filteredMovies}
+					onMovieClick={onMovieClick}
+				/>
 			) : (
-				<div className="error-message">❌ No movies found for this actor.</div>
+				<div className="error-message">
+					❌ No movies found for this actor.
+				</div>
 			)}
 		</div>
 	);

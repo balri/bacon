@@ -4,9 +4,7 @@ interface BreadcrumbsProps {
 	stack: Array<{ type: "actor" | "movie"; data: Actor | Movie }>;
 }
 
-export default function Breadcrumbs({
-	stack,
-}: BreadcrumbsProps) {
+export default function Breadcrumbs({ stack }: BreadcrumbsProps) {
 	return (
 		<nav className="breadcrumb-vertical">
 			{stack.map((item, idx) => {
@@ -14,10 +12,11 @@ export default function Breadcrumbs({
 				return (
 					<div
 						key={idx}
-						className={`breadcrumb-vertical-item ${item.type === "actor"
-							? "breadcrumb-actor"
-							: "breadcrumb-movie breadcrumb-movie-truncate"
-							}`}
+						className={`breadcrumb-vertical-item ${
+							item.type === "actor"
+								? "breadcrumb-actor"
+								: "breadcrumb-movie breadcrumb-movie-truncate"
+						}`}
 						title={
 							item.type === "movie"
 								? (item.data as Movie).title

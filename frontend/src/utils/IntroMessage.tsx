@@ -10,13 +10,13 @@ export default function IntroMessage({ onStart }: IntroMessageProps) {
 				<div className="intro-message">
 					<h2>Welcome to Six Degrees of Kevin Bacon!</h2>
 					<p>
-						Start with a random actor. Select a movie they've appeared in, then pick another actor from that movie, and so on.<br />
+						Start with a random actor. Select a movie they've
+						appeared in, then pick another actor from that movie,
+						and so on.
+						<br />
 						Your goal: <b>Reach Kevin Bacon in 6 steps or less!</b>
 					</p>
-					<button
-						className="random-actor-btn"
-						onClick={onStart}
-					>
+					<button className="random-actor-btn" onClick={onStart}>
 						Begin
 					</button>
 				</div>

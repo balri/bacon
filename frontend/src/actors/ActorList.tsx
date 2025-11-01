@@ -9,9 +9,11 @@ interface ActorListProps {
 export default function ActorList({ actors, onActorClick }: ActorListProps) {
 	return (
 		<ul className="actor-list">
-			{actors && actors.length > 0 ? actors.map((actor: Actor) => (
-				<ActorListItem actor={actor} onActorClick={onActorClick} />
-			)) : (
+			{actors && actors.length > 0 ? (
+				actors.map((actor: Actor) => (
+					<ActorListItem actor={actor} onActorClick={onActorClick} />
+				))
+			) : (
 				<li className="error-message">
 					❌ No cast found for this movie.
 				</li>

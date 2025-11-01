@@ -9,9 +9,7 @@ interface ActorCardProps {
 export default function ActorCard({ actor }: ActorCardProps) {
 	return (
 		<div className="actor-card">
-			{actor.profile_path && (
-				<ActorImage {...actor} />
-			)}
+			{actor.profile_path && <ActorImage {...actor} />}
 			<h2 className="actor-name">{actor.name}</h2>
 		</div>
 	);

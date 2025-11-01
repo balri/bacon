@@ -7,7 +7,10 @@ interface MovieListItemProps {
 	onMovieClick: (movie: Movie) => void;
 }
 
-export default function MovieListItem({ movie, onMovieClick }: MovieListItemProps) {
+export default function MovieListItem({
+	movie,
+	onMovieClick,
+}: MovieListItemProps) {
 	return (
 		<li
 			key={movie.id}
@@ -15,11 +18,11 @@ export default function MovieListItem({ movie, onMovieClick }: MovieListItemProp
 			style={{ cursor: "pointer" }}
 			onClick={() => onMovieClick(movie)}
 		>
-			{movie.poster_path && (
-				<MovieThumbnail {...movie} />
-			)}
+			{movie.poster_path && <MovieThumbnail {...movie} />}
 			<span className="movie-meta">
-				<span className="movie-title" title={movie.title}>{movie.title}</span>
+				<span className="movie-title" title={movie.title}>
+					{movie.title}
+				</span>
 				{movie.release_date && (
 					<span className="movie-year">
 						{" "}
