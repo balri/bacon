@@ -12,7 +12,11 @@ export default function MovieList({ movies, onMovieClick }: MovieListProps) {
 		<ul className="movie-list">
 			{movies && movies.length > 0 ? (
 				movies.map((movie: Movie) => (
-					<MovieListItem movie={movie} onMovieClick={onMovieClick} />
+					<MovieListItem
+						key={movie.id}
+						movie={movie}
+						onMovieClick={onMovieClick}
+					/>
 				))
 			) : (
 				<li className="error-message">

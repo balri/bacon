@@ -11,7 +11,11 @@ export default function ActorList({ actors, onActorClick }: ActorListProps) {
 		<ul className="actor-list">
 			{actors && actors.length > 0 ? (
 				actors.map((actor: Actor) => (
-					<ActorListItem actor={actor} onActorClick={onActorClick} />
+					<ActorListItem
+						key={actor.id}
+						actor={actor}
+						onActorClick={onActorClick}
+					/>
 				))
 			) : (
 				<li className="error-message">
