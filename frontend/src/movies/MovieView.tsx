@@ -35,10 +35,6 @@ export default function MovieView({
 		loadActors();
 	}, [movie.id]);
 
-	if (loading) {
-		return <Loading />;
-	}
-
 	const actorIdsInStack = stack
 		.filter((item) => item.type === "actor")
 		.map((item) => (item.data as Actor).id);
@@ -51,43 +47,52 @@ export default function MovieView({
 	const kevinBaconInCast =
 		actors && actors.some((a) => a.id === KEVIN_BACON_ID);
 
-	if (actorsInStackCount >= SIX_DEGREES && actors && !kevinBaconInCast) {
+	useEffect(() => {
+		if (!actors) return;
 		const firstActor =
 			(stack.find((item) => item.type === "actor")?.data as Actor) ??
 			null;
 
-		onGameEnd?.({
-			type: "failure",
-			node: (
-				<div>
-					<span role="img" aria-label="sad">
-						😢
-					</span>
-					You have failed to link {firstActor.name} to Kevin Bacon
-					with 6 degrees of separation!
-					<br />
-					Go back or start again.
-				</div>
-			),
-		});
-		return null;
-	} else if (actors && kevinBaconInCast) {
-		const lastActor = actors.find((a) => a.id === KEVIN_BACON_ID) ?? null;
-		const firstActor =
-			(stack.find((item) => item.type === "actor")?.data as Actor) ??
-			null;
+		if (actorsInStackCount >= SIX_DEGREES && !kevinBaconInCast) {
+			onGameEnd?.({
+				type: "failure",
+				node: (
+					<div>
+						<span role="img" aria-label="sad">
+							😢
+						</span>
+						You have failed to link {firstActor?.name} to Kevin
+						Bacon with 6 degrees of separation!
+						<br />
+						Go back or start again.
+					</div>
+				),
+			});
+		} else if (kevinBaconInCast) {
+			const lastActor =
+				actors.find((a) => a.id === KEVIN_BACON_ID) ?? null;
+			onGameEnd?.({
+				type: "success",
+				node: (
+					<SuccessMessage
+						firstActor={firstActor}
+						lastActor={lastActor}
+						movie={movie}
+						degrees={actorsInStackCount}
+					/>
+				),
+			});
+		}
+	}, [actors, actorsInStackCount, kevinBaconInCast, onGameEnd, stack, movie]);
 
-		onGameEnd?.({
-			type: "success",
-			node: (
-				<SuccessMessage
-					firstActor={firstActor}
-					lastActor={lastActor}
-					movie={movie}
-					degrees={actorsInStackCount}
-				/>
-			),
-		});
+	if (loading) {
+		return <Loading />;
+	}
+
+	if (
+		(actorsInStackCount >= SIX_DEGREES && actors && !kevinBaconInCast) ||
+		(actors && kevinBaconInCast)
+	) {
 		return null;
 	}
 

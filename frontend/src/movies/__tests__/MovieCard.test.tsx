@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import MovieCard from "../MovieCard";
 
 describe("MovieCard", () => {
-	it("renders movie name and character", () => {
+	it("renders movie title", () => {
 		render(
 			<MovieCard
 				movie={{

@@ -6,7 +6,7 @@ import MovieListItem from "../MovieListItem";
 import type { Movie } from "../../api";
 
 describe("MovieListItem", () => {
-	it("renders movie name and handles click", () => {
+	it("renders movie title and handles click", () => {
 		const movie: Movie = {
 			id: 1,
 			title: "Forrest Gump",

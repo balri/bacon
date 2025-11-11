@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import ActorCard from "../ActorCard";
 
 describe("ActorCard", () => {
-	it("renders actor name and character", () => {
+	it("renders actor name", () => {
 		render(
 			<ActorCard
 				actor={{

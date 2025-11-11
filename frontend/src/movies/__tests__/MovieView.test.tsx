@@ -152,4 +152,23 @@ describe("MovieView", () => {
 			),
 		);
 	});
+
+	it("calls onActorClick when an actor is clicked", async () => {
+		const onActorClick = vi.fn();
+		render(
+			<MovieView
+				movie={{
+					id: 1,
+					title: "Forrest Gump",
+				}}
+				stack={[]}
+				onActorClick={onActorClick}
+			/>,
+		);
+		const actor = await screen.findByText("Tom Hanks");
+		actor.click();
+		expect(onActorClick).toHaveBeenCalledWith(
+			expect.objectContaining({ id: 1, name: "Tom Hanks" }),
+		);
+	});
 });

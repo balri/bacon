@@ -107,4 +107,30 @@ describe("ActorView", () => {
 		expect(screen.queryByText("Big")).not.toBeInTheDocument();
 		expect(await screen.findByText("Forrest Gump")).toBeInTheDocument();
 	});
+
+	it("calls onMovieClick when a movie is clicked", async () => {
+		const onMovieClick = vi.fn();
+		render(
+			<ActorView
+				actor={{
+					id: 1,
+					name: "Tom Hanks",
+					profile_path: "",
+					character: "Forrest Gump",
+				}}
+				stack={[]}
+				onMovieClick={onMovieClick}
+			/>,
+		);
+		const movie = await screen.findByText("Forrest Gump");
+		movie.click();
+		expect(onMovieClick).toHaveBeenCalledWith(
+			expect.objectContaining({
+				id: 2,
+				title: "Forrest Gump",
+				poster_path: "",
+				release_date: "1994-07-06",
+			}),
+		);
+	});
 });
