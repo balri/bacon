@@ -1,5 +1,5 @@
 import { View, Text, Pressable, StyleSheet } from "react-native";
-import type { Movie } from "../api";
+import type { Movie } from "../../lib/api";
 import MovieThumbnail from "./MovieThumbnail";
 
 interface MovieListItemProps {

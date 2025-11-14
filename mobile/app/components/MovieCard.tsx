@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from "react-native";
-import type { Movie } from "../api";
+import type { Movie } from "../../lib/api";
 import MovieImage from "./MovieImage";
 
 interface MovieCardProps {

@@ -1,4 +1,4 @@
-import type { Movie } from "../api";
+import type { Movie } from "../../lib/api";
 import BaseImage from "./BaseImage";
 
 interface MovieThumbnailProps {

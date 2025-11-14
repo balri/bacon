@@ -1,5 +1,5 @@
 import { View, Text, Pressable, StyleSheet } from "react-native";
-import type { Actor } from "../api";
+import type { Actor } from "../../lib/api";
 import ActorThumbnail from "./ActorThumbnail";
 
 interface ActorListItemProps {

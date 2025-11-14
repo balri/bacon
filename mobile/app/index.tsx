@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, Pressable, StyleSheet, ScrollView } from "react-native";
 
-import type { Actor as ActorType, Movie as MovieType } from "./api";
-import { getRandomActor } from "./api";
+import type { Actor as ActorType, Movie as MovieType } from "../lib/api";
+import { getRandomActor } from "../lib/api";
 import ActorView from "./components/ActorView";
 import Loading from "./components/Loading";
 import MovieView from "./components/MovieView";

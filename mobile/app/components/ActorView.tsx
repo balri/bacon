@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-import { getMoviesForActor, type Actor, type Movie } from "../api";
+import { getMoviesForActor, type Actor, type Movie } from "../../lib/api";
 import Loading from "./Loading";
 import MovieList from "./MovieList";
 import ActorCard from "./ActorCard";

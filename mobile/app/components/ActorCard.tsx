@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from "react-native";
-import type { Actor } from "../api";
+import type { Actor } from "../../lib/api";
 
 import ActorImage from "./ActorImage";
 

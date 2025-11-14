@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-import { getActorsForMovie, type Actor, type Movie } from "../api";
+import { getActorsForMovie, type Actor, type Movie } from "../../lib/api";
 import Loading from "./Loading";
 import ActorList from "./ActorList";
 import { KEVIN_BACON_ID, SIX_DEGREES } from "../index";

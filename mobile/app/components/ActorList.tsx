@@ -1,5 +1,5 @@
 import { View, Text, FlatList, StyleSheet } from "react-native";
-import type { Actor } from "../api";
+import type { Actor } from "../../lib/api";
 import ActorListItem from "./ActorListItem";
 
 interface ActorListProps {

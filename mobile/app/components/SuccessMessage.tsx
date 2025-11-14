@@ -1,5 +1,5 @@
 import { View, Text, Image, StyleSheet } from "react-native";
-import type { Actor } from "../api";
+import type { Actor } from "../../lib/api";
 
 interface SuccessMessageProps {
 	firstActor: Actor | null;
