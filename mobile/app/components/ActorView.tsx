@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text } from "react-native";
+import { actorViewStyles } from "../../lib/styles";
 
 import { getMoviesForActor, type Actor, type Movie } from "../../lib/api";
 import Loading from "./Loading";
@@ -40,36 +41,17 @@ export default function ActorView({ actor, onMovieClick, stack }: ActorProps) {
 		: [];
 
 	return (
-		<View style={styles.container}>
+		<View style={actorViewStyles.container}>
 			<ActorCard actor={actor} />
-			<Text style={styles.title}>Select a movie:</Text>
+			<Text style={actorViewStyles.title}>Select a movie:</Text>
 			{filteredMovies.length > 0 ? (
 				<MovieList
 					movies={filteredMovies}
 					onMovieClick={onMovieClick}
 				/>
 			) : (
-				<Text style={styles.error}>❌ No movies found for this actor.</Text>
+				<Text style={actorViewStyles.error}>❌ No movies found for this actor.</Text>
 			)}
 		</View>
 	);
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		padding: 16,
-	},
-	title: {
-		fontSize: 18,
-		fontWeight: "bold",
-		marginVertical: 12,
-		color: "#3730a3",
-	},
-	error: {
-		color: "#b91c1c",
-		fontSize: 16,
-		marginTop: 16,
-		textAlign: "center",
-	},
-});

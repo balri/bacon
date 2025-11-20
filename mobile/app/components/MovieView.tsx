@@ -7,6 +7,7 @@ import ActorList from "./ActorList";
 import { KEVIN_BACON_ID, SIX_DEGREES } from "../index";
 import SuccessMessage from "./SuccessMessage";
 import MovieCard from "./MovieCard";
+import { movieViewStyles } from "../../lib/styles";
 
 interface MovieProps {
 	movie: Movie;
@@ -56,7 +57,7 @@ export default function MovieView({
 			onGameEnd?.({
 				type: "failure",
 				node: (
-					<Text style={styles.errorMessage}>
+					<Text style={movieViewStyles.errorMessage}>
 						{"😢 You have failed to link "}
 						{firstActor?.name}
 						{" to Kevin Bacon with 6 degrees of separation!\nGo back or start again."}
@@ -91,35 +92,16 @@ export default function MovieView({
 	}
 
 	return (
-		<View style={styles.container}>
+		<View style={movieViewStyles.container}>
 			<MovieCard movie={movie} />
-			<Text style={styles.title}>Select an actor:</Text>
+			<Text style={movieViewStyles.title}>Select an actor:</Text>
 			{filteredActors.length > 0 ? (
 				<ActorList actors={filteredActors} onActorClick={onActorClick} />
 			) : (
-				<Text style={styles.errorMessage}>
+				<Text style={movieViewStyles.errorMessage}>
 					❌ No cast found for this movie.
 				</Text>
 			)}
 		</View>
 	);
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		padding: 16,
-	},
-	title: {
-		fontSize: 18,
-		fontWeight: "bold",
-		marginVertical: 12,
-		color: "#3730a3",
-	},
-	errorMessage: {
-		color: "#b91c1c",
-		fontSize: 16,
-		marginTop: 16,
-		textAlign: "center",
-	},
-});

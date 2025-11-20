@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import type { Actor, Movie } from "../../lib/api";
+import { breadcrumbsStyles } from "../../lib/styles";
 
 interface BreadcrumbsProps {
 	stack: Array<{ type: "actor" | "movie"; data: Actor | Movie }>;
@@ -8,7 +9,7 @@ interface BreadcrumbsProps {
 
 export default function Breadcrumbs({ stack, onPressItem }: BreadcrumbsProps) {
 	return (
-		<View style={styles.container}>
+		<View style={breadcrumbsStyles.container}>
 			{stack.map((item, idx) => {
 				const indent = idx * 6;
 				const isActor = item.type === "actor";
@@ -17,8 +18,8 @@ export default function Breadcrumbs({ stack, onPressItem }: BreadcrumbsProps) {
 					: (item.data as Movie).title;
 
 				const itemStyle = [
-					styles.item,
-					isActor ? styles.actor : styles.movie,
+					breadcrumbsStyles.item,
+					isActor ? breadcrumbsStyles.actor : breadcrumbsStyles.movie,
 					{ marginLeft: indent, width: `100%` }, // width can be adjusted as needed
 				];
 
@@ -26,7 +27,7 @@ export default function Breadcrumbs({ stack, onPressItem }: BreadcrumbsProps) {
 
 				const content = (
 					<Text
-						style={styles.text}
+						style={breadcrumbsStyles.text}
 						numberOfLines={1}
 						ellipsizeMode="tail"
 					>
@@ -37,13 +38,13 @@ export default function Breadcrumbs({ stack, onPressItem }: BreadcrumbsProps) {
 				return isClickable ? (
 					<Pressable
 						key={idx}
-						style={styles.item}
+						style={breadcrumbsStyles.item}
 						onPress={() => onPressItem(idx)}
 					>
 						{content}
 					</Pressable>
 				) : (
-					<View key={idx} style={styles.item}>
+					<View key={idx} style={breadcrumbsStyles.item}>
 						{content}
 					</View>
 				);
@@ -51,26 +52,3 @@ export default function Breadcrumbs({ stack, onPressItem }: BreadcrumbsProps) {
 		</View>
 	);
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flexDirection: "column",
-		paddingVertical: 8,
-	},
-	item: {
-		paddingVertical: 4,
-		paddingHorizontal: 8,
-		borderRadius: 6,
-		marginBottom: 2,
-	},
-	actor: {
-		backgroundColor: "#eef2ff",
-	},
-	movie: {
-		backgroundColor: "#f1f5f9",
-	},
-	text: {
-		fontSize: 15,
-		color: "#3730a3",
-	},
-});

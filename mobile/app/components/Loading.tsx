@@ -1,4 +1,5 @@
 import { View, Text, ActivityIndicator, StyleSheet } from "react-native";
+import { loadingStyles } from "../../lib/styles";
 
 interface LoadingProps {
 	small?: boolean;
@@ -6,20 +7,20 @@ interface LoadingProps {
 }
 
 export default function Loading({ small, tiny }: LoadingProps) {
-	let containerStyle = styles.container;
+	let containerStyle = loadingStyles.container;
 	let spinnerSize: "small" | "large" = "large";
-	let textStyle = styles.text;
+	let textStyle = loadingStyles.text;
 	let text = "Loading...";
 
 	if (tiny) {
-		containerStyle = styles.tinyContainer;
+		containerStyle = loadingStyles.tinyContainer;
 		spinnerSize = "small";
-		textStyle = styles.tinyText;
+		textStyle = loadingStyles.tinyText;
 		text = "";
 	} else if (small) {
-		containerStyle = styles.smallContainer;
+		containerStyle = loadingStyles.smallContainer;
 		spinnerSize = "small";
-		textStyle = styles.smallText;
+		textStyle = loadingStyles.smallText;
 	}
 
 	return (
@@ -29,36 +30,3 @@ export default function Loading({ small, tiny }: LoadingProps) {
 		</View>
 	);
 }
-
-const styles = StyleSheet.create({
-	container: {
-		alignItems: "center",
-		justifyContent: "center",
-		padding: 24,
-	},
-	smallContainer: {
-		alignItems: "center",
-		justifyContent: "center",
-		padding: 12,
-	},
-	tinyContainer: {
-		alignItems: "center",
-		justifyContent: "center",
-		padding: 4,
-	},
-	text: {
-		marginTop: 12,
-		fontSize: 18,
-		color: "#6366f1",
-	},
-	smallText: {
-		marginTop: 8,
-		fontSize: 14,
-		color: "#6366f1",
-	},
-	tinyText: {
-		marginTop: 0,
-		fontSize: 0,
-		color: "#6366f1",
-	},
-});

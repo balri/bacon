@@ -1,6 +1,7 @@
 import { View, Text, FlatList, StyleSheet } from "react-native";
 import type { Movie } from "../../lib/api";
 import MovieListItem from "./MovieListItem";
+import { movieListStyles } from "../../lib/styles";
 
 interface MovieListProps {
 	movies: Movie[];
@@ -10,8 +11,8 @@ interface MovieListProps {
 export default function MovieList({ movies, onMovieClick }: MovieListProps) {
 	if (!movies || movies.length === 0) {
 		return (
-			<View style={styles.errorContainer}>
-				<Text style={styles.errorText}>
+			<View style={movieListStyles.errorContainer}>
+				<Text style={movieListStyles.errorText}>
 					❌ No movies found for this actor.
 				</Text>
 			</View>
@@ -25,21 +26,7 @@ export default function MovieList({ movies, onMovieClick }: MovieListProps) {
 			renderItem={({ item }) => (
 				<MovieListItem movie={item} onMovieClick={onMovieClick} />
 			)}
-			contentContainerStyle={styles.list}
+			contentContainerStyle={movieListStyles.list}
 		/>
 	);
 }
-
-const styles = StyleSheet.create({
-	list: {
-		paddingVertical: 8,
-	},
-	errorContainer: {
-		alignItems: "center",
-		padding: 16,
-	},
-	errorText: {
-		color: "#b91c1c",
-		fontSize: 16,
-	},
-});

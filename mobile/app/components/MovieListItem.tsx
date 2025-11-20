@@ -1,6 +1,7 @@
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import type { Movie } from "../../lib/api";
 import MovieThumbnail from "./MovieThumbnail";
+import { movieListItemStyles } from "../../lib/styles";
 
 interface MovieListItemProps {
 	movie: Movie;
@@ -12,19 +13,19 @@ export default function MovieListItem({
 	onMovieClick,
 }: MovieListItemProps) {
 	return (
-		<Pressable style={styles.item} onPress={() => onMovieClick(movie)}>
+		<Pressable style={movieListItemStyles.item} onPress={() => onMovieClick(movie)}>
 			{movie.poster_path && <MovieThumbnail movie={movie} />}
-			<View style={styles.meta}>
-				<Text style={styles.title} numberOfLines={1} ellipsizeMode="tail" selectable={false}>
+			<View style={movieListItemStyles.meta}>
+				<Text style={movieListItemStyles.title} numberOfLines={1} ellipsizeMode="tail" selectable={false}>
 					{movie.title}
 				</Text>
 				{movie.release_date && (
-					<Text style={styles.year}>
+					<Text style={movieListItemStyles.year}>
 						{" "}({new Date(movie.release_date).getFullYear()})
 					</Text>
 				)}
 				{movie.vote_average && (
-					<Text style={styles.rating}>
+					<Text style={movieListItemStyles.rating}>
 						{" "}⭐ {movie.vote_average.toFixed(1)}
 					</Text>
 				)}
@@ -32,36 +33,3 @@ export default function MovieListItem({
 		</Pressable>
 	);
 }
-
-const styles = StyleSheet.create({
-	item: {
-		flexDirection: "row",
-		alignItems: "center",
-		paddingVertical: 10,
-		paddingHorizontal: 16,
-		borderBottomWidth: 1,
-		borderBottomColor: "#e5e7eb",
-		backgroundColor: "#fff",
-	},
-	meta: {
-		marginLeft: 12,
-		flexDirection: "row",
-		alignItems: "center",
-		flexWrap: "wrap",
-	},
-	title: {
-		fontSize: 16,
-		fontWeight: "600",
-		color: "#3730a3",
-	},
-	year: {
-		fontSize: 15,
-		color: "#6366f1",
-		marginLeft: 4,
-	},
-	rating: {
-		fontSize: 15,
-		color: "#f59e42",
-		marginLeft: 4,
-	},
-});

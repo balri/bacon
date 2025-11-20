@@ -1,6 +1,6 @@
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
+import { actorImageStyles } from "../../lib/styles";
 import type { Actor } from "../../lib/api";
-
 import BaseImage from "./BaseImage";
 
 interface ActorImageProps {
@@ -13,7 +13,7 @@ export default function ActorImage({ actor }: ActorImageProps) {
 	}
 
 	return (
-		<View style={styles.container}>
+		<View style={actorImageStyles.container}>
 			<BaseImage
 				url={`https://image.tmdb.org/t/p/w200${actor.profile_path}`}
 				alt={actor.name}
@@ -21,11 +21,3 @@ export default function ActorImage({ actor }: ActorImageProps) {
 		</View>
 	);
 }
-
-const styles = StyleSheet.create({
-	container: {
-		minHeight: 130,
-		alignItems: "center",
-		justifyContent: "center",
-	},
-});

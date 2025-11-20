@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { View, Image, StyleSheet, ActivityIndicator } from "react-native";
+import { View, Image, ActivityIndicator } from "react-native";
+import { baseImageStyles } from "../../lib/styles";
 
 interface BaseImageProps {
 	url: string;
@@ -15,57 +16,27 @@ export default function BaseImage({
 	const [imgLoaded, setImgLoaded] = useState(false);
 
 	return (
-		<View style={styles.wrapper}>
+		<View style={baseImageStyles.wrapper}>
 			<Image
 				source={{ uri: url }}
 				accessibilityLabel={alt}
 				style={[
-					styles.img,
-					imgLoaded && styles.loaded,
-					isThumbnail && styles.thumbnail,
+					baseImageStyles.img,
+					imgLoaded && baseImageStyles.loaded,
+					isThumbnail && baseImageStyles.thumbnail,
 				]}
 				onLoad={() => setImgLoaded(true)}
 			/>
-			{!imgLoaded && (
-				<View style={styles.loadingOverlay}>
-					<ActivityIndicator
-						size={isThumbnail ? "small" : "large"}
-						color="#6366f1"
-					/>
-				</View>
-			)}
-		</View>
+			{
+				!imgLoaded && (
+					<View style={baseImageStyles.loadingOverlay}>
+						<ActivityIndicator
+							size={isThumbnail ? "small" : "large"}
+							color="#6366f1"
+						/>
+					</View>
+				)
+			}
+		</View >
 	);
 }
-
-const styles = StyleSheet.create({
-	wrapper: {
-		justifyContent: "center",
-		alignItems: "center",
-		position: "relative",
-	},
-	img: {
-		width: 120,
-		height: 120,
-		borderRadius: 8,
-		backgroundColor: "#eee",
-	},
-	loaded: {
-		opacity: 1,
-	},
-	thumbnail: {
-		width: 60,
-		height: 60,
-	},
-	loadingOverlay: {
-		position: "absolute",
-		top: 0,
-		left: 0,
-		right: 0,
-		bottom: 0,
-		justifyContent: "center",
-		alignItems: "center",
-		backgroundColor: "rgba(255,255,255,0.5)",
-		borderRadius: 8,
-	},
-});
