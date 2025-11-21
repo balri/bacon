@@ -1,20 +1,20 @@
-import type { Movie } from "../../lib/api";
-import BaseImage from "./BaseImage";
+import type { Movie } from '@/lib/api';
+import BaseImage from './BaseImage';
 
 interface MovieThumbnailProps {
-	movie: Movie;
+  movie: Movie;
 }
 
 export default function MovieThumbnail({ movie }: MovieThumbnailProps) {
-	if (!movie.poster_path) {
-		return null;
-	}
+  if (!movie.poster_path) {
+    return null;
+  }
 
-	return (
-		<BaseImage
-			url={`https://image.tmdb.org/t/p/w45${movie.poster_path}`}
-			alt={movie.title}
-			isThumbnail={true}
-		/>
-	);
+  return (
+    <BaseImage
+      url={`https://image.tmdb.org/t/p/w45${movie.poster_path}`}
+      alt={movie.title}
+      isThumbnail={true}
+    />
+  );
 }

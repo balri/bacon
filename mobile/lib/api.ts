@@ -1,45 +1,45 @@
-const BASE_URL = "http://localhost:3000/bacon/api";
+const BASE_URL = 'http://localhost:3000/bacon/api';
 
 export interface Actor {
-	id: number;
-	name: string;
-	character?: string;
-	profile_path?: string;
+  id: number;
+  name: string;
+  character?: string;
+  profile_path?: string;
 }
 
 export interface Movie {
-	id: number;
-	title: string;
-	poster_path?: string;
-	vote_average?: number;
-	vote_count?: number;
-	release_date?: string;
+  id: number;
+  title: string;
+  poster_path?: string;
+  vote_average?: number;
+  vote_count?: number;
+  release_date?: string;
 }
 
 export async function getRandomActor(): Promise<Actor | null> {
-	const res = await fetch(`${BASE_URL}/random-actor`);
-	if (!res.ok) {
-		return null;
-	}
-	return res.json();
+  const res = await fetch(`${BASE_URL}/random-actor`);
+  if (!res.ok) {
+    return null;
+  }
+  return res.json();
 }
 
 export async function getMoviesForActor(
-	actorId: number,
+  actorId: number,
 ): Promise<Movie[] | null> {
-	const res = await fetch(`${BASE_URL}/movies/${actorId}`);
-	if (!res.ok) {
-		return null;
-	}
-	return res.json();
+  const res = await fetch(`${BASE_URL}/movies/${actorId}`);
+  if (!res.ok) {
+    return null;
+  }
+  return res.json();
 }
 
 export async function getActorsForMovie(
-	movieId: number,
+  movieId: number,
 ): Promise<Actor[] | null> {
-	const res = await fetch(`${BASE_URL}/actors/${movieId}`);
-	if (!res.ok) {
-		return null;
-	}
-	return res.json();
+  const res = await fetch(`${BASE_URL}/actors/${movieId}`);
+  if (!res.ok) {
+    return null;
+  }
+  return res.json();
 }

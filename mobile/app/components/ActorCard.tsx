@@ -1,18 +1,18 @@
-import { View, Text, StyleSheet } from "react-native";
-import type { Actor } from "../../lib/api";
-import { actorCardStyles } from "../../lib/styles";
+import { View, Text } from 'react-native';
+import type { Actor } from '@/lib/api';
+import { actorCardStyles } from '@/lib/styles';
 
-import ActorImage from "./ActorImage";
+import ActorImage from './ActorImage';
 
 interface ActorCardProps {
-	actor: Actor;
+  actor: Actor;
 }
 
 export default function ActorCard({ actor }: ActorCardProps) {
-	return (
-		<View style={actorCardStyles.card}>
-			{actor.profile_path && <ActorImage actor={actor} />}
-			<Text style={actorCardStyles.name}>{actor.name}</Text>
-		</View>
-	);
+  return (
+    <View style={actorCardStyles.card}>
+      {actor.profile_path && <ActorImage actor={actor} />}
+      <Text style={actorCardStyles.name}>{actor.name}</Text>
+    </View>
+  );
 }
