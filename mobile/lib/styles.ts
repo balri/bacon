@@ -143,9 +143,11 @@ export const breadcrumbsStyles = StyleSheet.create({
   },
   actor: {
     backgroundColor: '#eef2ff',
+    color: '#3730a3',
   },
   movie: {
-    backgroundColor: '#f1f5f9',
+    backgroundColor: '#fff7ed',
+    color: 'f59e42',
   },
   text: {
     fontSize: 15,
