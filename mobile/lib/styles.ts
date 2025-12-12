@@ -147,7 +147,7 @@ export const breadcrumbsStyles = StyleSheet.create({
   },
   movie: {
     backgroundColor: '#fff7ed',
-    color: 'f59e42',
+    color: '#f59e42',
   },
   text: {
     fontSize: 15,

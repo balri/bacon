@@ -230,7 +230,6 @@ body {
 }
 
 .breadcrumb-vertical-item {
-	/* or your preferred value */
 	border-radius: 6px;
 	box-sizing: border-box;
 	display: block;
