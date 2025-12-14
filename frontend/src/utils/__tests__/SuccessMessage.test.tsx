@@ -20,7 +20,6 @@ describe("SuccessMessage", () => {
 					profile_path: "",
 					character: "B",
 				}}
-				movie={{ title: "Apollo 13" }}
 				degrees={3}
 			/>,
 		);
@@ -45,7 +44,6 @@ describe("SuccessMessage", () => {
 					profile_path: "/bacon.jpg",
 					character: "B",
 				}}
-				movie={{ title: "Apollo 13" }}
 				degrees={3}
 			/>,
 		);
@@ -72,7 +70,6 @@ describe("SuccessMessage", () => {
 					profile_path: "",
 					character: "B",
 				}}
-				movie={{ title: "Apollo 13" }}
 				degrees={3}
 			/>,
 		);

@@ -108,8 +108,7 @@ describe("MovieView", () => {
 			<MovieView
 				movie={{ id: 1, title: "A Movie" }}
 				stack={[]}
-				onActorClick={() => {}}
-				onGameEnd={onGameEnd}
+				onActorClick={() => { }}
 			/>,
 		);
 		await waitFor(() =>
@@ -142,8 +141,7 @@ describe("MovieView", () => {
 			<MovieView
 				movie={{ id: 1, title: "A Movie" }}
 				stack={stack}
-				onActorClick={() => {}}
-				onGameEnd={onGameEnd}
+				onActorClick={() => { }}
 			/>,
 		);
 		await waitFor(() =>
