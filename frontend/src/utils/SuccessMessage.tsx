@@ -3,17 +3,14 @@ import type { Actor } from "../api";
 interface SuccessMessageProps {
 	firstActor: Actor | null;
 	lastActor: Actor | null;
-	movie: { title: string };
 	degrees: number;
 }
 
 export default function SuccessMessage({
 	firstActor,
 	lastActor,
-	movie,
 	degrees,
 }: SuccessMessageProps) {
-	const character = lastActor?.character || "an unknown character";
 	const lastActorName = lastActor?.name || "Kevin Bacon";
 	const firstActorName = firstActor?.name || "Unknown Actor";
 	const profilePath = lastActor?.profile_path;
@@ -44,8 +41,6 @@ export default function SuccessMessage({
 					🏆
 				</span>{" "}
 				Congratulations!
-				<br />
-				{lastActorName} played {character} in <b>{movie.title}</b>.
 				<br />
 				You have linked {firstActorName} to {lastActorName} with{" "}
 				{degrees} degrees of separation!

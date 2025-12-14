@@ -123,13 +123,13 @@ function App() {
 						actor={current.data as ActorType}
 						onMovieClick={handleMovieClick}
 						stack={stack}
+						onGameEnd={setEndMessage}
 					/>
 				) : (
 					<MovieView
 						movie={current.data as MovieType}
 						onActorClick={handleActorClick}
 						stack={stack}
-						onGameEnd={setEndMessage}
 					/>
 				)
 			) : (
