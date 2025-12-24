@@ -1,7 +1,7 @@
 Run tests:
 
 ```
-npx vitest run
+npm run test
 ```
 
 Format:

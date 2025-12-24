@@ -10,7 +10,7 @@ export default function IntroMessage({ onStart }: IntroMessageProps) {
 				<div className="intro-message">
 					<h2>Welcome to Six Degrees of Kevin Bacon!</h2>
 					<p>
-						Start with a random actor. Select a movie they've
+						Each day, start with a random actor. Select a movie they've
 						appeared in, then pick another actor from that movie,
 						and so on.
 						<br />

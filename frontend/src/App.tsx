@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import type { Actor as ActorType, Movie as MovieType } from "./api";
-import { getRandomActor } from "./api";
+import { getDailyActor } from "./api";
 import ActorView from "./actors/ActorView";
 import Loading from "./utils/Loading";
 import "./index.css";
@@ -33,7 +33,7 @@ function App() {
 
 	async function loadActor() {
 		setLoading(true);
-		const actor = await getRandomActor();
+		const actor = await getDailyActor();
 		if (actor) {
 			setStack([{ type: "actor", data: actor }]);
 			setEndMessage(null);

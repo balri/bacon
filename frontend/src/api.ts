@@ -25,6 +25,14 @@ export async function getRandomActor(): Promise<Actor | null> {
 	return res.json();
 }
 
+export async function getDailyActor(): Promise<Actor | null> {
+	const res = await fetch(`${BASE_URL}/daily-actor`);
+	if (!res.ok) {
+		return null;
+	}
+	return res.json();
+}
+
 export async function getMoviesForActor(
 	actorId: number,
 ): Promise<Movie[] | null> {
