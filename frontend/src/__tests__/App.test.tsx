@@ -8,7 +8,7 @@ vi.mock("../api", async () => {
 	const actual = await vi.importActual<object>("../api");
 	return {
 		...actual,
-		getRandomActor: vi.fn().mockResolvedValue({
+		getDailyActor: vi.fn().mockResolvedValue({
 			id: 1,
 			name: "Tom Hanks",
 			profile_path: "",

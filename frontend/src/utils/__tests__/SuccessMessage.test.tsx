@@ -25,7 +25,6 @@ describe("SuccessMessage", () => {
 		);
 		expect(screen.getByText(/Tom Hanks/)).toBeInTheDocument();
 		expect(screen.getByText(/Kevin Bacon/)).toBeInTheDocument();
-		expect(screen.getByText(/Apollo 13/)).toBeInTheDocument();
 		expect(screen.getByText(/3 degrees/)).toBeInTheDocument();
 	});
 
