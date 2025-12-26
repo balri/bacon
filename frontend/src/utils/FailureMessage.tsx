@@ -16,7 +16,7 @@ export default function FailureMessage({ firstActor }: FailureMessageProps) {
 			You have failed to link {firstActorName} to Kevin Bacon with{" "}
 			{SIX_DEGREES} degrees of separation!
 			<br />
-			Go back or start again.
+			Go back or try again.
 		</div>
 	);
 }

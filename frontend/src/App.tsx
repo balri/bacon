@@ -99,6 +99,7 @@ function App() {
 				handleBack={handleBack}
 				breadcrumbs={breadcrumbs}
 				showBackButton={!isSuccess}
+				showTryAgainButton={endMessage.type === "failure"}
 			/>
 		);
 	}
@@ -107,16 +108,13 @@ function App() {
 		<div className="app-container">
 			<h1 className="main-title">🎬 Mmmm, Bacon 🥓</h1>
 			<div className="top-bar">
-				<button className="random-actor-btn" onClick={loadActor}>
-					🔀 Start Again
-				</button>
 				{stack.length > 1 && !gameEnded && (
 					<button className="back-btn" onClick={handleBack}>
 						← Back
 					</button>
 				)}
 			</div>
-			{breadcrumbs}
+			{stack.length > 1 && breadcrumbs}
 			{current ? (
 				!endMessage && current.type === "actor" ? (
 					<ActorView

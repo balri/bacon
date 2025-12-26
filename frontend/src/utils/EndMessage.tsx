@@ -6,6 +6,7 @@ interface EndMessageProps {
 	handleBack: () => void;
 	breadcrumbs: React.ReactNode;
 	showBackButton?: boolean;
+	showTryAgainButton?: boolean;
 }
 
 export default function EndMessage({
@@ -14,14 +15,17 @@ export default function EndMessage({
 	handleBack,
 	breadcrumbs,
 	showBackButton,
+	showTryAgainButton,
 }: EndMessageProps) {
 	return (
 		<div className="app-container">
 			<h1 className="main-title">🎬 Mmmm, Bacon 🥓</h1>
 			<div className="top-bar">
-				<button className="random-actor-btn" onClick={loadActor}>
-					🔀 Play Again
-				</button>
+				{showTryAgainButton && (
+					<button className="random-actor-btn" onClick={loadActor}>
+						🔀 Try Again
+					</button>
+				)}
 				{showBackButton && (
 					<button className="back-btn" onClick={handleBack}>
 						← Back
