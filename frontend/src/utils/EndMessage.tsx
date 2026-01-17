@@ -22,7 +22,7 @@ export default function EndMessage({
 			<h1 className="main-title">🎬 Mmmm, Bacon 🥓</h1>
 			<div className="top-bar">
 				{showTryAgainButton && (
-					<button className="random-actor-btn" onClick={loadActor}>
+					<button className="daily-actor-btn" onClick={loadActor}>
 						🔀 Start Again
 					</button>
 				)}

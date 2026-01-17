@@ -16,7 +16,7 @@ export default function IntroMessage({ onStart }: IntroMessageProps) {
 						<br />
 						Your goal: <b>Reach Kevin Bacon in 6 steps or less!</b>
 					</p>
-					<button className="random-actor-btn" onClick={onStart}>
+					<button className="daily-actor-btn" onClick={onStart}>
 						Begin
 					</button>
 				</div>
