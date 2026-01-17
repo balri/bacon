@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import { getMoviesForActor, type Actor, type Movie } from "../api";
 import Loading from "../utils/Loading";
@@ -20,6 +20,7 @@ export default function ActorView({
 	stack,
 	onGameEnd,
 }: ActorProps) {
+	const gameEndCalled = useRef(false);
 	const [movies, setMovies] = useState<Movie[] | null>(null);
 	const [loading, setLoading] = useState(true);
 
@@ -48,9 +49,12 @@ export default function ActorView({
 	const isKevinBacon = actor.id === KEVIN_BACON_ID;
 
 	useEffect(() => {
+		if (gameEndCalled.current) return;
 		if (isKevinBacon) {
+			gameEndCalled.current = true;
 			onGameEnd?.("success");
-		} else if (actorsInStackCount >= SIX_DEGREES) {
+		} else if (actorsInStackCount > SIX_DEGREES) {
+			gameEndCalled.current = true;
 			onGameEnd?.("failure");
 		}
 	}, [actorsInStackCount, isKevinBacon, onGameEnd]);
@@ -59,7 +63,7 @@ export default function ActorView({
 		return <Loading />;
 	}
 
-	if (actorsInStackCount >= SIX_DEGREES || isKevinBacon) {
+	if (actorsInStackCount > SIX_DEGREES || isKevinBacon) {
 		return null;
 	}
 

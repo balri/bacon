@@ -2,19 +2,22 @@ import type { Actor } from "../api";
 
 type SuccessMessageProps = {
 	firstActor: Actor | null;
-	steps: number;
+	degrees: number;
 	attempts: number;
 	streak?: number;
 };
 
 export default function SuccessMessage(props: SuccessMessageProps) {
-	const { firstActor, steps, attempts, streak: streakProp } = props;
+	const { firstActor, degrees, attempts, streak: streakProp } = props;
 	const streakVal =
 		typeof streakProp === "number" && !isNaN(streakProp) ? streakProp : 1;
 	const firstActorName = firstActor?.name || "Unknown Actor";
 	const firstActorPhoto = firstActor?.profile_path
 		? `https://image.tmdb.org/t/p/w185${firstActor.profile_path}`
 		: null;
+	const baconName = "Kevin Bacon";
+	const baconPhoto =
+		"https://image.tmdb.org/t/p/w185/rjX2Oz3tCZMfSwOoIAyEhdtXnTE.jpg";
 
 	return (
 		<div
@@ -26,7 +29,7 @@ export default function SuccessMessage(props: SuccessMessageProps) {
 				borderRadius: 16,
 				boxShadow: "0 4px 24px rgba(0,0,0,0.12)",
 				padding: 32,
-				maxWidth: 340,
+				maxWidth: 400,
 				margin: "40px auto",
 				color: "#222",
 			}}
@@ -44,29 +47,56 @@ export default function SuccessMessage(props: SuccessMessageProps) {
 			<div style={{ marginBottom: 20, color: "#444" }}>
 				You completed today's challenge.
 			</div>
-			{firstActorPhoto && (
-				<img
-					src={firstActorPhoto}
-					alt={firstActorName}
-					style={{
-						borderRadius: 12,
-						width: 120,
-						height: 160,
-						objectFit: "cover",
-						marginBottom: 16,
-						boxShadow: "0 2px 12px rgba(0,0,0,0.15)",
-					}}
-				/>
-			)}
 			<div
 				style={{
-					fontSize: 18,
-					fontWeight: 500,
-					marginBottom: 8,
-					color: "#222",
+					display: "flex",
+					flexDirection: "row",
+					alignItems: "center",
+					gap: 24,
+					marginBottom: 16,
 				}}
 			>
-				{firstActorName}
+				<div style={{ textAlign: "center" }}>
+					{firstActorPhoto && (
+						<img
+							src={firstActorPhoto}
+							alt={firstActorName}
+							style={{
+								borderRadius: 12,
+								width: 100,
+								height: 140,
+								objectFit: "cover",
+								marginBottom: 8,
+								boxShadow: "0 2px 12px rgba(0,0,0,0.15)",
+							}}
+						/>
+					)}
+					<div
+						style={{ fontSize: 16, fontWeight: 500, color: "#222" }}
+					>
+						{firstActorName}
+					</div>
+				</div>
+				<span style={{ fontSize: 32, color: "#1a8917" }}>→</span>
+				<div style={{ textAlign: "center" }}>
+					<img
+						src={baconPhoto}
+						alt={baconName}
+						style={{
+							borderRadius: 12,
+							width: 100,
+							height: 140,
+							objectFit: "cover",
+							marginBottom: 8,
+							boxShadow: "0 2px 12px rgba(0,0,0,0.15)",
+						}}
+					/>
+					<div
+						style={{ fontSize: 16, fontWeight: 500, color: "#222" }}
+					>
+						{baconName}
+					</div>
+				</div>
 			</div>
 			<div
 				style={{
@@ -77,12 +107,12 @@ export default function SuccessMessage(props: SuccessMessageProps) {
 				}}
 			>
 				<div style={{ textAlign: "center" }}>
-					<div style={{ fontSize: 14, color: "#555" }}>Steps</div>
+					<div style={{ fontSize: 14, color: "#555" }}>Degrees</div>
 					<div
-						data-testid="steps"
+						data-testid="degrees"
 						style={{ fontSize: 22, fontWeight: 600, color: "#222" }}
 					>
-						{steps}
+						{degrees}
 					</div>
 				</div>
 				<div style={{ textAlign: "center" }}>

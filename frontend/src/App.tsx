@@ -53,7 +53,7 @@ function App() {
 						node: (
 							<SuccessMessage
 								firstActor={actor}
-								steps={data.steps || 0}
+								degrees={data.degrees || 0}
 								attempts={data.attempts || 1}
 								streak={data.streak || 1}
 							/>
@@ -103,28 +103,34 @@ function App() {
 		const cookieData = setCookieData({
 			actorId: actorId,
 			completed: type === "success",
-			steps: actorsInStack.length,
+			degrees: actorsInStack.length - 1,
 		});
-		let msgNode = null;
 		if (type === "success") {
-			msgNode = (
-				<SuccessMessage
-					firstActor={firstActor}
-					steps={actorsInStack.length || 0}
-					attempts={cookieData.attempts || 1}
-					streak={cookieData.streak || 1}
-				/>
-			);
+			setEndMessage({
+				type,
+				node: (
+					<SuccessMessage
+						firstActor={firstActor}
+						degrees={actorsInStack.length - 1 || 0}
+						attempts={cookieData.attempts || 1}
+						streak={cookieData.streak || 1}
+					/>
+				),
+			});
 		} else {
-			msgNode = <FailureMessage firstActor={firstActor} />;
+			setEndMessage({
+				type,
+				node: (
+					<FailureMessage
+						firstActor={firstActor}
+						attempts={cookieData.attempts || 1}
+					/>
+				),
+			});
 		}
-		setEndMessage({
-			type,
-			node: msgNode,
-		});
 	}
 
-	const showBreadcrumbs = !endMessage || endMessage.type !== "success";
+	const showBreadcrumbs = !endMessage;
 	const breadcrumbs = showBreadcrumbs ? <Breadcrumbs stack={stack} /> : null;
 
 	const current = stack[stack.length - 1];

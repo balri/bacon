@@ -157,12 +157,14 @@ describe("ActorView", () => {
 			{ type: "actor", data: { id: 9642, name: "Jude Law" } },
 			{ type: "movie", data: { id: 853, title: "Enemy At The Gates" } },
 			{ type: "actor", data: { id: 12763, name: "Joseph Fiennes" } },
+			{ type: "movie", data: { id: 1245, title: "Shakespeare In Love" } },
+			{ type: "actor", data: { id: 2224, name: "Gwyneth Paltrow" } },
 		];
 		render(
 			<ActorView
 				actor={{
-					id: 12763,
-					name: "Joseph Fiennes",
+					id: 2224,
+					name: "Gwyneth Paltrow",
 					profile_path: "/sg5Z7nTvEPBqDKULvGXWzJRbnrU.jpg",
 					character: "A",
 				}}

@@ -16,19 +16,19 @@ describe("cookie utils", () => {
 
 	it("sets and gets cookie data for today", () => {
 		const today = getTodayDateString();
-		setCookieData({ completed: true, steps: 3 });
+		setCookieData({ completed: true, degrees: 3 });
 		const data = getCookieData(today);
 		expect(data).not.toBeNull();
 		expect(data?.completed).toBe(true);
-		expect(data?.steps).toBe(3);
+		expect(data?.degrees).toBe(3);
 		expect(data?.attempts).toBe(1);
 		expect(data?.streak).toBe(1);
 	});
 
 	it("increments attempts on multiple sets in one day", () => {
 		const today = getTodayDateString();
-		setCookieData({ completed: false, steps: 2 });
-		setCookieData({ completed: false, steps: 2 });
+		setCookieData({ completed: false, degrees: 2 });
+		setCookieData({ completed: false, degrees: 2 });
 		const data = getCookieData(today);
 		expect(data?.attempts).toBe(2);
 	});
@@ -39,11 +39,11 @@ describe("cookie utils", () => {
 		Cookies.set(
 			COOKIE_NAME,
 			JSON.stringify({
-				[yesterday]: { completed: true, steps: 2, streak: 1 },
+				[yesterday]: { completed: true, degrees: 2, streak: 1 },
 			}),
 			{ expires: 30 },
 		);
-		setCookieData({ completed: true, steps: 3 });
+		setCookieData({ completed: true, degrees: 3 });
 		const data = getCookieData(today);
 		expect(data?.streak).toBe(2);
 	});
@@ -54,11 +54,11 @@ describe("cookie utils", () => {
 		Cookies.set(
 			COOKIE_NAME,
 			JSON.stringify({
-				[yesterday]: { completed: false, steps: 2, streak: 1 },
+				[yesterday]: { completed: false, degrees: 2, streak: 1 },
 			}),
 			{ expires: 30 },
 		);
-		setCookieData({ completed: true, steps: 3 });
+		setCookieData({ completed: true, degrees: 3 });
 		const data = getCookieData(today);
 		expect(data?.streak).toBe(1);
 	});

@@ -17,7 +17,7 @@ describe("EndMessage", () => {
 			/>,
 		);
 		expect(screen.getByText("Game Over")).toBeInTheDocument();
-		expect(screen.getByText("🔀 Try Again")).toBeInTheDocument();
+		expect(screen.getByText("🔀 Start Again")).toBeInTheDocument();
 		expect(screen.getByText("← Back")).toBeInTheDocument();
 		expect(screen.getByText("Breadcrumbs")).toBeInTheDocument();
 	});
@@ -32,7 +32,7 @@ describe("EndMessage", () => {
 				showTryAgainButton={false}
 			/>,
 		);
-		expect(screen.queryByText("🔀 Try Again")).not.toBeInTheDocument();
+		expect(screen.queryByText("🔀 Start Again")).not.toBeInTheDocument();
 	});
 
 	it("does not render back button if showBackButton is false", () => {

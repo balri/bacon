@@ -14,13 +14,13 @@ describe("SuccessMessage", () => {
 					profile_path: "",
 					character: "A",
 				}}
-				steps={3}
+				degrees={3}
 				attempts={2}
 				streak={5}
 			/>,
 		);
 		expect(screen.getByText(/Tom Hanks/)).toBeInTheDocument();
-		expect(screen.getByTestId("steps")).toContainHTML("3");
+		expect(screen.getByTestId("degrees")).toContainHTML("3");
 		expect(screen.getByTestId("attempts")).toContainHTML("2");
 		expect(screen.getByTestId("streak")).toContainHTML("5");
 	});
@@ -34,7 +34,7 @@ describe("SuccessMessage", () => {
 					profile_path: "/tommyboy.jpg",
 					character: "A",
 				}}
-				steps={3}
+				degrees={3}
 				attempts={2}
 				streak={5}
 			/>,
@@ -56,7 +56,7 @@ describe("SuccessMessage", () => {
 					profile_path: "",
 					character: "A",
 				}}
-				steps={3}
+				degrees={3}
 				attempts={2}
 				streak={5}
 			/>,

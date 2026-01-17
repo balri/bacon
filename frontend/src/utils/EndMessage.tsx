@@ -23,7 +23,7 @@ export default function EndMessage({
 			<div className="top-bar">
 				{showTryAgainButton && (
 					<button className="random-actor-btn" onClick={loadActor}>
-						🔀 Try Again
+						🔀 Start Again
 					</button>
 				)}
 				{showBackButton && (

@@ -5,7 +5,7 @@ export const COOKIE_NAME = "bacon_game";
 type CookieData = {
 	completed: boolean;
 	actorId?: number | null;
-	steps?: number;
+	degrees?: number;
 	attempts?: number | null;
 	streak?: number | null;
 };
