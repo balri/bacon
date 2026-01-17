@@ -14,47 +14,40 @@ describe("SuccessMessage", () => {
 					profile_path: "",
 					character: "A",
 				}}
-				lastActor={{
-					id: 2,
-					name: "Kevin Bacon",
-					profile_path: "",
-					character: "B",
-				}}
-				degrees={3}
+				steps={3}
+				attempts={2}
+				streak={5}
 			/>,
 		);
 		expect(screen.getByText(/Tom Hanks/)).toBeInTheDocument();
-		expect(screen.getByText(/Kevin Bacon/)).toBeInTheDocument();
-		expect(screen.getByText(/3 degrees/)).toBeInTheDocument();
+		expect(screen.getByTestId("steps")).toContainHTML("3");
+		expect(screen.getByTestId("attempts")).toContainHTML("2");
+		expect(screen.getByTestId("streak")).toContainHTML("5");
 	});
 
-	it("renders image if lastActor has profile_path", () => {
+	it("renders image if firstActor has profile_path", () => {
 		render(
 			<SuccessMessage
 				firstActor={{
 					id: 1,
 					name: "Tom Hanks",
-					profile_path: "",
+					profile_path: "/tommyboy.jpg",
 					character: "A",
 				}}
-				lastActor={{
-					id: 2,
-					name: "Kevin Bacon",
-					profile_path: "/bacon.jpg",
-					character: "B",
-				}}
-				degrees={3}
+				steps={3}
+				attempts={2}
+				streak={5}
 			/>,
 		);
-		const img = screen.getByAltText("Kevin Bacon");
+		const img = screen.getByAltText("Tom Hanks");
 		expect(img).toBeInTheDocument();
 		expect(img).toHaveAttribute(
 			"src",
-			expect.stringContaining("/bacon.jpg"),
+			expect.stringContaining("/tommyboy.jpg"),
 		);
 	});
 
-	it("does not render image if lastActor has no profile_path", () => {
+	it("does not render image if firstActor has no profile_path", () => {
 		render(
 			<SuccessMessage
 				firstActor={{
@@ -63,15 +56,11 @@ describe("SuccessMessage", () => {
 					profile_path: "",
 					character: "A",
 				}}
-				lastActor={{
-					id: 2,
-					name: "Kevin Bacon",
-					profile_path: "",
-					character: "B",
-				}}
-				degrees={3}
+				steps={3}
+				attempts={2}
+				streak={5}
 			/>,
 		);
-		expect(screen.queryByAltText("Kevin Bacon")).not.toBeInTheDocument();
+		expect(screen.queryByAltText("Tom Hanks")).not.toBeInTheDocument();
 	});
 });

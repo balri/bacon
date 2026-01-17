@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { getMoviesForActor, type Actor, type Movie } from "../api";
 import Loading from "../utils/Loading";
 import MovieList from "../movies/MovieList";
 import { KEVIN_BACON_ID, SIX_DEGREES } from "../App";
-import SuccessMessage from "../utils/SuccessMessage";
-import FailureMessage from "../utils/FailureMessage";
 
 import ActorCard from "./ActorCard";
 
@@ -13,7 +11,7 @@ interface ActorProps {
 	actor: Actor;
 	onMovieClick: (movie: Movie) => void;
 	stack: Array<{ type: "actor" | "movie"; data: Actor | Movie }>;
-	onGameEnd?: (msg: { type: string; node: React.ReactNode }) => void;
+	onGameEnd?: (type: string) => void;
 }
 
 export default function ActorView({
@@ -50,28 +48,12 @@ export default function ActorView({
 	const isKevinBacon = actor.id === KEVIN_BACON_ID;
 
 	useEffect(() => {
-		const firstActor =
-			(stack.find((item) => item.type === "actor")?.data as Actor) ??
-			null;
-
 		if (isKevinBacon) {
-			onGameEnd?.({
-				type: "success",
-				node: (
-					<SuccessMessage
-						firstActor={firstActor}
-						lastActor={actor}
-						degrees={actorsInStackCount - 1}
-					/>
-				),
-			});
+			onGameEnd?.("success");
 		} else if (actorsInStackCount >= SIX_DEGREES) {
-			onGameEnd?.({
-				type: "failure",
-				node: <FailureMessage firstActor={firstActor} />,
-			});
+			onGameEnd?.("failure");
 		}
-	}, [actorsInStackCount, isKevinBacon, actor, onGameEnd, stack]);
+	}, [actorsInStackCount, isKevinBacon, onGameEnd]);
 
 	if (loading) {
 		return <Loading />;

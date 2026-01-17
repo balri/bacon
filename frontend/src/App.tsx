@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import type { Actor as ActorType, Movie as MovieType } from "./api";
 import { getDailyActor } from "./api";
@@ -9,6 +9,13 @@ import MovieView from "./movies/MovieView";
 import Breadcrumbs from "./utils/Breadcrumbs";
 import EndMessage from "./utils/EndMessage";
 import IntroMessage from "./utils/IntroMessage";
+import SuccessMessage from "./utils/SuccessMessage";
+import {
+	getTodayDateString,
+	getCookieData,
+	setCookieData,
+} from "./utils/cookie";
+import FailureMessage from "./utils/FailureMessage";
 
 export const KEVIN_BACON_ID = 4724;
 export const SIX_DEGREES = 6;
@@ -21,6 +28,7 @@ function isActor(item: {
 }
 
 function App() {
+	const today = getTodayDateString();
 	const [showIntro, setShowIntro] = useState(true);
 	const [stack, setStack] = useState<
 		Array<{ type: "actor" | "movie"; data: ActorType | MovieType }>
@@ -30,6 +38,32 @@ function App() {
 		type: string;
 		node: React.ReactNode;
 	}>(null);
+
+	useEffect(() => {
+		const data = getCookieData(today);
+		if (data && data.completed && data.actorId) {
+			setShowIntro(false);
+			setLoading(true);
+			(async () => {
+				const actor = await getDailyActor();
+				if (actor && actor.id === data.actorId) {
+					setStack([{ type: "actor", data: actor }]);
+					setEndMessage({
+						type: "success",
+						node: (
+							<SuccessMessage
+								firstActor={actor}
+								steps={data.steps || 0}
+								attempts={data.attempts || 1}
+								streak={data.streak || 1}
+							/>
+						),
+					});
+				}
+				setLoading(false);
+			})();
+		}
+	}, [today]);
 
 	async function loadActor() {
 		setLoading(true);
@@ -56,17 +90,42 @@ function App() {
 		setEndMessage(null);
 	}
 
-	// Find all actors in the stack
 	const actorsInStack = stack.filter(isActor);
 
-	// Game end logic
 	const lastActor = actorsInStack[actorsInStack.length - 1];
 	const reachedSixActors = actorsInStack.length > SIX_DEGREES;
 	const isKevinBacon = lastActor && lastActor.data.id === KEVIN_BACON_ID;
 	const gameEnded = reachedSixActors || isKevinBacon || !!endMessage;
 
-	// Breadcrumbs
-	const breadcrumbs = <Breadcrumbs stack={stack} />;
+	function handleGameEnd(type: string) {
+		const firstActor = actorsInStack[0].data || null;
+		const actorId = firstActor?.id || null;
+		const cookieData = setCookieData({
+			actorId: actorId,
+			completed: type === "success",
+			steps: actorsInStack.length,
+		});
+		let msgNode = null;
+		if (type === "success") {
+			msgNode = (
+				<SuccessMessage
+					firstActor={firstActor}
+					steps={actorsInStack.length || 0}
+					attempts={cookieData.attempts || 1}
+					streak={cookieData.streak || 1}
+				/>
+			);
+		} else {
+			msgNode = <FailureMessage firstActor={firstActor} />;
+		}
+		setEndMessage({
+			type,
+			node: msgNode,
+		});
+	}
+
+	const showBreadcrumbs = !endMessage || endMessage.type !== "success";
+	const breadcrumbs = showBreadcrumbs ? <Breadcrumbs stack={stack} /> : null;
 
 	const current = stack[stack.length - 1];
 
@@ -97,7 +156,7 @@ function App() {
 				endMessage={endMessage.node}
 				loadActor={loadActor}
 				handleBack={handleBack}
-				breadcrumbs={breadcrumbs}
+				breadcrumbs={isSuccess ? null : breadcrumbs}
 				showBackButton={!isSuccess}
 				showTryAgainButton={endMessage.type === "failure"}
 			/>
@@ -121,7 +180,7 @@ function App() {
 						actor={current.data as ActorType}
 						onMovieClick={handleMovieClick}
 						stack={stack}
-						onGameEnd={setEndMessage}
+						onGameEnd={handleGameEnd}
 					/>
 				) : (
 					<MovieView

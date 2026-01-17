@@ -1,19 +1,20 @@
 import type { Actor } from "../api";
 
-interface SuccessMessageProps {
+type SuccessMessageProps = {
 	firstActor: Actor | null;
-	lastActor: Actor | null;
-	degrees: number;
-}
+	steps: number;
+	attempts: number;
+	streak?: number;
+};
 
-export default function SuccessMessage({
-	firstActor,
-	lastActor,
-	degrees,
-}: SuccessMessageProps) {
-	const lastActorName = lastActor?.name || "Kevin Bacon";
+export default function SuccessMessage(props: SuccessMessageProps) {
+	const { firstActor, steps, attempts, streak: streakProp } = props;
+	const streakVal =
+		typeof streakProp === "number" && !isNaN(streakProp) ? streakProp : 1;
 	const firstActorName = firstActor?.name || "Unknown Actor";
-	const profilePath = lastActor?.profile_path;
+	const firstActorPhoto = firstActor?.profile_path
+		? `https://image.tmdb.org/t/p/w185${firstActor.profile_path}`
+		: null;
 
 	return (
 		<div
@@ -21,29 +22,94 @@ export default function SuccessMessage({
 				display: "flex",
 				flexDirection: "column",
 				alignItems: "center",
+				background: "#fff",
+				borderRadius: 16,
+				boxShadow: "0 4px 24px rgba(0,0,0,0.12)",
+				padding: 32,
+				maxWidth: 340,
+				margin: "40px auto",
+				color: "#222",
 			}}
 		>
-			{profilePath && (
+			<span
+				role="img"
+				aria-label="trophy"
+				style={{ fontSize: 48, marginBottom: 12 }}
+			>
+				🏆
+			</span>
+			<h2 style={{ margin: 0, marginBottom: 8, color: "#222" }}>
+				Congratulations!
+			</h2>
+			<div style={{ marginBottom: 20, color: "#444" }}>
+				You completed today's challenge.
+			</div>
+			{firstActorPhoto && (
 				<img
-					src={`https://image.tmdb.org/t/p/w185${profilePath}`}
-					alt={lastActorName}
+					src={firstActorPhoto}
+					alt={firstActorName}
 					style={{
-						borderRadius: "8px",
-						width: "120px",
-						height: "auto",
-						marginBottom: "1rem",
+						borderRadius: 12,
+						width: 120,
+						height: 160,
+						objectFit: "cover",
+						marginBottom: 16,
 						boxShadow: "0 2px 12px rgba(0,0,0,0.15)",
 					}}
 				/>
 			)}
-			<div>
-				<span role="img" aria-label="trophy">
-					🏆
-				</span>{" "}
-				Congratulations!
-				<br />
-				You have linked {firstActorName} to {lastActorName} with{" "}
-				{degrees} degrees of separation!
+			<div
+				style={{
+					fontSize: 18,
+					fontWeight: 500,
+					marginBottom: 8,
+					color: "#222",
+				}}
+			>
+				{firstActorName}
+			</div>
+			<div
+				style={{
+					display: "flex",
+					justifyContent: "center",
+					gap: 24,
+					marginBottom: 16,
+				}}
+			>
+				<div style={{ textAlign: "center" }}>
+					<div style={{ fontSize: 14, color: "#555" }}>Steps</div>
+					<div
+						data-testid="steps"
+						style={{ fontSize: 22, fontWeight: 600, color: "#222" }}
+					>
+						{steps}
+					</div>
+				</div>
+				<div style={{ textAlign: "center" }}>
+					<div style={{ fontSize: 14, color: "#555" }}>Attempts</div>
+					<div
+						data-testid="attempts"
+						style={{ fontSize: 22, fontWeight: 600, color: "#222" }}
+					>
+						{attempts}
+					</div>
+				</div>
+				<div style={{ textAlign: "center" }}>
+					<div style={{ fontSize: 14, color: "#555" }}>Streak</div>
+					<div
+						data-testid="streak"
+						style={{
+							fontSize: 22,
+							fontWeight: 600,
+							color: streakVal > 1 ? "#1a8917" : "#222",
+						}}
+					>
+						{streakVal}
+					</div>
+				</div>
+			</div>
+			<div style={{ color: "#555", fontSize: 15, marginTop: 8 }}>
+				<em>Come back tomorrow for a new challenge!</em>
 			</div>
 		</div>
 	);

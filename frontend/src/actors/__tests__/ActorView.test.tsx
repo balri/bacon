@@ -137,11 +137,7 @@ describe("ActorView", () => {
 				onGameEnd={onGameEnd}
 			/>,
 		);
-		await waitFor(() =>
-			expect(onGameEnd).toHaveBeenCalledWith(
-				expect.objectContaining({ type: "success" }),
-			),
-		);
+		await waitFor(() => expect(onGameEnd).toHaveBeenCalledWith("success"));
 	});
 
 	it("calls onGameEnd with failure if 6 actors in stack and Kevin Bacon is not found", async () => {
@@ -175,11 +171,7 @@ describe("ActorView", () => {
 				onGameEnd={onGameEnd}
 			/>,
 		);
-		await waitFor(() =>
-			expect(onGameEnd).toHaveBeenCalledWith(
-				expect.objectContaining({ type: "failure" }),
-			),
-		);
+		await waitFor(() => expect(onGameEnd).toHaveBeenCalledWith("failure"));
 	});
 
 	it("calls onMovieClick when a movie is clicked", async () => {

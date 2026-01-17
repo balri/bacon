@@ -16,6 +16,12 @@ Lint:
 npm run lint
 ```
 
+To fix:
+
+```
+npm run lint:fix
+```
+
 Run in dev mode:
 
 ```
