@@ -12,12 +12,8 @@ type CookieData = {
 
 // Today's date string in Brisbane timezone
 export function getTodayDateString() {
-	const brisbaneOffset = 10 * 60; // UTC+10:00 in minutes
-	const now = new Date();
-	// Convert to UTC, then add Brisbane offset
-	const utc = now.getTime() + now.getTimezoneOffset() * 60000;
-	const brisbane = new Date(utc + brisbaneOffset * 60000);
-	return brisbane.toISOString().slice(0, 10);
+	// Use Australia/Brisbane timezone and ISO format (YYYY-MM-DD)
+	return new Date().toLocaleDateString("en-CA", { timeZone: "Australia/Brisbane" });
 }
 
 export function getYesterdayDateString() {
