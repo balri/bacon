@@ -149,7 +149,41 @@ export default function SuccessMessage(props: SuccessMessageProps) {
 								textAlign: "center",
 							}}
 						>
-							Degrees
+							Optimal Steps
+						</div>
+						<div
+							data-testid="optimal-steps"
+							style={{
+								fontSize: 22,
+								fontWeight: 600,
+								color: "#222",
+							}}
+						>
+							{firstActor?.bacon_number != null &&
+							firstActor.bacon_number > 0
+								? firstActor.bacon_number
+								: "-"}
+						</div>
+					</div>
+					<div
+						style={{
+							display: "flex",
+							flexDirection: "column",
+							justifyContent: "flex-end",
+							alignItems: "center",
+							flex: 1,
+							minWidth: 0,
+						}}
+					>
+						<div
+							style={{
+								fontSize: 14,
+								color: "#555",
+								wordBreak: "break-word",
+								textAlign: "center",
+							}}
+						>
+							Your Steps
 						</div>
 						<div
 							data-testid="degrees"
@@ -180,7 +214,7 @@ export default function SuccessMessage(props: SuccessMessageProps) {
 								textAlign: "center",
 							}}
 						>
-							Attempts
+							Your Attempts
 						</div>
 						<div
 							data-testid="attempts"
@@ -193,7 +227,6 @@ export default function SuccessMessage(props: SuccessMessageProps) {
 							{attempts}
 						</div>
 					</div>
-					<div style={{ flex: 1 }}></div>
 				</div>
 				<div
 					style={{
@@ -222,7 +255,7 @@ export default function SuccessMessage(props: SuccessMessageProps) {
 								textAlign: "center",
 							}}
 						>
-							Streak
+							Current Streak
 						</div>
 						<div
 							data-testid="streak"
