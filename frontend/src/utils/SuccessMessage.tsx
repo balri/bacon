@@ -4,13 +4,28 @@ type SuccessMessageProps = {
 	firstActor: Actor | null;
 	degrees: number;
 	attempts: number;
+	numSolved?: number;
+	longestStreak?: number;
 	streak?: number;
 };
 
 export default function SuccessMessage(props: SuccessMessageProps) {
-	const { firstActor, degrees, attempts, streak: streakProp } = props;
+	const {
+		firstActor,
+		degrees,
+		attempts,
+		streak: streakProp,
+		longestStreak,
+		numSolved,
+	} = props;
 	const streakVal =
 		typeof streakProp === "number" && !isNaN(streakProp) ? streakProp : 1;
+	const longestStreakVal =
+		typeof longestStreak === "number" && !isNaN(longestStreak)
+			? longestStreak
+			: 0;
+	const numSolvedVal =
+		typeof numSolved === "number" && !isNaN(numSolved) ? numSolved : 0;
 	const firstActorName = firstActor?.name || "Unknown Actor";
 	const firstActorPhoto = firstActor?.profile_path
 		? `https://image.tmdb.org/t/p/w185${firstActor.profile_path}`
@@ -101,40 +116,187 @@ export default function SuccessMessage(props: SuccessMessageProps) {
 			<div
 				style={{
 					display: "flex",
-					justifyContent: "center",
-					gap: 24,
+					flexDirection: "column",
+					alignItems: "center",
+					gap: 8,
 					marginBottom: 16,
 				}}
 			>
-				<div style={{ textAlign: "center" }}>
-					<div style={{ fontSize: 14, color: "#555" }}>Degrees</div>
+				<div
+					style={{
+						display: "flex",
+						justifyContent: "center",
+						alignItems: "stretch",
+						gap: 24,
+						width: "100%",
+					}}
+				>
 					<div
-						data-testid="degrees"
-						style={{ fontSize: 22, fontWeight: 600, color: "#222" }}
-					>
-						{degrees}
-					</div>
-				</div>
-				<div style={{ textAlign: "center" }}>
-					<div style={{ fontSize: 14, color: "#555" }}>Attempts</div>
-					<div
-						data-testid="attempts"
-						style={{ fontSize: 22, fontWeight: 600, color: "#222" }}
-					>
-						{attempts}
-					</div>
-				</div>
-				<div style={{ textAlign: "center" }}>
-					<div style={{ fontSize: 14, color: "#555" }}>Streak</div>
-					<div
-						data-testid="streak"
 						style={{
-							fontSize: 22,
-							fontWeight: 600,
-							color: streakVal > 1 ? "#1a8917" : "#222",
+							display: "flex",
+							flexDirection: "column",
+							justifyContent: "flex-end",
+							alignItems: "center",
+							flex: 1,
+							minWidth: 0,
 						}}
 					>
-						{streakVal}
+						<div
+							style={{
+								fontSize: 14,
+								color: "#555",
+								wordBreak: "break-word",
+								textAlign: "center",
+							}}
+						>
+							Degrees
+						</div>
+						<div
+							data-testid="degrees"
+							style={{
+								fontSize: 22,
+								fontWeight: 600,
+								color: "#222",
+							}}
+						>
+							{degrees}
+						</div>
+					</div>
+					<div
+						style={{
+							display: "flex",
+							flexDirection: "column",
+							justifyContent: "flex-end",
+							alignItems: "center",
+							flex: 1,
+							minWidth: 0,
+						}}
+					>
+						<div
+							style={{
+								fontSize: 14,
+								color: "#555",
+								wordBreak: "break-word",
+								textAlign: "center",
+							}}
+						>
+							Attempts
+						</div>
+						<div
+							data-testid="attempts"
+							style={{
+								fontSize: 22,
+								fontWeight: 600,
+								color: "#222",
+							}}
+						>
+							{attempts}
+						</div>
+					</div>
+					<div style={{ flex: 1 }}></div>
+				</div>
+				<div
+					style={{
+						display: "flex",
+						justifyContent: "center",
+						alignItems: "stretch",
+						gap: 24,
+						width: "100%",
+					}}
+				>
+					<div
+						style={{
+							display: "flex",
+							flexDirection: "column",
+							justifyContent: "flex-end",
+							alignItems: "center",
+							flex: 1,
+							minWidth: 0,
+						}}
+					>
+						<div
+							style={{
+								fontSize: 14,
+								color: "#555",
+								wordBreak: "break-word",
+								textAlign: "center",
+							}}
+						>
+							Streak
+						</div>
+						<div
+							data-testid="streak"
+							style={{
+								fontSize: 22,
+								fontWeight: 600,
+								color: streakVal > 1 ? "#1a8917" : "#222",
+							}}
+						>
+							{streakVal}
+						</div>
+					</div>
+					<div
+						style={{
+							display: "flex",
+							flexDirection: "column",
+							justifyContent: "flex-end",
+							alignItems: "center",
+							flex: 1,
+							minWidth: 0,
+						}}
+					>
+						<div
+							style={{
+								fontSize: 14,
+								color: "#555",
+								wordBreak: "break-word",
+								textAlign: "center",
+							}}
+						>
+							Longest Streak
+						</div>
+						<div
+							data-testid="longest-streak"
+							style={{
+								fontSize: 22,
+								fontWeight: 600,
+								color:
+									longestStreakVal > 1 ? "#1a8917" : "#222",
+							}}
+						>
+							{longestStreakVal}
+						</div>
+					</div>
+					<div
+						style={{
+							display: "flex",
+							flexDirection: "column",
+							justifyContent: "center",
+							alignItems: "center",
+							flex: 1,
+							minWidth: 0,
+						}}
+					>
+						<div
+							style={{
+								fontSize: 14,
+								color: "#555",
+								wordBreak: "break-word",
+								textAlign: "center",
+							}}
+						>
+							Total Solved
+						</div>
+						<div
+							data-testid="num-solved"
+							style={{
+								fontSize: 22,
+								fontWeight: 600,
+								color: numSolvedVal > 0 ? "#1a8917" : "#222",
+							}}
+						>
+							{numSolvedVal}
+						</div>
 					</div>
 				</div>
 			</div>

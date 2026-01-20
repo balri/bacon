@@ -17,7 +17,7 @@ describe("FailureMessage", () => {
 		expect(screen.getByText(/No Connection/i)).toBeInTheDocument();
 		expect(screen.getByText(/Tom Hanks/)).toBeInTheDocument();
 		expect(screen.getByTestId("attempts")).toContainHTML("2");
-		expect(screen.getByText(/Try again tomorrow/i)).toBeInTheDocument();
+		expect(screen.getByText(/Go Back or Start Again/i)).toBeInTheDocument();
 	});
 
 	it("renders actor photo if profile_path is present", () => {

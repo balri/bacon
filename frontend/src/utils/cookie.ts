@@ -7,13 +7,15 @@ type CookieData = {
 	actorId?: number | null;
 	degrees?: number;
 	attempts?: number | null;
+	numSolved?: number | null;
+	longestStreak?: number | null;
 	streak?: number | null;
 };
 
-// Today's date string in Brisbane timezone
 export function getTodayDateString() {
-	// Use Australia/Brisbane timezone and ISO format (YYYY-MM-DD)
-	return new Date().toLocaleDateString("en-CA", { timeZone: "Australia/Brisbane" });
+	return new Date().toLocaleDateString("en-CA", {
+		timeZone: "Australia/Brisbane",
+	});
 }
 
 export function getYesterdayDateString() {
@@ -62,14 +64,25 @@ export function setCookieData(data: CookieData): CookieData {
 	if (yesterdayData && yesterdayData.completed) {
 		streak = yesterdayData.streak || 0;
 	}
+
+	let numSolved = yesterdayData?.numSolved || streak;
+
 	if (data.completed) {
 		streak += 1;
+		numSolved += 1;
+	}
+
+	let longestStreak = yesterdayData?.longestStreak || streak;
+	if (streak > longestStreak) {
+		longestStreak = streak;
 	}
 
 	allData[today] = {
 		...data,
 		attempts,
 		streak,
+		longestStreak,
+		numSolved,
 	};
 
 	const todayDate = new Date(today);

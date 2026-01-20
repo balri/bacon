@@ -116,7 +116,7 @@ export default function FailureMessage({
 				</div>
 			</div>
 			<div style={{ color: "#555", fontSize: 15, marginTop: 8 }}>
-				<em>Try again tomorrow!</em>
+				<em>Go Back or Start Again</em>
 			</div>
 		</div>
 	);

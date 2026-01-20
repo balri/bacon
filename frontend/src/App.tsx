@@ -55,6 +55,8 @@ function App() {
 								firstActor={actor}
 								degrees={data.degrees || 0}
 								attempts={data.attempts || 1}
+								numSolved={data.numSolved || 1}
+								longestStreak={data.longestStreak || 1}
 								streak={data.streak || 1}
 							/>
 						),
@@ -113,6 +115,8 @@ function App() {
 						firstActor={firstActor}
 						degrees={actorsInStack.length - 1 || 0}
 						attempts={cookieData.attempts || 1}
+						numSolved={cookieData.numSolved || 1}
+						longestStreak={cookieData.longestStreak || 1}
 						streak={cookieData.streak || 1}
 					/>
 				),
