@@ -65,7 +65,18 @@ export function setCookieData(data: CookieData): CookieData {
 		streak = yesterdayData.streak || 0;
 	}
 
-	let numSolved = yesterdayData?.numSolved || streak;
+	// Find the highest numSolved in allData
+	let numSolved = 0;
+	for (const key in allData) {
+		const entry = allData[key];
+		if (entry.numSolved && entry.numSolved > numSolved) {
+			numSolved = entry.numSolved;
+		}
+	}
+	// If no numSolved found, fallback to streak
+	if (numSolved === 0) {
+		numSolved = streak;
+	}
 
 	if (data.completed) {
 		streak += 1;
