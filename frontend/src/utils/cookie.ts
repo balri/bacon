@@ -65,15 +65,18 @@ export function setCookieData(data: CookieData): CookieData {
 		streak = yesterdayData.streak || 0;
 	}
 
-	// Find the highest numSolved in allData
 	let numSolved = 0;
+	let longestStreak = 0;
 	for (const key in allData) {
 		const entry = allData[key];
 		if (entry.numSolved && entry.numSolved > numSolved) {
 			numSolved = entry.numSolved;
 		}
+		if (entry.longestStreak && entry.longestStreak > longestStreak) {
+			longestStreak = entry.longestStreak;
+		}
 	}
-	// If no numSolved found, fallback to streak
+
 	if (numSolved === 0) {
 		numSolved = streak;
 	}
@@ -83,7 +86,6 @@ export function setCookieData(data: CookieData): CookieData {
 		numSolved += 1;
 	}
 
-	let longestStreak = yesterdayData?.longestStreak || streak;
 	if (streak > longestStreak) {
 		longestStreak = streak;
 	}
@@ -108,7 +110,7 @@ export function setCookieData(data: CookieData): CookieData {
 		}
 	}
 
-	Cookies.set(COOKIE_NAME, JSON.stringify(allData), { expires: 30 });
+	Cookies.set(COOKIE_NAME, JSON.stringify(allData), { expires: 365 * 30 });
 
 	return allData[today];
 }

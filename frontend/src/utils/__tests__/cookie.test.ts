@@ -86,4 +86,28 @@ describe("cookie utils", () => {
 		const data = getCookieData(today);
 		expect(data?.numSolved).toBe(6);
 	});
+
+	it("gets longestStreak from highest value if yesterday is missing", () => {
+		const today = getTodayDateString();
+		const twoDaysAgo = (() => {
+			const d = new Date(today);
+			d.setDate(d.getDate() - 2);
+			return d.toISOString().slice(0, 10);
+		})();
+		Cookies.set(
+			COOKIE_NAME,
+			JSON.stringify({
+				[twoDaysAgo]: {
+					completed: true,
+					degrees: 2,
+					streak: 3,
+					longestStreak: 5,
+				},
+			}),
+			{ expires: 30 },
+		);
+		setCookieData({ completed: true, degrees: 1 });
+		const data = getCookieData(today);
+		expect(data?.longestStreak).toBe(5);
+	});
 });
