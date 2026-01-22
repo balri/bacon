@@ -30,17 +30,11 @@ function isActor(item: {
 
 function App() {
 	const today = getTodayDateString();
+
 	const [showIntro, setShowIntro] = useState(() => {
-		const cookie = getAllCookieData();
-		return cookie ? Object.keys(cookie).length === 0 : true;
+		const allCookies = getAllCookieData();
+		return Object.keys(allCookies).length === 0;
 	});
-
-	useEffect(() => {
-		if (!showIntro) {
-			loadActor();
-		}
-	}, []);
-
 	const [stack, setStack] = useState<
 		Array<{ type: "actor" | "movie"; data: ActorType | MovieType }>
 	>([]);
@@ -51,6 +45,12 @@ function App() {
 	}>(null);
 
 	useEffect(() => {
+		const allCookies = getAllCookieData();
+		if (Object.keys(allCookies).length === 0) {
+			setShowIntro(true);
+			setLoading(false);
+			return;
+		}
 		const data = getCookieData(today);
 		if (data && data.completed && data.actorId) {
 			setShowIntro(false);
@@ -75,6 +75,9 @@ function App() {
 				}
 				setLoading(false);
 			})();
+		} else {
+			setShowIntro(false);
+			loadActor();
 		}
 	}, [today]);
 
