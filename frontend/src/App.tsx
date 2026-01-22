@@ -14,6 +14,7 @@ import {
 	getTodayDateString,
 	getCookieData,
 	setCookieData,
+	getAllCookieData,
 } from "./utils/cookie";
 import FailureMessage from "./utils/FailureMessage";
 
@@ -29,7 +30,17 @@ function isActor(item: {
 
 function App() {
 	const today = getTodayDateString();
-	const [showIntro, setShowIntro] = useState(true);
+	const [showIntro, setShowIntro] = useState(() => {
+		const cookie = getAllCookieData();
+		return cookie ? Object.keys(cookie).length === 0 : true;
+	});
+
+	useEffect(() => {
+		if (!showIntro) {
+			loadActor();
+		}
+	}, []);
+
 	const [stack, setStack] = useState<
 		Array<{ type: "actor" | "movie"; data: ActorType | MovieType }>
 	>([]);

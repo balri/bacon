@@ -197,7 +197,7 @@ export default function SuccessMessage(props: SuccessMessageProps) {
 							}}
 						>
 							{firstActor?.bacon_number != null &&
-								firstActor.bacon_number > 0
+							firstActor.bacon_number > 0
 								? firstActor.bacon_number
 								: "-"}
 						</div>

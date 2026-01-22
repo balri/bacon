@@ -34,7 +34,7 @@ export function getCookieData(dateStr: string): CookieData | null {
 	return null;
 }
 
-function getAllCookieData(): { [key: string]: CookieData } {
+export function getAllCookieData(): { [key: string]: CookieData } {
 	const cookie = Cookies.get(COOKIE_NAME);
 	if (cookie) {
 		try {
