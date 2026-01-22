@@ -1,3 +1,5 @@
+import React from "react";
+
 import type { Actor } from "../api";
 
 type SuccessMessageProps = {
@@ -33,6 +35,41 @@ export default function SuccessMessage(props: SuccessMessageProps) {
 	const baconName = "Kevin Bacon";
 	const baconPhoto =
 		"https://image.tmdb.org/t/p/w185/rjX2Oz3tCZMfSwOoIAyEhdtXnTE.jpg";
+
+	const shareUrl = typeof window !== "undefined" ? window.location.href : "";
+	const [copied, setCopied] = React.useState(false);
+	const [showManual, setShowManual] = React.useState(false);
+	const handleShare = () => {
+		const shareText = `I connected ${firstActorName} to Kevin Bacon in ${degrees} steps! Can you beat my streak of ${streakVal}? Play now: `;
+		if (
+			typeof window !== "undefined" &&
+			window.navigator &&
+			window.navigator.share
+		) {
+			window.navigator.share({
+				title: "Bacon Game Challenge",
+				text: shareText,
+				url: shareUrl,
+			});
+		} else {
+			setShowManual(true);
+		}
+	};
+
+	const handleCopy = () => {
+		if (
+			typeof window !== "undefined" &&
+			window.navigator &&
+			window.navigator.clipboard
+		) {
+			window.navigator.clipboard.writeText(shareUrl).then(() => {
+				setCopied(true);
+				if (typeof window !== "undefined" && window.setTimeout) {
+					window.setTimeout(() => setCopied(false), 2000);
+				}
+			});
+		}
+	};
 
 	return (
 		<div
@@ -160,7 +197,7 @@ export default function SuccessMessage(props: SuccessMessageProps) {
 							}}
 						>
 							{firstActor?.bacon_number != null &&
-							firstActor.bacon_number > 0
+								firstActor.bacon_number > 0
 								? firstActor.bacon_number
 								: "-"}
 						</div>
@@ -332,6 +369,86 @@ export default function SuccessMessage(props: SuccessMessageProps) {
 						</div>
 					</div>
 				</div>
+			</div>
+			<div
+				style={{
+					marginTop: 16,
+					marginBottom: 8,
+					display: "flex",
+					flexDirection: "column",
+					justifyContent: "center",
+					alignItems: "center",
+				}}
+			>
+				<button
+					type="button"
+					onClick={handleShare}
+					style={{
+						background: "#e0ffe0",
+						color: "green",
+						border: "1px solid #cfc",
+						borderRadius: "3px",
+						padding: "0.3em 0.7em",
+						cursor: "pointer",
+						marginLeft: "0.5em",
+						marginBottom: showManual ? "8px" : 0,
+					}}
+				>
+					Share
+				</button>
+				{showManual && (
+					<div
+						style={{
+							display: "flex",
+							alignItems: "center",
+							gap: "8px",
+							marginTop: "4px",
+						}}
+					>
+						<input
+							type="text"
+							value={shareUrl}
+							readOnly
+							style={{
+								padding: "0.3em 0.7em",
+								border: "1px solid #cfc",
+								borderRadius: "3px",
+								width: "220px",
+								color: "#222",
+								background: "#f6fff6",
+							}}
+							onFocus={(e) => e.target.select()}
+						/>
+						<button
+							type="button"
+							onClick={handleCopy}
+							style={{
+								background: "#e0ffe0",
+								color: "green",
+								border: "1px solid #cfc",
+								borderRadius: "3px",
+								padding: "0.3em 0.7em",
+								cursor: "pointer",
+							}}
+						>
+							Copy
+						</button>
+					</div>
+				)}
+				{copied && (
+					<div
+						style={{
+							color: "#1a8917",
+							fontWeight: 500,
+							fontSize: "13px",
+							marginTop: 4,
+							width: "100%",
+							textAlign: "center",
+						}}
+					>
+						Link copied!
+					</div>
+				)}
 			</div>
 			<div style={{ color: "#555", fontSize: 15, marginTop: 8 }}>
 				<em>Come back tomorrow for a new challenge!</em>
