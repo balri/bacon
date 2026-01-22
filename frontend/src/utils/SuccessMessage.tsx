@@ -40,7 +40,7 @@ export default function SuccessMessage(props: SuccessMessageProps) {
 	const [copied, setCopied] = React.useState(false);
 	const [showManual, setShowManual] = React.useState(false);
 	const handleShare = () => {
-		const shareText = `I connected ${firstActorName} to Kevin Bacon in ${degrees} steps! Can you beat my streak of ${streakVal}? Play now: `;
+		const shareText = `I connected ${firstActorName} to Kevin Bacon in ${degrees} steps! Can you beat my score? Play now!`;
 		if (
 			typeof window !== "undefined" &&
 			window.navigator &&
@@ -386,15 +386,39 @@ export default function SuccessMessage(props: SuccessMessageProps) {
 					style={{
 						background: "#e0ffe0",
 						color: "green",
-						border: "1px solid #cfc",
-						borderRadius: "3px",
-						padding: "0.3em 0.7em",
+						border: "1.5px solid #1a8917",
+						borderRadius: "4px",
+						padding: "0.4em 1em",
+						fontSize: "1em",
+						fontWeight: 500,
 						cursor: "pointer",
 						marginLeft: "0.5em",
 						marginBottom: showManual ? "8px" : 0,
+						display: "flex",
+						alignItems: "center",
+						gap: "0.4em",
 					}}
 				>
 					Share
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="20"
+						height="20"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						aria-hidden="true"
+					>
+						<path d="M6 12 L14 6" />
+						<path d="M6 12 L14 18" />
+
+						<circle cx="6" cy="12" r="2" />
+						<circle cx="16" cy="6" r="2" />
+						<circle cx="16" cy="18" r="2" />
+					</svg>
 				</button>
 				{showManual && (
 					<div
