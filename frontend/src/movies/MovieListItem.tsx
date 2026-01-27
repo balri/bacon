@@ -5,18 +5,27 @@ import MovieThumbnail from "./MovieThumbnail";
 interface MovieListItemProps {
 	movie: Movie;
 	onMovieClick: (movie: Movie) => void;
+	alreadySelected?: boolean;
 }
-
 export default function MovieListItem({
 	movie,
 	onMovieClick,
+	alreadySelected = false,
 }: MovieListItemProps) {
 	return (
 		<li
 			key={movie.id}
-			className="movie-item"
-			style={{ cursor: "pointer" }}
-			onClick={() => onMovieClick(movie)}
+			className={alreadySelected ? "movie-item selected" : "movie-item"}
+			style={
+				alreadySelected
+					? {
+							cursor: "not-allowed",
+							opacity: 0.5,
+							pointerEvents: "none",
+						}
+					: { cursor: "pointer" }
+			}
+			onClick={alreadySelected ? undefined : () => onMovieClick(movie)}
 		>
 			{movie.poster_path && <MovieThumbnail {...movie} />}
 			<span className="movie-meta">

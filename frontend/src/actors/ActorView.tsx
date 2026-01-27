@@ -4,6 +4,7 @@ import { getMoviesForActor, type Actor, type Movie } from "../api";
 import Loading from "../utils/Loading";
 import MovieList from "../movies/MovieList";
 import { KEVIN_BACON_ID, SIX_DEGREES } from "../App";
+import MovieListItem from "../movies/MovieListItem";
 
 import ActorCard from "./ActorCard";
 
@@ -48,6 +49,12 @@ export default function ActorView({
 	).length;
 	const isKevinBacon = actor.id === KEVIN_BACON_ID;
 
+	const lastSelectedMovie = (() => {
+		const moviesInStack = stack.filter((item) => item.type === "movie");
+		if (moviesInStack.length === 0) return null;
+		return moviesInStack[moviesInStack.length - 1].data as Movie;
+	})();
+
 	useEffect(() => {
 		if (gameEndCalled.current) return;
 		if (isKevinBacon) {
@@ -70,6 +77,17 @@ export default function ActorView({
 	return (
 		<div>
 			<ActorCard actor={actor} />
+			{lastSelectedMovie && (
+				<div style={{ marginBottom: "1rem" }}>
+					<ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+						<MovieListItem
+							movie={lastSelectedMovie}
+							onMovieClick={() => {}}
+							alreadySelected={true}
+						/>
+					</ul>
+				</div>
+			)}
 			<h3 className="movies-title">Select a movie:</h3>
 			{filteredMovies.length > 0 ? (
 				<MovieList

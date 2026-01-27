@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getActorsForMovie, type Actor, type Movie } from "../api";
 import Loading from "../utils/Loading";
 import ActorList from "../actors/ActorList";
+import ActorListItem from "../actors/ActorListItem";
 
 import MovieCard from "./MovieCard";
 
@@ -35,6 +36,12 @@ export default function MovieView({ movie, onActorClick, stack }: MovieProps) {
 		? actors.filter((actor) => !actorIdsInStack.includes(actor.id))
 		: [];
 
+	const lastSelectedActor = (() => {
+		const actorsInStack = stack.filter((item) => item.type === "actor");
+		if (actorsInStack.length === 0) return null;
+		return actorsInStack[actorsInStack.length - 1].data as Actor;
+	})();
+
 	if (loading) {
 		return <Loading />;
 	}
@@ -42,6 +49,17 @@ export default function MovieView({ movie, onActorClick, stack }: MovieProps) {
 	return (
 		<div>
 			<MovieCard movie={movie} />
+			{lastSelectedActor && (
+				<div style={{ marginBottom: "1rem" }}>
+					<ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+						<ActorListItem
+							actor={lastSelectedActor}
+							onActorClick={() => {}}
+							alreadySelected={true}
+						/>
+					</ul>
+				</div>
+			)}
 			<h3 className="actors-title">Select an actor:</h3>
 			{filteredActors.length > 0 ? (
 				<ActorList
