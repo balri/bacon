@@ -36,11 +36,11 @@ export default function MovieView({ movie, onActorClick, stack }: MovieProps) {
 		? actors.filter((actor) => !actorIdsInStack.includes(actor.id))
 		: [];
 
-	const lastSelectedActor = (() => {
-		const actorsInStack = stack.filter((item) => item.type === "actor");
-		if (actorsInStack.length === 0) return null;
-		return actorsInStack[actorsInStack.length - 1].data as Actor;
-	})();
+	const lastSelectedActor = actors
+		? actors
+				.filter((actor) => actorIdsInStack.includes(actor.id))
+				.slice(-1)[0]
+		: null;
 
 	if (loading) {
 		return <Loading />;

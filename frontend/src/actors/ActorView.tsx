@@ -49,11 +49,11 @@ export default function ActorView({
 	).length;
 	const isKevinBacon = actor.id === KEVIN_BACON_ID;
 
-	const lastSelectedMovie = (() => {
-		const moviesInStack = stack.filter((item) => item.type === "movie");
-		if (moviesInStack.length === 0) return null;
-		return moviesInStack[moviesInStack.length - 1].data as Movie;
-	})();
+	const lastSelectedMovie = movies
+		? movies
+				.filter((movie) => movieIdsInStack.includes(movie.id))
+				.slice(-1)[0]
+		: null;
 
 	useEffect(() => {
 		if (gameEndCalled.current) return;
