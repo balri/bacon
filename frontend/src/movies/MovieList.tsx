@@ -5,9 +5,14 @@ import MovieListItem from "./MovieListItem";
 interface MovieListProps {
 	movies: Movie[];
 	onMovieClick: (movie: Movie) => void;
+	alreadySelected: boolean;
 }
 
-export default function MovieList({ movies, onMovieClick }: MovieListProps) {
+export default function MovieList({
+	movies,
+	onMovieClick,
+	alreadySelected,
+}: MovieListProps) {
 	return (
 		<ul className="movie-list">
 			{movies && movies.length > 0 ? (
@@ -16,6 +21,7 @@ export default function MovieList({ movies, onMovieClick }: MovieListProps) {
 						key={movie.id}
 						movie={movie}
 						onMovieClick={onMovieClick}
+						alreadySelected={alreadySelected}
 					/>
 				))
 			) : (

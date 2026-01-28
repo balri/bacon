@@ -5,8 +5,13 @@ import ActorListItem from "./ActorListItem";
 interface ActorListProps {
 	actors: Actor[];
 	onActorClick: (actor: Actor) => void;
+	alreadySelected: boolean;
 }
-export default function ActorList({ actors, onActorClick }: ActorListProps) {
+export default function ActorList({
+	actors,
+	onActorClick,
+	alreadySelected,
+}: ActorListProps) {
 	return (
 		<ul className="actor-list">
 			{actors && actors.length > 0 ? (
@@ -15,6 +20,7 @@ export default function ActorList({ actors, onActorClick }: ActorListProps) {
 						key={actor.id}
 						actor={actor}
 						onActorClick={onActorClick}
+						alreadySelected={alreadySelected}
 					/>
 				))
 			) : (

@@ -76,7 +76,7 @@ describe("MovieView", () => {
 		).toBeInTheDocument();
 	});
 
-	it.skip("does not list actors already in the stack", async () => {
+	it("lists actors already in the stack", async () => {
 		const onClick = vi.fn();
 		render(
 			<MovieView
@@ -88,8 +88,12 @@ describe("MovieView", () => {
 				onActorClick={onClick}
 			/>,
 		);
-		expect(await screen.findByText("Robin Wright")).toBeInTheDocument();
-		expect(screen.queryByText("Tom Hanks")).not.toBeInTheDocument();
+		expect(await screen.findByTestId("actor-item")).toHaveTextContent(
+			"Robin Wright",
+		);
+		expect(
+			await screen.findByTestId("selected-actor-item"),
+		).toHaveTextContent("Tom Hanks");
 	});
 
 	it("calls onActorClick when an actor is clicked", async () => {

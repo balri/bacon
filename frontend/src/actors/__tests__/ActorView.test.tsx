@@ -82,7 +82,7 @@ describe("ActorView", () => {
 		expect(await screen.findByText(/no movies found/i)).toBeInTheDocument();
 	});
 
-	it("does not list movies already in the stack", async () => {
+	it("lists movies already in the stack", async () => {
 		const onClick = vi.fn();
 		render(
 			<ActorView
@@ -106,8 +106,12 @@ describe("ActorView", () => {
 				]}
 			/>,
 		);
-		expect(screen.queryByText("Big")).not.toBeInTheDocument();
-		expect(await screen.findByText("Forrest Gump")).toBeInTheDocument();
+		expect(await screen.findByTestId("movie-item")).toHaveTextContent(
+			"Forrest Gump",
+		);
+		expect(
+			await screen.findByTestId("selected-movie-item"),
+		).toHaveTextContent("Big");
 	});
 
 	it("calls onGameEnd with success if Kevin Bacon is found", async () => {

@@ -4,7 +4,6 @@ import { getMoviesForActor, type Actor, type Movie } from "../api";
 import Loading from "../utils/Loading";
 import MovieList from "../movies/MovieList";
 import { KEVIN_BACON_ID, SIX_DEGREES } from "../App";
-import MovieListItem from "../movies/MovieListItem";
 
 import ActorCard from "./ActorCard";
 
@@ -44,16 +43,14 @@ export default function ActorView({
 		? movies.filter((movie) => !movieIdsInStack.includes(movie.id))
 		: [];
 
+	const selectedMovies = movies
+		? movies.filter((movie) => movieIdsInStack.includes(movie.id))
+		: [];
+
 	const actorsInStackCount = stack.filter(
 		(item) => item.type === "actor",
 	).length;
 	const isKevinBacon = actor.id === KEVIN_BACON_ID;
-
-	const lastSelectedMovie = movies
-		? movies
-				.filter((movie) => movieIdsInStack.includes(movie.id))
-				.slice(-1)[0]
-		: null;
 
 	useEffect(() => {
 		if (gameEndCalled.current) return;
@@ -77,22 +74,19 @@ export default function ActorView({
 	return (
 		<div>
 			<ActorCard actor={actor} />
-			{lastSelectedMovie && (
-				<div style={{ marginBottom: "1rem" }}>
-					<ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-						<MovieListItem
-							movie={lastSelectedMovie}
-							onMovieClick={() => {}}
-							alreadySelected={true}
-						/>
-					</ul>
-				</div>
-			)}
 			<h3 className="movies-title">Select a movie:</h3>
+			{selectedMovies.length > 0 && (
+				<MovieList
+					movies={selectedMovies}
+					onMovieClick={() => {}}
+					alreadySelected={true}
+				/>
+			)}
 			{filteredMovies.length > 0 ? (
 				<MovieList
 					movies={filteredMovies}
 					onMovieClick={onMovieClick}
+					alreadySelected={false}
 				/>
 			) : (
 				<div className="error-message">

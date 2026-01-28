@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { getActorsForMovie, type Actor, type Movie } from "../api";
 import Loading from "../utils/Loading";
 import ActorList from "../actors/ActorList";
-import ActorListItem from "../actors/ActorListItem";
 
 import MovieCard from "./MovieCard";
 
@@ -36,11 +35,9 @@ export default function MovieView({ movie, onActorClick, stack }: MovieProps) {
 		? actors.filter((actor) => !actorIdsInStack.includes(actor.id))
 		: [];
 
-	const lastSelectedActor = actors
-		? actors
-				.filter((actor) => actorIdsInStack.includes(actor.id))
-				.slice(-1)[0]
-		: null;
+	const selectedActors = actors
+		? actors.filter((actor) => actorIdsInStack.includes(actor.id))
+		: [];
 
 	if (loading) {
 		return <Loading />;
@@ -49,22 +46,19 @@ export default function MovieView({ movie, onActorClick, stack }: MovieProps) {
 	return (
 		<div>
 			<MovieCard movie={movie} />
-			{lastSelectedActor && (
-				<div style={{ marginBottom: "1rem" }}>
-					<ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-						<ActorListItem
-							actor={lastSelectedActor}
-							onActorClick={() => {}}
-							alreadySelected={true}
-						/>
-					</ul>
-				</div>
-			)}
 			<h3 className="actors-title">Select an actor:</h3>
+			{selectedActors.length > 0 && (
+				<ActorList
+					actors={selectedActors}
+					onActorClick={() => {}}
+					alreadySelected={true}
+				/>
+			)}
 			{filteredActors.length > 0 ? (
 				<ActorList
 					actors={filteredActors}
 					onActorClick={onActorClick}
+					alreadySelected={false}
 				/>
 			) : (
 				<div className="error-message">

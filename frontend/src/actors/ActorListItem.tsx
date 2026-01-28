@@ -13,10 +13,11 @@ export default function ActorListItem({
 	onActorClick,
 	alreadySelected = false,
 }: ActorListItemProps) {
+	const testId = alreadySelected ? "selected-actor-item" : "actor-item";
 	return (
 		<li
 			key={actor.id}
-			className={alreadySelected ? "actor-item selected" : "actor-item"}
+			className={alreadySelected ? "selected-actor-item" : "actor-item"}
 			style={
 				alreadySelected
 					? {
@@ -30,7 +31,9 @@ export default function ActorListItem({
 		>
 			{actor.profile_path && <ActorThumbnail {...actor} />}
 			<span className="actor-meta">
-				<span className="actor-item-name">{actor.name}</span>
+				<span className="actor-item-name" data-testid={testId}>
+					{actor.name}
+				</span>
 				{actor.character && (
 					<span className="actor-character">
 						as {actor.character}

@@ -12,6 +12,7 @@ export default function MovieListItem({
 	onMovieClick,
 	alreadySelected = false,
 }: MovieListItemProps) {
+	const testId = alreadySelected ? "selected-movie-item" : "movie-item";
 	return (
 		<li
 			key={movie.id}
@@ -29,7 +30,11 @@ export default function MovieListItem({
 		>
 			{movie.poster_path && <MovieThumbnail {...movie} />}
 			<span className="movie-meta">
-				<span className="movie-title" title={movie.title}>
+				<span
+					className="movie-title"
+					title={movie.title}
+					data-testid={testId}
+				>
 					{movie.title}
 				</span>
 				{movie.release_date && (
