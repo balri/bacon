@@ -12,7 +12,7 @@ describe("MovieList", () => {
 			{ id: 2, title: "You've Got Mail" },
 		];
 		const onMovieClick = vi.fn();
-		render(<MovieList movies={movies} onMovieClick={onMovieClick} />);
+		render(<MovieList movies={movies} onMovieClick={onMovieClick} alreadySelected={false} />);
 		expect(screen.getByText("Forrest Gump")).toBeInTheDocument();
 		expect(screen.getByText("You've Got Mail")).toBeInTheDocument();
 		fireEvent.click(screen.getByText("Forrest Gump"));
@@ -22,7 +22,7 @@ describe("MovieList", () => {
 	it("renders no movies message when list is empty", () => {
 		const movies: Movie[] = [];
 		const onMovieClick = vi.fn();
-		render(<MovieList movies={movies} onMovieClick={onMovieClick} />);
+		render(<MovieList movies={movies} onMovieClick={onMovieClick} alreadySelected={false} />);
 		expect(
 			screen.getByText("❌ No movies found for this actor."),
 		).toBeInTheDocument();

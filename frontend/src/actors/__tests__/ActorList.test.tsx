@@ -12,7 +12,7 @@ describe("ActorList", () => {
 			{ id: 2, name: "Meg Ryan", profile_path: "", character: "B" },
 		];
 		const onActorClick = vi.fn();
-		render(<ActorList actors={actors} onActorClick={onActorClick} />);
+		render(<ActorList actors={actors} onActorClick={onActorClick} alreadySelected={false} />);
 		expect(screen.getByText("Tom Hanks")).toBeInTheDocument();
 		expect(screen.getByText("Meg Ryan")).toBeInTheDocument();
 		fireEvent.click(screen.getByText("Tom Hanks"));
@@ -22,7 +22,7 @@ describe("ActorList", () => {
 	it("renders no actors message when list is empty", () => {
 		const actors: Actor[] = [];
 		const onActorClick = vi.fn();
-		render(<ActorList actors={actors} onActorClick={onActorClick} />);
+		render(<ActorList actors={actors} onActorClick={onActorClick} alreadySelected={false} />);
 		expect(
 			screen.getByText("❌ No cast found for this movie."),
 		).toBeInTheDocument();
