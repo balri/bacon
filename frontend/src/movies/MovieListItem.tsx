@@ -16,7 +16,7 @@ export default function MovieListItem({
 	return (
 		<li
 			key={movie.id}
-			className={alreadySelected ? "movie-item selected" : "movie-item"}
+			className={"movie-item"}
 			style={
 				alreadySelected
 					? {

@@ -17,7 +17,7 @@ export default function ActorListItem({
 	return (
 		<li
 			key={actor.id}
-			className={alreadySelected ? "selected-actor-item" : "actor-item"}
+			className={"actor-item"}
 			style={
 				alreadySelected
 					? {
