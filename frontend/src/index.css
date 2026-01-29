@@ -1,3 +1,23 @@
+.breadcrumb-btn-reset {
+	background: none;
+	border: none;
+	padding: 0;
+	margin: 0;
+	font: inherit;
+	color: inherit;
+	text-align: left;
+	outline: none;
+	box-shadow: none;
+	cursor: pointer;
+	width: 100%;
+	display: block;
+}
+
+.breadcrumb-btn-reset:focus {
+	outline: 2px solid #6366f1;
+	outline-offset: 1px;
+}
+
 body {
 	background: linear-gradient(120deg, #f8fafc 0%, #e0e7ff 100%);
 	font-family: "Segoe UI", Roboto, Arial, sans-serif;
@@ -257,7 +277,7 @@ body {
 	max-width: 100%;
 }
 
-.breadcrumb-vertical-item:hover {
+.breadcrumb-clickable:hover {
 	background: #c7d2fe;
 	color: #1e293b;
 }

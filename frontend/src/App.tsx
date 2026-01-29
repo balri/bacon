@@ -149,7 +149,13 @@ function App() {
 	}
 
 	const showBreadcrumbs = !endMessage;
-	const breadcrumbs = showBreadcrumbs ? <Breadcrumbs stack={stack} /> : null;
+	const handleBreadcrumbClick = (index: number) => {
+		setStack((prev) => prev.slice(0, index + 1));
+		setEndMessage(null);
+	};
+	const breadcrumbs = showBreadcrumbs ? (
+		<Breadcrumbs stack={stack} onBreadcrumbClick={handleBreadcrumbClick} />
+	) : null;
 
 	const current = stack[stack.length - 1];
 
