@@ -11,7 +11,6 @@ describe("EndMessage", () => {
 				endMessage="Game Over"
 				loadActor={() => {}}
 				handleBack={() => {}}
-				breadcrumbs={<div>Breadcrumbs</div>}
 				showBackButton={true}
 				showTryAgainButton={true}
 			/>,
@@ -19,7 +18,6 @@ describe("EndMessage", () => {
 		expect(screen.getByText("Game Over")).toBeInTheDocument();
 		expect(screen.getByText("🔀 Start Again")).toBeInTheDocument();
 		expect(screen.getByText("← Back")).toBeInTheDocument();
-		expect(screen.getByText("Breadcrumbs")).toBeInTheDocument();
 	});
 
 	it("does not render try again button if showTryAgainButton is false", () => {
@@ -28,7 +26,6 @@ describe("EndMessage", () => {
 				endMessage="Game Over"
 				loadActor={() => {}}
 				handleBack={() => {}}
-				breadcrumbs={null}
 				showTryAgainButton={false}
 			/>,
 		);
@@ -41,7 +38,6 @@ describe("EndMessage", () => {
 				endMessage="Game Over"
 				loadActor={() => {}}
 				handleBack={() => {}}
-				breadcrumbs={null}
 				showBackButton={false}
 			/>,
 		);

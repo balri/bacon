@@ -263,12 +263,12 @@ body {
 	width: 100%;
 }
 
-.breadcrumb-actor {
+.breadcrumb-movie {
 	background: #e0e7ff;
 	color: #3730a3;
 }
 
-.breadcrumb-movie {
+.breadcrumb-actor {
 	background: #fff7ed;
 	color: #f59e42;
 }
@@ -280,6 +280,54 @@ body {
 .breadcrumb-clickable:hover {
 	background: #c7d2fe;
 	color: #1e293b;
+}
+
+.breadcrumb-accordion {
+	width: 100%;
+	background: #e0e7ff;
+	/* blue-100 */
+	border: none;
+	color: #1d4ed8;
+	/* blue-700 */
+	margin-bottom: 0;
+	font: inherit;
+	font-weight: 500;
+	box-sizing: border-box;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-radius: 0.5rem;
+	padding: 0.25rem 0.75rem;
+	cursor: pointer;
+}
+
+.breadcrumb-accordion-title {
+	font-weight: 600;
+	font-size: 1rem;
+	flex: 1;
+	text-align: left;
+}
+
+.breadcrumb-accordion-degrees {
+	font-size: 0.9em;
+	margin-right: 0.5em;
+	color: #2563eb;
+}
+
+.breadcrumb-accordion-list {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	background: none;
+}
+
+.breacrumb-accordion-icon {
+	width: 1em;
+	height: 1em;
+	transition: transform 0.2s;
+	color: #2563eb;
+	display: inline-block;
+	vertical-align: middle;
 }
 
 .back-btn {

@@ -186,7 +186,6 @@ function App() {
 				endMessage={endMessage.node}
 				loadActor={loadActor}
 				handleBack={handleBack}
-				breadcrumbs={isSuccess ? null : breadcrumbs}
 				showBackButton={!isSuccess}
 				showTryAgainButton={endMessage.type === "failure"}
 			/>

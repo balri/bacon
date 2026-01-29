@@ -4,7 +4,6 @@ interface EndMessageProps {
 	endMessage: string | React.ReactNode;
 	loadActor: () => void;
 	handleBack: () => void;
-	breadcrumbs: React.ReactNode;
 	showBackButton?: boolean;
 	showTryAgainButton?: boolean;
 }
@@ -13,7 +12,6 @@ export default function EndMessage({
 	endMessage,
 	loadActor,
 	handleBack,
-	breadcrumbs,
 	showBackButton,
 	showTryAgainButton,
 }: EndMessageProps) {
@@ -32,7 +30,6 @@ export default function EndMessage({
 					</button>
 				)}
 			</div>
-			{breadcrumbs}
 			<div className="end-overlay">
 				<div className="end-message">{endMessage}</div>
 			</div>
