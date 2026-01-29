@@ -308,7 +308,7 @@ body {
 	text-align: left;
 }
 
-.breadcrumb-accordion-degrees {
+.breadcrumb-accordion-steps {
 	font-size: 0.9em;
 	margin-right: 0.5em;
 	color: #2563eb;
@@ -321,7 +321,7 @@ body {
 	background: none;
 }
 
-.breacrumb-accordion-icon {
+.breadcrumb-accordion-icon {
 	width: 1em;
 	height: 1em;
 	transition: transform 0.2s;
