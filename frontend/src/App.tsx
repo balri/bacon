@@ -153,9 +153,6 @@ function App() {
 		setStack((prev) => prev.slice(0, index + 1));
 		setEndMessage(null);
 	};
-	const breadcrumbs = showBreadcrumbs ? (
-		<Breadcrumbs stack={stack} onBreadcrumbClick={handleBreadcrumbClick} />
-	) : null;
 
 	const current = stack[stack.length - 1];
 
@@ -202,7 +199,12 @@ function App() {
 					</button>
 				)}
 			</div>
-			{stack.length > 1 && breadcrumbs}
+			{showBreadcrumbs && (
+				<Breadcrumbs
+					stack={stack}
+					onBreadcrumbClick={handleBreadcrumbClick}
+				/>
+			)}
 			{current ? (
 				!endMessage && current.type === "actor" ? (
 					<ActorView

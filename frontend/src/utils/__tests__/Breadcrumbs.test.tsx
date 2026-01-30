@@ -12,13 +12,13 @@ describe("Breadcrumbs", () => {
 		{ type: "actor", data: { id: 3, name: "Actor Three" } as Actor },
 	];
 
-	it("renders the accordion button with label and step count", () => {
+	it("renders the accordion button with label and steps remaining count", () => {
 		render(<Breadcrumbs stack={stack} />);
 		expect(
 			screen.getByRole("button", { name: /progress/i }),
 		).toBeInTheDocument();
 		expect(screen.getByText(/progress/i)).toBeInTheDocument();
-		expect(screen.getByText(/1 step/i)).toBeInTheDocument();
+		expect(screen.getByText(/5 steps remaining/i)).toBeInTheDocument();
 	});
 
 	it("does not show breadcrumbs list when accordion is closed", () => {

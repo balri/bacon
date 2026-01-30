@@ -1,6 +1,7 @@
 import React from "react";
 
 import type { Actor, Movie } from "../api";
+import { SIX_DEGREES } from "../App";
 
 interface BreadcrumbsProps {
 	stack: Array<{ type: "actor" | "movie"; data: Actor | Movie }>;
@@ -13,6 +14,8 @@ export default function Breadcrumbs({
 }: BreadcrumbsProps) {
 	const [open, setOpen] = React.useState(false);
 	const steps = stack.filter((item) => item.type === "actor").length - 1;
+	const stepsRemaining = SIX_DEGREES - steps;
+
 	return (
 		<nav className="breadcrumb-vertical" style={{ display: "block" }}>
 			<button
@@ -24,7 +27,7 @@ export default function Breadcrumbs({
 			>
 				<span className="breadcrumb-accordion-title">Progress</span>
 				<span style={{ flexShrink: 0 }}>
-					<span className="breadcrumb-accordion-steps">{`${steps} step${steps !== 1 ? "s" : ""}`}</span>
+					<span className="breadcrumb-accordion-steps">{`${stepsRemaining} step${stepsRemaining !== 1 ? "s" : ""} remaining`}</span>
 					<svg
 						className="breadcrumb-accordion-icon"
 						style={{
