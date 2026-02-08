@@ -40,7 +40,10 @@ export default function SuccessMessage(props: SuccessMessageProps) {
 	const [copied, setCopied] = React.useState(false);
 	const [showManual, setShowManual] = React.useState(false);
 	const handleShare = () => {
-		const shareText = `I connected ${firstActorName} to Kevin Bacon in ${degrees} steps! Can you beat my score? Play now!`;
+		const shareText =
+			(firstActor && degrees === firstActor.bacon_number) || degrees === 1
+				? `I connected ${firstActorName} to Kevin Bacon in the optimal steps! Can you do the same? Play now!`
+				: `I connected ${firstActorName} to Kevin Bacon in ${degrees} steps! Can you beat my score? Play now!`;
 		if (
 			typeof window !== "undefined" &&
 			window.navigator &&
@@ -197,7 +200,7 @@ export default function SuccessMessage(props: SuccessMessageProps) {
 							}}
 						>
 							{firstActor?.bacon_number != null &&
-							firstActor.bacon_number > 0
+								firstActor.bacon_number > 0
 								? firstActor.bacon_number
 								: "-"}
 						</div>

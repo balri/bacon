@@ -73,7 +73,7 @@ describe("SuccessMessage share link", () => {
 			profile_path: "",
 			bacon_number: 2,
 		},
-		degrees: 2,
+		degrees: 3,
 		attempts: 1,
 		numSolved: 5,
 		longestStreak: 3,
@@ -91,7 +91,8 @@ describe("SuccessMessage share link", () => {
 		).toBeInTheDocument();
 	});
 
-	it("calls navigator.share if available", () => {
+
+	it("calls navigator.share if available and passes correct share text", () => {
 		const mockShare = vi.fn();
 		setup({
 			value: mockShare,
@@ -101,6 +102,55 @@ describe("SuccessMessage share link", () => {
 		render(<SuccessMessage {...defaultProps} />);
 		fireEvent.click(screen.getByRole("button", { name: /share/i }));
 		expect(mockShare).toHaveBeenCalled();
+		const callArg = mockShare.mock.calls[0][0];
+		expect(callArg).toHaveProperty("text");
+		expect(callArg.text).toMatch(
+			/I connected Test Actor to Kevin Bacon in 3 steps! Can you beat my score\? Play now!/i
+		);
+	});
+
+	it("calls navigator.share with optimal share text when degrees=1", () => {
+		const mockShare = vi.fn();
+		setup({
+			value: mockShare,
+			configurable: true,
+			writable: true,
+		});
+		render(
+			<SuccessMessage
+				{...defaultProps}
+				degrees={1}
+			/>
+		);
+		fireEvent.click(screen.getByRole("button", { name: /share/i }));
+		expect(mockShare).toHaveBeenCalled();
+		const callArg = mockShare.mock.calls[0][0];
+		expect(callArg).toHaveProperty("text");
+		expect(callArg.text).toMatch(
+			/I connected Test Actor to Kevin Bacon in the optimal steps! Can you do the same\? Play now!/i
+		);
+	});
+
+	it("calls navigator.share with optimal share text when optimal steps", () => {
+		const mockShare = vi.fn();
+		setup({
+			value: mockShare,
+			configurable: true,
+			writable: true,
+		});
+		render(
+			<SuccessMessage
+				{...defaultProps}
+				degrees={2}
+			/>
+		);
+		fireEvent.click(screen.getByRole("button", { name: /share/i }));
+		expect(mockShare).toHaveBeenCalled();
+		const callArg = mockShare.mock.calls[0][0];
+		expect(callArg).toHaveProperty("text");
+		expect(callArg.text).toMatch(
+			/I connected Test Actor to Kevin Bacon in the optimal steps! Can you do the same\? Play now!/i
+		);
 	});
 
 	it("shows input and copy button if navigator.share is not available", async () => {
