@@ -1,4 +1,4 @@
-import type { Movie } from "../api";
+import type { Movie } from "../utils/types";
 
 import MovieThumbnail from "./MovieThumbnail";
 

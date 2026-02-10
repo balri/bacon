@@ -1,7 +1,6 @@
 import React from "react";
 
-import type { Actor, Movie } from "../api";
-import { SIX_DEGREES } from "../App";
+import { SIX_DEGREES, type Actor, type Movie } from "./types";
 
 interface BreadcrumbsProps {
 	stack: Array<{ type: "actor" | "movie"; data: Actor | Movie }>;
@@ -14,7 +13,7 @@ export default function Breadcrumbs({
 }: BreadcrumbsProps) {
 	const [open, setOpen] = React.useState(false);
 	const steps = stack.filter((item) => item.type === "actor").length - 1;
-	const stepsRemaining = SIX_DEGREES - steps;
+	const stepsRemaining = steps > 0 ? SIX_DEGREES - steps : SIX_DEGREES;
 
 	return (
 		<nav className="breadcrumb-vertical" style={{ display: "block" }}>

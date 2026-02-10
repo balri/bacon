@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 
-import { getActorsForMovie, type Actor, type Movie } from "../api";
+import { getActorsForMovie } from "../api";
 import Loading from "../utils/Loading";
 import ActorList from "../actors/ActorList";
+import type { Movie, Actor } from "../utils/types";
 
 import MovieCard from "./MovieCard";
 

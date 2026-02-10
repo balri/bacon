@@ -1,5 +1,5 @@
-import type { Movie } from "../api";
 import Image from "../utils/Image";
+import type { Movie } from "../utils/types";
 
 const movieContainerStyle = {
 	minHeight: 130,

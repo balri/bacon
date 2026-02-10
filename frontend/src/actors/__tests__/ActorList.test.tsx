@@ -3,7 +3,7 @@ import "@testing-library/jest-dom";
 import { describe, it, vi, expect } from "vitest";
 
 import ActorList from "../ActorList";
-import type { Actor } from "../../api";
+import type { Actor } from "../../utils/types";
 
 describe("ActorList", () => {
 	it("renders a list of actors and handles click", () => {

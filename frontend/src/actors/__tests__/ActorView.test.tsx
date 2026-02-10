@@ -4,8 +4,7 @@ import { describe, it, expect, vi } from "vitest";
 
 import * as api from "../../api";
 import ActorView from "../ActorView";
-import { KEVIN_BACON_ID } from "../../App";
-import type { Actor, Movie } from "../../api";
+import { KEVIN_BACON_ID, type Actor, type Movie } from "../../utils/types";
 
 vi.mock("../../api", async () => {
 	const actual = await vi.importActual<object>("../../api");

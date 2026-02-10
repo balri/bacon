@@ -1,4 +1,4 @@
-import type { Actor } from "../api";
+import type { Actor } from "../utils/types";
 
 import ActorListItem from "./ActorListItem";
 

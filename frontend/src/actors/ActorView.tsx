@@ -1,9 +1,14 @@
 import { useEffect, useState, useRef } from "react";
 
-import { getMoviesForActor, type Actor, type Movie } from "../api";
+import { getMoviesForActor } from "../api";
 import Loading from "../utils/Loading";
 import MovieList from "../movies/MovieList";
-import { KEVIN_BACON_ID, SIX_DEGREES } from "../App";
+import {
+	KEVIN_BACON_ID,
+	SIX_DEGREES,
+	type Actor,
+	type Movie,
+} from "../utils/types";
 
 import ActorCard from "./ActorCard";
 

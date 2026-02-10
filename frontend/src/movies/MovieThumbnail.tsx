@@ -1,5 +1,5 @@
-import type { Movie } from "../api";
 import Image from "../utils/Image";
+import type { Movie } from "../utils/types";
 
 export default function MovieThumbnail(movie: Movie) {
 	if (!movie.poster_path) {

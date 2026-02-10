@@ -1,5 +1,5 @@
-import type { Actor } from "../api";
 import Image from "../utils/Image";
+import type { Actor } from "../utils/types";
 
 export default function ActorThumbnail(actor: Actor) {
 	return (

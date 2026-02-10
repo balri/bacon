@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-import type { Actor as ActorType, Movie as MovieType } from "./api";
 import { getDailyActor } from "./api";
 import ActorView from "./actors/ActorView";
 import Loading from "./utils/Loading";
@@ -17,14 +16,17 @@ import {
 	getAllCookieData,
 } from "./utils/cookie";
 import FailureMessage from "./utils/FailureMessage";
-
-export const KEVIN_BACON_ID = 4724;
-export const SIX_DEGREES = 6;
+import {
+	KEVIN_BACON_ID,
+	SIX_DEGREES,
+	type Actor,
+	type Movie,
+} from "./utils/types";
 
 function isActor(item: {
 	type: string;
 	data: any;
-}): item is { type: "actor"; data: ActorType } {
+}): item is { type: "actor"; data: Actor } {
 	return item.type === "actor";
 }
 
@@ -36,7 +38,7 @@ function App() {
 		return Object.keys(allCookies).length === 0;
 	});
 	const [stack, setStack] = useState<
-		Array<{ type: "actor" | "movie"; data: ActorType | MovieType }>
+		Array<{ type: "actor" | "movie"; data: Actor | Movie }>
 	>([]);
 	const [loading, setLoading] = useState(true);
 	const [endMessage, setEndMessage] = useState<null | {
@@ -91,12 +93,12 @@ function App() {
 		setLoading(false);
 	}
 
-	function handleMovieClick(movie: MovieType) {
+	function handleMovieClick(movie: Movie) {
 		if (gameEnded) return;
 		setStack((prev) => [...prev, { type: "movie", data: movie }]);
 	}
 
-	function handleActorClick(actor: ActorType) {
+	function handleActorClick(actor: Actor) {
 		if (gameEnded) return;
 		setStack((prev) => [...prev, { type: "actor", data: actor }]);
 	}
@@ -148,7 +150,6 @@ function App() {
 		}
 	}
 
-	const showBreadcrumbs = !endMessage;
 	const handleBreadcrumbClick = (index: number) => {
 		setStack((prev) => prev.slice(0, index + 1));
 		setEndMessage(null);
@@ -199,30 +200,28 @@ function App() {
 					</button>
 				)}
 			</div>
-			{showBreadcrumbs && (
-				<Breadcrumbs
-					stack={stack}
-					onBreadcrumbClick={handleBreadcrumbClick}
-				/>
-			)}
+			<Breadcrumbs
+				stack={stack}
+				onBreadcrumbClick={handleBreadcrumbClick}
+			/>
 			{current ? (
 				!endMessage && current.type === "actor" ? (
 					<ActorView
-						actor={current.data as ActorType}
+						actor={current.data as Actor}
 						onMovieClick={handleMovieClick}
 						stack={stack}
 						onGameEnd={handleGameEnd}
 					/>
 				) : (
 					<MovieView
-						movie={current.data as MovieType}
+						movie={current.data as Movie}
 						onActorClick={handleActorClick}
 						stack={stack}
 					/>
 				)
 			) : (
 				<div className="error-message">
-					❌ An error occurred. Please try again.
+					❌ An error occurred. Please try again later.
 				</div>
 			)}
 		</div>

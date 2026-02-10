@@ -1,4 +1,4 @@
-import type { Actor } from "../api";
+import type { Actor } from "./types";
 
 interface FailureMessageProps {
 	firstActor: Actor | null;

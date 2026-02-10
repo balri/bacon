@@ -91,7 +91,6 @@ describe("SuccessMessage share link", () => {
 		).toBeInTheDocument();
 	});
 
-
 	it("calls navigator.share if available and passes correct share text", () => {
 		const mockShare = vi.fn();
 		setup({
@@ -105,7 +104,7 @@ describe("SuccessMessage share link", () => {
 		const callArg = mockShare.mock.calls[0][0];
 		expect(callArg).toHaveProperty("text");
 		expect(callArg.text).toMatch(
-			/I connected Test Actor to Kevin Bacon in 3 steps! Can you beat my score\? Play now!/i
+			/I connected Test Actor to Kevin Bacon in 3 steps! Can you beat my score\? Play now!/i,
 		);
 	});
 
@@ -116,18 +115,13 @@ describe("SuccessMessage share link", () => {
 			configurable: true,
 			writable: true,
 		});
-		render(
-			<SuccessMessage
-				{...defaultProps}
-				degrees={1}
-			/>
-		);
+		render(<SuccessMessage {...defaultProps} degrees={1} />);
 		fireEvent.click(screen.getByRole("button", { name: /share/i }));
 		expect(mockShare).toHaveBeenCalled();
 		const callArg = mockShare.mock.calls[0][0];
 		expect(callArg).toHaveProperty("text");
 		expect(callArg.text).toMatch(
-			/I connected Test Actor to Kevin Bacon in the optimal steps! Can you do the same\? Play now!/i
+			/I connected Test Actor to Kevin Bacon in the optimal steps! Can you do the same\? Play now!/i,
 		);
 	});
 
@@ -138,18 +132,13 @@ describe("SuccessMessage share link", () => {
 			configurable: true,
 			writable: true,
 		});
-		render(
-			<SuccessMessage
-				{...defaultProps}
-				degrees={2}
-			/>
-		);
+		render(<SuccessMessage {...defaultProps} degrees={2} />);
 		fireEvent.click(screen.getByRole("button", { name: /share/i }));
 		expect(mockShare).toHaveBeenCalled();
 		const callArg = mockShare.mock.calls[0][0];
 		expect(callArg).toHaveProperty("text");
 		expect(callArg.text).toMatch(
-			/I connected Test Actor to Kevin Bacon in the optimal steps! Can you do the same\? Play now!/i
+			/I connected Test Actor to Kevin Bacon in the optimal steps! Can you do the same\? Play now!/i,
 		);
 	});
 

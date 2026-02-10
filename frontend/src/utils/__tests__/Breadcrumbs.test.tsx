@@ -3,7 +3,7 @@ import "@testing-library/jest-dom";
 import { describe, it, expect, vi } from "vitest";
 
 import Breadcrumbs from "../Breadcrumbs";
-import type { Actor, Movie } from "../../api";
+import type { Actor, Movie } from "../types";
 
 describe("Breadcrumbs", () => {
 	const stack: Array<{ type: "actor" | "movie"; data: Actor | Movie }> = [
