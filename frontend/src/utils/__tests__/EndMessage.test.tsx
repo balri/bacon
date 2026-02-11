@@ -9,10 +9,11 @@ describe("EndMessage", () => {
 		render(
 			<EndMessage
 				endMessage="Game Over"
-				loadActor={() => {}}
-				handleBack={() => {}}
+				loadActor={() => { }}
+				handleBack={() => { }}
 				showBackButton={true}
 				showTryAgainButton={true}
+				stack={[]}
 			/>,
 		);
 		expect(screen.getByText("Game Over")).toBeInTheDocument();
@@ -24,9 +25,10 @@ describe("EndMessage", () => {
 		render(
 			<EndMessage
 				endMessage="Game Over"
-				loadActor={() => {}}
-				handleBack={() => {}}
+				loadActor={() => { }}
+				handleBack={() => { }}
 				showTryAgainButton={false}
+				stack={[]}
 			/>,
 		);
 		expect(screen.queryByText("🔀 Start Again")).not.toBeInTheDocument();
@@ -36,9 +38,10 @@ describe("EndMessage", () => {
 		render(
 			<EndMessage
 				endMessage="Game Over"
-				loadActor={() => {}}
-				handleBack={() => {}}
+				loadActor={() => { }}
+				handleBack={() => { }}
 				showBackButton={false}
+				stack={[]}
 			/>,
 		);
 		expect(screen.queryByText("← Back")).not.toBeInTheDocument();

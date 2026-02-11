@@ -186,6 +186,7 @@ function App() {
 				handleBack={handleBack}
 				showBackButton={!isSuccess}
 				showTryAgainButton={endMessage.type === "failure"}
+				stack={stack}
 			/>
 		);
 	}
