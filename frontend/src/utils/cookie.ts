@@ -6,7 +6,6 @@ type CookieData = {
 	completed: boolean;
 	actorId?: number | null;
 	degrees?: number;
-	attempts?: number | null;
 	numSolved?: number | null;
 	longestStreak?: number | null;
 	streak?: number | null;
@@ -49,15 +48,7 @@ export function getAllCookieData(): { [key: string]: CookieData } {
 
 export function setCookieData(data: CookieData): CookieData {
 	const allData = getAllCookieData();
-
 	const today = getTodayDateString();
-	const todayData = allData[today] || null;
-	let attempts = 0;
-	if (todayData) {
-		attempts = todayData.attempts || 0;
-	}
-	attempts += 1;
-
 	const yesterday = getYesterdayDateString();
 	const yesterdayData = allData[yesterday] || null;
 	let streak = 0;
@@ -92,7 +83,6 @@ export function setCookieData(data: CookieData): CookieData {
 
 	allData[today] = {
 		...data,
-		attempts,
 		streak,
 		longestStreak,
 		numSolved,

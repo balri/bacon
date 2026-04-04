@@ -1,14 +1,10 @@
-import type { Actor } from "./types";
+import { SIX_DEGREES, type Actor } from "./types";
 
 interface FailureMessageProps {
 	firstActor: Actor | null;
-	attempts: number;
 }
 
-export default function FailureMessage({
-	firstActor,
-	attempts,
-}: FailureMessageProps) {
+export default function FailureMessage({ firstActor }: FailureMessageProps) {
 	const firstActorName = firstActor?.name || "Unknown Actor";
 	const firstActorPhoto = firstActor?.profile_path
 		? `https://image.tmdb.org/t/p/w185${firstActor.profile_path}`
@@ -93,30 +89,13 @@ export default function FailureMessage({
 					</div>
 				</div>
 			</div>
-			<div
-				style={{
-					display: "flex",
-					justifyContent: "center",
-					gap: 24,
-					marginBottom: 16,
-				}}
-			>
-				<div style={{ textAlign: "center" }}>
-					<div style={{ fontSize: 14, color: "#555" }}>Attempts</div>
-					<div
-						data-testid="attempts"
-						style={{
-							fontSize: 22,
-							fontWeight: 600,
-							color: "#b00020",
-						}}
-					>
-						{typeof attempts === "number" ? attempts : "-"}
-					</div>
-				</div>
-			</div>
 			<div style={{ color: "#555", fontSize: 15, marginTop: 8 }}>
-				<em>Go Back or Start Again</em>
+				<em>
+					You failed to connect {firstActorName} to {baconName} in{" "}
+					{SIX_DEGREES} steps.
+					<br />
+					Please try Again Tomorrow
+				</em>
 			</div>
 		</div>
 	);

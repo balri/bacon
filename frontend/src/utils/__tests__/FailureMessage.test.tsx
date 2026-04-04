@@ -12,16 +12,15 @@ describe("FailureMessage", () => {
 		character: "A",
 	};
 
-	it("renders failure message with actor name and attempts", () => {
-		render(<FailureMessage firstActor={baseActor} attempts={3} />);
+	it("renders failure message with actor name", () => {
+		render(<FailureMessage firstActor={baseActor} />);
 		expect(screen.getByText(/No Connection/i)).toBeInTheDocument();
-		expect(screen.getByText(/Tom Hanks/)).toBeInTheDocument();
-		expect(screen.getByTestId("attempts")).toContainHTML("2");
-		expect(screen.getByText(/Go Back or Start Again/i)).toBeInTheDocument();
+		expect(screen.getAllByText(/Tom Hanks/).length).toBeGreaterThan(0);
+		expect(screen.getByText(/You failed to connect/i)).toBeInTheDocument();
 	});
 
 	it("renders actor photo if profile_path is present", () => {
-		render(<FailureMessage firstActor={baseActor} attempts={2} />);
+		render(<FailureMessage firstActor={baseActor} />);
 		const img = screen.getByAltText("Tom Hanks");
 		expect(img).toBeInTheDocument();
 		expect(img).toHaveAttribute("src", expect.stringContaining("/tom.jpg"));
@@ -29,8 +28,8 @@ describe("FailureMessage", () => {
 
 	it("renders placeholder if no profile_path", () => {
 		const actorNoPhoto = { ...baseActor, profile_path: undefined };
-		render(<FailureMessage firstActor={actorNoPhoto} attempts={1} />);
-		expect(screen.getByText(/Tom Hanks/)).toBeInTheDocument();
+		render(<FailureMessage firstActor={actorNoPhoto} />);
+		expect(screen.getAllByText(/Tom Hanks/).length).toBeGreaterThan(0);
 		// Should not find an image
 		expect(screen.queryByAltText("Tom Hanks")).not.toBeInTheDocument();
 	});

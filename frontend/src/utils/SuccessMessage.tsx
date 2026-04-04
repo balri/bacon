@@ -5,7 +5,6 @@ import type { Actor } from "./types";
 type SuccessMessageProps = {
 	firstActor: Actor | null;
 	degrees: number;
-	attempts: number;
 	numSolved?: number;
 	longestStreak?: number;
 	streak?: number;
@@ -15,7 +14,6 @@ export default function SuccessMessage(props: SuccessMessageProps) {
 	const {
 		firstActor,
 		degrees,
-		attempts,
 		streak: streakProp,
 		longestStreak,
 		numSolved,
@@ -234,37 +232,6 @@ export default function SuccessMessage(props: SuccessMessageProps) {
 							}}
 						>
 							{degrees}
-						</div>
-					</div>
-					<div
-						style={{
-							display: "flex",
-							flexDirection: "column",
-							justifyContent: "flex-end",
-							alignItems: "center",
-							flex: 1,
-							minWidth: 0,
-						}}
-					>
-						<div
-							style={{
-								fontSize: 14,
-								color: "#555",
-								wordBreak: "break-word",
-								textAlign: "center",
-							}}
-						>
-							Your Attempts
-						</div>
-						<div
-							data-testid="attempts"
-							style={{
-								fontSize: 22,
-								fontWeight: 600,
-								color: "#222",
-							}}
-						>
-							{attempts}
 						</div>
 					</div>
 				</div>

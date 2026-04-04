@@ -21,16 +21,7 @@ describe("cookie utils", () => {
 		expect(data).not.toBeNull();
 		expect(data?.completed).toBe(true);
 		expect(data?.degrees).toBe(3);
-		expect(data?.attempts).toBe(1);
 		expect(data?.streak).toBe(1);
-	});
-
-	it("increments attempts on multiple sets in one day", () => {
-		const today = getTodayDateString();
-		setCookieData({ completed: false, degrees: 2 });
-		setCookieData({ completed: false, degrees: 2 });
-		const data = getCookieData(today);
-		expect(data?.attempts).toBe(2);
 	});
 
 	it("increments streak if yesterday was completed", () => {

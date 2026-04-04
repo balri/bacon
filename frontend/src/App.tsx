@@ -67,7 +67,6 @@ function App() {
 							<SuccessMessage
 								firstActor={actor}
 								degrees={data.degrees || 0}
-								attempts={data.attempts || 1}
 								numSolved={data.numSolved || 1}
 								longestStreak={data.longestStreak || 1}
 								streak={data.streak || 1}
@@ -130,7 +129,6 @@ function App() {
 					<SuccessMessage
 						firstActor={firstActor}
 						degrees={actorsInStack.length - 1 || 0}
-						attempts={cookieData.attempts || 1}
 						numSolved={cookieData.numSolved || 1}
 						longestStreak={cookieData.longestStreak || 1}
 						streak={cookieData.streak || 1}
@@ -140,12 +138,7 @@ function App() {
 		} else {
 			setEndMessage({
 				type,
-				node: (
-					<FailureMessage
-						firstActor={firstActor}
-						attempts={cookieData.attempts || 1}
-					/>
-				),
+				node: <FailureMessage firstActor={firstActor} />,
 			});
 		}
 	}
@@ -168,7 +161,7 @@ function App() {
 		);
 	}
 
-	if (loading) {
+	if (loading || (!current && !endMessage)) {
 		return (
 			<div className="app-container">
 				<h1 className="main-title">🎬 Mmmm, Bacon 🥓</h1>
@@ -178,17 +171,7 @@ function App() {
 	}
 
 	if (endMessage) {
-		const isSuccess = endMessage.type === "success";
-		return (
-			<EndMessage
-				endMessage={endMessage.node}
-				loadActor={loadActor}
-				handleBack={handleBack}
-				showBackButton={!isSuccess}
-				showTryAgainButton={endMessage.type === "failure"}
-				stack={stack}
-			/>
-		);
+		return <EndMessage endMessage={endMessage.node} stack={stack} />;
 	}
 
 	return (
@@ -206,7 +189,7 @@ function App() {
 				onBreadcrumbClick={handleBreadcrumbClick}
 			/>
 			{current ? (
-				!endMessage && current.type === "actor" ? (
+				current.type === "actor" ? (
 					<ActorView
 						actor={current.data as Actor}
 						onMovieClick={handleMovieClick}

@@ -15,13 +15,11 @@ describe("SuccessMessage", () => {
 					character: "A",
 				}}
 				degrees={3}
-				attempts={2}
 				streak={5}
 			/>,
 		);
 		expect(screen.getByText(/Tom Hanks/)).toBeInTheDocument();
 		expect(screen.getByTestId("degrees")).toContainHTML("3");
-		expect(screen.getByTestId("attempts")).toContainHTML("2");
 		expect(screen.getByTestId("streak")).toContainHTML("5");
 	});
 
@@ -35,7 +33,6 @@ describe("SuccessMessage", () => {
 					character: "A",
 				}}
 				degrees={3}
-				attempts={2}
 				streak={5}
 			/>,
 		);
@@ -57,7 +54,6 @@ describe("SuccessMessage", () => {
 					character: "A",
 				}}
 				degrees={3}
-				attempts={2}
 				streak={5}
 			/>,
 		);
@@ -74,7 +70,6 @@ describe("SuccessMessage share link", () => {
 			bacon_number: 2,
 		},
 		degrees: 3,
-		attempts: 1,
 		numSolved: 5,
 		longestStreak: 3,
 		streak: 2,
