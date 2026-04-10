@@ -54,25 +54,34 @@ function App() {
 			return;
 		}
 		const data = getCookieData(today);
-		if (data && data.completed && data.actorId) {
+		if (data && data.actorId) {
 			setShowIntro(false);
 			setLoading(true);
 			(async () => {
 				const actor = await getDailyActor();
 				if (actor && actor.id === data.actorId) {
 					setStack([{ type: "actor", data: actor }]);
-					setEndMessage({
-						type: "success",
-						node: (
-							<SuccessMessage
-								firstActor={actor}
-								degrees={data.degrees || 0}
-								numSolved={data.numSolved || 1}
-								longestStreak={data.longestStreak || 1}
-								streak={data.streak || 1}
-							/>
-						),
-					});
+					if (data.completed) {
+						setEndMessage({
+							type: "success",
+							node: (
+								<SuccessMessage
+									firstActor={actor}
+									degrees={data.degrees || 0}
+									numSolved={data.numSolved || 1}
+									longestStreak={data.longestStreak || 1}
+									streak={data.streak || 1}
+								/>
+							),
+						});
+					} else {
+						setEndMessage({
+							type: "failure",
+							node: (
+								<FailureMessage firstActor={actor} />
+							)
+						})
+					}
 				}
 				setLoading(false);
 			})();

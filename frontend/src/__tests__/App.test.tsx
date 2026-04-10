@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import App from "../App";
 
@@ -46,6 +46,8 @@ vi.mock("../api", async () => {
 });
 
 describe("App", () => {
+	afterEach(() => vi.restoreAllMocks());
+
 	it("shows intro and begins game on begin", async () => {
 		render(<App />);
 		expect(screen.getByText("🎬 Mmmm, Bacon 🥓")).toBeInTheDocument();
@@ -70,6 +72,21 @@ describe("App", () => {
 		await screen.findByText("Robin Wright");
 		fireEvent.click(screen.getByText("Robin Wright"));
 		await screen.findByText("Big");
+	});
+
+	it("shows failure message for returning user who has not completed today's puzzle", async () => {
+		const cookie = await import("../utils/cookie");
+		vi.spyOn(cookie, "getAllCookieData").mockReturnValue({
+			"2026-04-11": { actorId: 1, completed: false },
+		});
+		vi.spyOn(cookie, "getCookieData").mockReturnValue({
+			actorId: 1,
+			completed: false,
+		});
+		vi.spyOn(cookie, "getTodayDateString").mockReturnValue("2026-04-11");
+
+		render(<App />);
+		await screen.findByText(/No Connection Found/i);
 	});
 
 	it("shows end message when a movie with Kevin Bacon is clicked", async () => {
