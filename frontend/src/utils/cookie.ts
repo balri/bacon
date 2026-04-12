@@ -1,4 +1,5 @@
 import Cookies from "js-cookie";
+import type { Actor, Movie } from "./types";
 
 export const COOKIE_NAME = "bacon_game";
 
@@ -9,6 +10,7 @@ type CookieData = {
 	numSolved?: number | null;
 	longestStreak?: number | null;
 	streak?: number | null;
+	stack: Array<{ type: "actor" | "movie"; data: Actor | Movie }>
 };
 
 export function getTodayDateString() {

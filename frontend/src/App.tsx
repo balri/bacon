@@ -60,7 +60,11 @@ function App() {
 			(async () => {
 				const actor = await getDailyActor();
 				if (actor && actor.id === data.actorId) {
-					setStack([{ type: "actor", data: actor }]);
+					if (data.stack) {
+						setStack(data.stack);
+					} else {
+						setStack([{ type: "actor", data: actor }]);
+					}
 					if (data.completed) {
 						setEndMessage({
 							type: "success",
@@ -130,6 +134,7 @@ function App() {
 			actorId: actorId,
 			completed: type === "success",
 			degrees: actorsInStack.length - 1,
+			stack: stack,
 		});
 		if (type === "success") {
 			setEndMessage({
