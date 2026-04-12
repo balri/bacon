@@ -11,7 +11,7 @@ type CookieData = {
 	numSolved?: number | null;
 	longestStreak?: number | null;
 	streak?: number | null;
-	stack: Array<{ type: "actor" | "movie"; data: Actor | Movie }>;
+	stack?: Array<{ type: "actor" | "movie"; data: Actor | Movie }>;
 };
 
 export function getTodayDateString() {
