@@ -92,15 +92,17 @@ describe("App", () => {
 
 	it("saves stack to cookie when Kevin Bacon is reached", async () => {
 		const cookie = await import("../utils/cookie");
-		const setCookieDataSpy = vi.spyOn(cookie, "setCookieData").mockReturnValue({
-			completed: true,
-			actorId: 1,
-			degrees: 1,
-			numSolved: 1,
-			longestStreak: 1,
-			streak: 1,
-			stack: [],
-		});
+		const setCookieDataSpy = vi
+			.spyOn(cookie, "setCookieData")
+			.mockReturnValue({
+				completed: true,
+				actorId: 1,
+				degrees: 1,
+				numSolved: 1,
+				longestStreak: 1,
+				streak: 1,
+				stack: [],
+			});
 
 		const api = await import("../api");
 		vi.spyOn(api, "getActorsForMovie").mockResolvedValueOnce([
@@ -123,9 +125,18 @@ describe("App", () => {
 		expect(setCookieDataSpy).toHaveBeenCalledWith(
 			expect.objectContaining({
 				stack: [
-					expect.objectContaining({ type: "actor", data: expect.objectContaining({ id: 1 }) }),
-					expect.objectContaining({ type: "movie", data: expect.objectContaining({ id: 1 }) }),
-					expect.objectContaining({ type: "actor", data: expect.objectContaining({ id: 4724 }) }),
+					expect.objectContaining({
+						type: "actor",
+						data: expect.objectContaining({ id: 1 }),
+					}),
+					expect.objectContaining({
+						type: "movie",
+						data: expect.objectContaining({ id: 1 }),
+					}),
+					expect.objectContaining({
+						type: "actor",
+						data: expect.objectContaining({ id: 4724 }),
+					}),
 				],
 			}),
 		);
@@ -134,9 +145,33 @@ describe("App", () => {
 	it("restores stack from cookie for a previously completed game", async () => {
 		const cookie = await import("../utils/cookie");
 		const savedStack = [
-			{ type: "actor" as const, data: { id: 1, name: "Tom Hanks", profile_path: "", character: "Forrest Gump" } },
-			{ type: "movie" as const, data: { id: 1, title: "Big", poster_path: "", release_date: "1988-06-03" } },
-			{ type: "actor" as const, data: { id: 4724, name: "Kevin Bacon", profile_path: "", character: "Himself" } },
+			{
+				type: "actor" as const,
+				data: {
+					id: 1,
+					name: "Tom Hanks",
+					profile_path: "",
+					character: "Forrest Gump",
+				},
+			},
+			{
+				type: "movie" as const,
+				data: {
+					id: 1,
+					title: "Big",
+					poster_path: "",
+					release_date: "1988-06-03",
+				},
+			},
+			{
+				type: "actor" as const,
+				data: {
+					id: 4724,
+					name: "Kevin Bacon",
+					profile_path: "",
+					character: "Himself",
+				},
+			},
 		];
 
 		vi.spyOn(cookie, "getAllCookieData").mockReturnValue({

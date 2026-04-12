@@ -81,10 +81,8 @@ function App() {
 					} else {
 						setEndMessage({
 							type: "failure",
-							node: (
-								<FailureMessage firstActor={actor} />
-							)
-						})
+							node: <FailureMessage firstActor={actor} />,
+						});
 					}
 				}
 				setLoading(false);
