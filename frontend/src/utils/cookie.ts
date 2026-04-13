@@ -40,13 +40,35 @@ export function getAllCookieData(): { [key: string]: CookieData } {
 	const cookie = Cookies.get(COOKIE_NAME);
 	if (cookie) {
 		try {
-			const data = JSON.parse(cookie);
+			const data: { [key: string]: CookieData } = JSON.parse(cookie);
+			for (const key in data) {
+				data[key].stack = minifyStack(data[key].stack);
+			}
+			Cookies.set(COOKIE_NAME, JSON.stringify(data), {
+				expires: 365 * 30,
+			});
 			return data;
 		} catch {
 			return {};
 		}
 	}
 	return {};
+}
+
+function minifyStack(stack: CookieData["stack"]): CookieData["stack"] {
+	return stack?.map((item) => ({
+		type: item.type,
+		data:
+			item.type === "actor"
+				? {
+						id: (item.data as Actor).id,
+						name: (item.data as Actor).name,
+					}
+				: {
+						id: (item.data as Movie).id,
+						title: (item.data as Movie).title,
+					},
+	}));
 }
 
 export function setCookieData(data: CookieData): CookieData {
@@ -86,6 +108,7 @@ export function setCookieData(data: CookieData): CookieData {
 
 	allData[today] = {
 		...data,
+		stack: minifyStack(data.stack),
 		streak,
 		longestStreak,
 		numSolved,
