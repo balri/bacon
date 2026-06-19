@@ -7,6 +7,7 @@ export interface Actor {
 	character?: string;
 	profile_path?: string;
 	bacon_number?: number;
+	game_number?: number;
 }
 
 export interface Movie {

@@ -41,6 +41,7 @@ function App() {
 		Array<{ type: "actor" | "movie"; data: Actor | Movie }>
 	>([]);
 	const [loading, setLoading] = useState(true);
+	const [gameNumber, setGameNumber] = useState<number | null>(null);
 	const [endMessage, setEndMessage] = useState<null | {
 		type: string;
 		node: React.ReactNode;
@@ -60,6 +61,7 @@ function App() {
 			(async () => {
 				const actor = await getDailyActor();
 				if (actor && actor.id === data.actorId) {
+					setGameNumber(actor.game_number ?? null);
 					if (data.stack) {
 						setStack(data.stack);
 					} else {
@@ -98,6 +100,7 @@ function App() {
 		const actor = await getDailyActor();
 		if (actor) {
 			setStack([{ type: "actor", data: actor }]);
+			setGameNumber(actor.game_number ?? null);
 			setEndMessage(null);
 		}
 		setLoading(false);
@@ -177,18 +180,20 @@ function App() {
 		return (
 			<div className="app-container">
 				<h1 className="main-title">🎬 Mmmm, Bacon 🥓</h1>
+				{gameNumber != null && <p className="game-number">Game #{gameNumber}</p>}
 				<Loading />
 			</div>
 		);
 	}
 
 	if (endMessage) {
-		return <EndMessage endMessage={endMessage.node} stack={stack} />;
+		return <EndMessage endMessage={endMessage.node} stack={stack} gameNumber={gameNumber} />;
 	}
 
 	return (
 		<div className="app-container">
 			<h1 className="main-title">🎬 Mmmm, Bacon 🥓</h1>
+			{gameNumber != null && <p className="game-number">Game #{gameNumber}</p>}
 			<div className="top-bar">
 				{stack.length > 1 && !gameEnded && (
 					<button className="back-btn" onClick={handleBack}>
