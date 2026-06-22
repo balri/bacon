@@ -180,7 +180,7 @@ function App() {
 		return (
 			<div className="app-container">
 				<h1 className="main-title">🎬 Mmmm, Bacon 🥓</h1>
-				{gameNumber != null && <p className="game-number">Game #{gameNumber}</p>}
+				{gameNumber != null && <p className="game-number">Game #{gameNumber} · {new Date(today + "T00:00:00").toLocaleDateString("en-AU", { day: "numeric", month: "long", year: "numeric" })}</p>}
 				<Loading />
 			</div>
 		);
@@ -193,7 +193,7 @@ function App() {
 	return (
 		<div className="app-container">
 			<h1 className="main-title">🎬 Mmmm, Bacon 🥓</h1>
-			{gameNumber != null && <p className="game-number">Game #{gameNumber}</p>}
+			{gameNumber != null && <p className="game-number">Game #{gameNumber} · {new Date(today + "T00:00:00").toLocaleDateString("en-AU", { day: "numeric", month: "long", year: "numeric" })}</p>}
 			<div className="top-bar">
 				{stack.length > 1 && !gameEnded && (
 					<button className="back-btn" onClick={handleBack}>
