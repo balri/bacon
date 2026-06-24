@@ -1,17 +1,21 @@
-import type { Actor } from "../utils/types";
+import type { Actor, Movie } from "../utils/types";
 
 import ActorListItem from "./ActorListItem";
 
 interface ActorListProps {
 	actors: Actor[];
 	onActorClick: (actor: Actor) => void;
-	alreadySelected: boolean;
+	stack: Array<{ type: "actor" | "movie"; data: Actor | Movie }>;
 }
 export default function ActorList({
 	actors,
 	onActorClick,
-	alreadySelected,
+	stack,
 }: ActorListProps) {
+	const actorIdsInStack = stack
+		.filter((item) => item.type === "actor")
+		.map((item) => (item.data as Actor).id);
+
 	return (
 		<ul className="actor-list">
 			{actors && actors.length > 0 ? (
@@ -20,7 +24,7 @@ export default function ActorList({
 						key={actor.id}
 						actor={actor}
 						onActorClick={onActorClick}
-						alreadySelected={alreadySelected}
+						alreadySelected={actorIdsInStack.includes(actor.id)}
 					/>
 				))
 			) : (

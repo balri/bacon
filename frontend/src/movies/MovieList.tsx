@@ -1,18 +1,22 @@
-import type { Movie } from "../utils/types";
+import type { Actor, Movie } from "../utils/types";
 
 import MovieListItem from "./MovieListItem";
 
 interface MovieListProps {
 	movies: Movie[];
 	onMovieClick: (movie: Movie) => void;
-	alreadySelected: boolean;
+	stack: Array<{ type: "actor" | "movie"; data: Actor | Movie }>;
 }
 
 export default function MovieList({
 	movies,
 	onMovieClick,
-	alreadySelected,
+	stack,
 }: MovieListProps) {
+	const movieIdsInStack = stack
+		.filter((item) => item.type === "movie")
+		.map((item) => (item.data as Movie).id);
+
 	return (
 		<ul className="movie-list">
 			{movies && movies.length > 0 ? (
@@ -21,7 +25,7 @@ export default function MovieList({
 						key={movie.id}
 						movie={movie}
 						onMovieClick={onMovieClick}
-						alreadySelected={alreadySelected}
+						alreadySelected={movieIdsInStack.includes(movie.id)}
 					/>
 				))
 			) : (

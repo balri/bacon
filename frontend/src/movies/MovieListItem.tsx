@@ -17,13 +17,10 @@ export default function MovieListItem({
 		<li
 			key={movie.id}
 			className={"movie-item"}
+			title={alreadySelected ? "Already selected" : undefined}
 			style={
 				alreadySelected
-					? {
-							cursor: "not-allowed",
-							opacity: 0.5,
-							pointerEvents: "none",
-						}
+					? { cursor: "not-allowed", opacity: 0.5 }
 					: { cursor: "pointer" }
 			}
 			onClick={alreadySelected ? undefined : () => onMovieClick(movie)}

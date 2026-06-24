@@ -28,18 +28,6 @@ export default function MovieView({ movie, onActorClick, stack }: MovieProps) {
 		loadActors();
 	}, [movie.id]);
 
-	const actorIdsInStack = stack
-		.filter((item) => item.type === "actor")
-		.map((item) => (item.data as Actor).id);
-
-	const filteredActors = actors
-		? actors.filter((actor) => !actorIdsInStack.includes(actor.id))
-		: [];
-
-	const selectedActors = actors
-		? actors.filter((actor) => actorIdsInStack.includes(actor.id))
-		: [];
-
 	if (loading) {
 		return <Loading />;
 	}
@@ -48,18 +36,11 @@ export default function MovieView({ movie, onActorClick, stack }: MovieProps) {
 		<div>
 			<MovieCard movie={movie} />
 			<h3 className="actors-title">Select an actor:</h3>
-			{selectedActors.length > 0 && (
+			{actors && actors.length > 0 ? (
 				<ActorList
-					actors={selectedActors}
-					onActorClick={() => {}}
-					alreadySelected={true}
-				/>
-			)}
-			{filteredActors.length > 0 ? (
-				<ActorList
-					actors={filteredActors}
+					actors={actors}
 					onActorClick={onActorClick}
-					alreadySelected={false}
+					stack={stack}
 				/>
 			) : (
 				<div className="error-message">

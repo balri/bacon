@@ -16,7 +16,7 @@ describe("MovieList", () => {
 			<MovieList
 				movies={movies}
 				onMovieClick={onMovieClick}
-				alreadySelected={false}
+				stack={[]}
 			/>,
 		);
 		expect(screen.getByText("Forrest Gump")).toBeInTheDocument();
@@ -32,7 +32,7 @@ describe("MovieList", () => {
 			<MovieList
 				movies={movies}
 				onMovieClick={onMovieClick}
-				alreadySelected={false}
+				stack={[]}
 			/>,
 		);
 		expect(

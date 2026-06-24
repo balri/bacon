@@ -18,13 +18,10 @@ export default function ActorListItem({
 		<li
 			key={actor.id}
 			className={"actor-item"}
+			title={alreadySelected ? "Already selected" : undefined}
 			style={
 				alreadySelected
-					? {
-							cursor: "not-allowed",
-							opacity: 0.5,
-							pointerEvents: "none",
-						}
+					? { cursor: "not-allowed", opacity: 0.5 }
 					: { cursor: "pointer" }
 			}
 			onClick={alreadySelected ? undefined : () => onActorClick(actor)}

@@ -16,7 +16,7 @@ describe("ActorList", () => {
 			<ActorList
 				actors={actors}
 				onActorClick={onActorClick}
-				alreadySelected={false}
+				stack={[]}
 			/>,
 		);
 		expect(screen.getByText("Tom Hanks")).toBeInTheDocument();
@@ -32,7 +32,7 @@ describe("ActorList", () => {
 			<ActorList
 				actors={actors}
 				onActorClick={onActorClick}
-				alreadySelected={false}
+				stack={[]}
 			/>,
 		);
 		expect(

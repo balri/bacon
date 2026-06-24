@@ -40,18 +40,6 @@ export default function ActorView({
 		loadMovies();
 	}, [actor.id]);
 
-	const movieIdsInStack = stack
-		.filter((item) => item.type === "movie")
-		.map((item) => (item.data as Movie).id);
-
-	const filteredMovies = movies
-		? movies.filter((movie) => !movieIdsInStack.includes(movie.id))
-		: [];
-
-	const selectedMovies = movies
-		? movies.filter((movie) => movieIdsInStack.includes(movie.id))
-		: [];
-
 	const actorsInStackCount = stack.filter(
 		(item) => item.type === "actor",
 	).length;
@@ -80,18 +68,11 @@ export default function ActorView({
 		<div>
 			<ActorCard actor={actor} />
 			<h3 className="movies-title">Select a movie:</h3>
-			{selectedMovies.length > 0 && (
+			{movies && movies.length > 0 ? (
 				<MovieList
-					movies={selectedMovies}
-					onMovieClick={() => {}}
-					alreadySelected={true}
-				/>
-			)}
-			{filteredMovies.length > 0 ? (
-				<MovieList
-					movies={filteredMovies}
+					movies={movies}
 					onMovieClick={onMovieClick}
-					alreadySelected={false}
+					stack={stack}
 				/>
 			) : (
 				<div className="error-message">

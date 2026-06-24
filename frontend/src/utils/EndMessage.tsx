@@ -10,12 +10,25 @@ interface EndMessageProps {
 	gameNumber?: number | null;
 }
 
-export default function EndMessage({ endMessage, stack, gameNumber }: EndMessageProps) {
+export default function EndMessage({
+	endMessage,
+	stack,
+	gameNumber,
+}: EndMessageProps) {
 	const today = getTodayDateString();
 	return (
 		<div className="app-container">
 			<h1 className="main-title">🎬 Mmmm, Bacon 🥓</h1>
-			{gameNumber != null && <p className="game-number">Game #{gameNumber} · {new Date(today + "T00:00:00").toLocaleDateString("en-AU", { day: "numeric", month: "long", year: "numeric" })}</p>}
+			{gameNumber != null && (
+				<p className="game-number">
+					Game #{gameNumber} ·{" "}
+					{new Date(today + "T00:00:00").toLocaleDateString("en-AU", {
+						day: "numeric",
+						month: "long",
+						year: "numeric",
+					})}
+				</p>
+			)}
 			{stack.length > 2 && (
 				<Breadcrumbs stack={stack} onBreadcrumbClick={undefined} />
 			)}
