@@ -1,0 +1,27 @@
+#!/bin/sh
+set -e
+
+ROOT="$(git rev-parse --show-toplevel)"
+
+echo ""
+echo "=== Frontend: format ==="
+cd "$ROOT/frontend"
+npm run format
+git add -A "$ROOT/frontend"
+
+echo ""
+echo "=== Frontend: lint ==="
+npm run lint
+npm run lint:css
+
+echo ""
+echo "=== Frontend: tests ==="
+npx vitest run
+
+echo ""
+echo "=== Mobile: lint ==="
+cd "$ROOT/mobile"
+npm run lint
+
+echo ""
+echo "Pre-commit checks passed."

@@ -8,8 +8,8 @@
 		"build": "tsc -b && vite build",
 		"format": "prettier --write .",
 		"lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
-		"lint:css": "stylelint '**/*.css'",
-		"lint:css:fix": "stylelint '**/*.css' --fix",
+		"lint:css": "stylelint 'src/**/*.css'",
+		"lint:css:fix": "stylelint 'src/**/*.css' --fix",
 		"lint:fix": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --fix",
 		"preview": "vite preview",
 		"test": "vitest"
