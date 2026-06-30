@@ -24,7 +24,7 @@ export default function Breadcrumbs({
 				className="breadcrumb-accordion"
 				tabIndex={0}
 			>
-				<span className="breadcrumb-accordion-title">Progress</span>
+				<span className="breadcrumb-accordion-title">Steps</span>
 				<span style={{ flexShrink: 0 }}>
 					<span className="breadcrumb-accordion-steps">{`${stepsRemaining} step${stepsRemaining !== 1 ? "s" : ""} remaining`}</span>
 					<svg

@@ -15,9 +15,9 @@ describe("Breadcrumbs", () => {
 	it("renders the accordion button with label and steps remaining count", () => {
 		render(<Breadcrumbs stack={stack} />);
 		expect(
-			screen.getByRole("button", { name: /progress/i }),
+			screen.getByRole("button", { name: /steps/i }),
 		).toBeInTheDocument();
-		expect(screen.getByText(/progress/i)).toBeInTheDocument();
+		expect(screen.getByText("Steps")).toBeInTheDocument();
 		expect(screen.getByText(/5 steps remaining/i)).toBeInTheDocument();
 	});
 
@@ -30,7 +30,7 @@ describe("Breadcrumbs", () => {
 
 	it("shows breadcrumbs when accordion is open", () => {
 		render(<Breadcrumbs stack={stack} />);
-		const accordionBtn = screen.getByRole("button", { name: /progress/i });
+		const accordionBtn = screen.getByRole("button", { name: /steps/i });
 		fireEvent.click(accordionBtn);
 		expect(screen.getByText("Actor One")).toBeInTheDocument();
 		expect(screen.getByText("Movie Two")).toBeInTheDocument();
@@ -40,7 +40,7 @@ describe("Breadcrumbs", () => {
 	it("renders clickable buttons for all but last breadcrumb when open", () => {
 		const handleClick = vi.fn();
 		render(<Breadcrumbs stack={stack} onBreadcrumbClick={handleClick} />);
-		const accordionBtn = screen.getByRole("button", { name: /progress/i });
+		const accordionBtn = screen.getByRole("button", { name: /steps/i });
 		fireEvent.click(accordionBtn);
 		const buttons = screen.getAllByRole("button");
 		// The first button is the accordion, next are the breadcrumbs
@@ -52,7 +52,7 @@ describe("Breadcrumbs", () => {
 	it("calls onBreadcrumbClick with correct index when open", () => {
 		const handleClick = vi.fn();
 		render(<Breadcrumbs stack={stack} onBreadcrumbClick={handleClick} />);
-		const accordionBtn = screen.getByRole("button", { name: /progress/i });
+		const accordionBtn = screen.getByRole("button", { name: /steps/i });
 		fireEvent.click(accordionBtn);
 		const buttons = screen.getAllByRole("button");
 		fireEvent.click(buttons[2]); // Movie Two
@@ -64,7 +64,7 @@ describe("Breadcrumbs", () => {
 	it("applies clickable and not-clickable classes correctly when open", () => {
 		const handleClick = vi.fn();
 		render(<Breadcrumbs stack={stack} onBreadcrumbClick={handleClick} />);
-		const accordionBtn = screen.getByRole("button", { name: /progress/i });
+		const accordionBtn = screen.getByRole("button", { name: /steps/i });
 		fireEvent.click(accordionBtn);
 		const buttons = screen.getAllByRole("button");
 		// Skip the first button (accordion)

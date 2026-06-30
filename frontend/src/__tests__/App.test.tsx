@@ -191,7 +191,7 @@ describe("App", () => {
 		render(<App />);
 		await screen.findByText(/congratulations/i);
 
-		fireEvent.click(screen.getByText("Progress"));
+		fireEvent.click(screen.getByText("Steps"));
 		const breadcrumbList = screen.getByRole("list");
 		expect(breadcrumbList).toHaveTextContent("Tom Hanks");
 		expect(breadcrumbList).toHaveTextContent("Big");
