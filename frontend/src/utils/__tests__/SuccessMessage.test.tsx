@@ -61,6 +61,36 @@ describe("SuccessMessage", () => {
 	});
 });
 
+describe("SuccessMessage confetti", () => {
+	const baseProps = {
+		firstActor: {
+			id: 1,
+			name: "Tom Hanks",
+			profile_path: "",
+			character: "A",
+		},
+		degrees: 3,
+	};
+
+	it("shows confetti when streak is a milestone", () => {
+		render(<SuccessMessage {...baseProps} streak={5} />);
+		expect(screen.getByTestId("confetti")).toBeInTheDocument();
+	});
+
+	it("does not show confetti when streak is not a milestone", () => {
+		render(<SuccessMessage {...baseProps} streak={6} />);
+		expect(screen.queryByTestId("confetti")).not.toBeInTheDocument();
+	});
+
+	it.each([1, 5, 25, 100, 365])(
+		"shows confetti for milestone streak %i",
+		(streak) => {
+			render(<SuccessMessage {...baseProps} streak={streak} />);
+			expect(screen.getByTestId("confetti")).toBeInTheDocument();
+		},
+	);
+});
+
 describe("SuccessMessage share link", () => {
 	const defaultProps = {
 		firstActor: {

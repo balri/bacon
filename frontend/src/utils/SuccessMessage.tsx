@@ -1,6 +1,9 @@
 import React from "react";
 
+import Confetti from "./Confetti";
 import type { Actor } from "./types";
+
+const MILESTONE_STREAKS = [1, 5, 25, 100, 365];
 
 type SuccessMessageProps = {
 	firstActor: Actor | null;
@@ -20,6 +23,7 @@ export default function SuccessMessage(props: SuccessMessageProps) {
 	} = props;
 	const streakVal =
 		typeof streakProp === "number" && !isNaN(streakProp) ? streakProp : 1;
+	const isMilestoneStreak = MILESTONE_STREAKS.includes(streakVal);
 	const longestStreakVal =
 		typeof longestStreak === "number" && !isNaN(longestStreak)
 			? longestStreak
@@ -87,6 +91,7 @@ export default function SuccessMessage(props: SuccessMessageProps) {
 				color: "#222",
 			}}
 		>
+			{isMilestoneStreak && <Confetti />}
 			<span
 				role="img"
 				aria-label="trophy"
