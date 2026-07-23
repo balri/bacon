@@ -2,7 +2,7 @@ import React from "react";
 
 const COLORS = ["#1a8917", "#ffb300", "#e53935", "#1e88e5", "#8e24aa"];
 const PARTICLE_COUNT = 150;
-const DURATION_MS = 3000;
+const DURATION_MS = 5000;
 
 type Particle = {
 	x: number;
