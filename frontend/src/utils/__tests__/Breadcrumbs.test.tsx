@@ -27,7 +27,7 @@ describe("Breadcrumbs", () => {
 			screen.getByRole("button", { name: /steps/i }),
 		).toBeInTheDocument();
 		expect(screen.getByText("Steps")).toBeInTheDocument();
-		expect(screen.getByText(/5 steps/i)).toBeInTheDocument();
+		expect(screen.getByText(/1 step/i)).toBeInTheDocument();
 		expect(screen.queryByText("remaining")).not.toBeInTheDocument();
 	});
 

@@ -17,6 +17,11 @@ export default function Breadcrumbs({
 	const steps = stack.filter((item) => item.type === "actor").length - 1;
 	const stepsRemaining = steps > 0 ? SIX_DEGREES - steps : SIX_DEGREES;
 
+	let stepsMessage = `${stepsRemaining} step${stepsRemaining !== 1 ? "s" : ""} remaining`;
+	if (gameEnded) {
+		stepsMessage = `${steps} steps`;
+	}
+
 	return (
 		<nav className="breadcrumb-vertical" style={{ display: "block" }}>
 			<button
@@ -28,7 +33,9 @@ export default function Breadcrumbs({
 			>
 				<span className="breadcrumb-accordion-title">Steps</span>
 				<span style={{ flexShrink: 0 }}>
-					<span className="breadcrumb-accordion-steps">{`${stepsRemaining} step${stepsRemaining !== 1 ? "s" : ""}${!gameEnded && " remaining"}`}</span>
+					<span className="breadcrumb-accordion-steps">
+						{stepsMessage}
+					</span>
 					<svg
 						className="breadcrumb-accordion-icon"
 						style={{
