@@ -5,11 +5,13 @@ import { SIX_DEGREES, type Actor, type Movie } from "./types";
 interface BreadcrumbsProps {
 	stack: Array<{ type: "actor" | "movie"; data: Actor | Movie }>;
 	onBreadcrumbClick?: (index: number) => void;
+	gameEnded: boolean;
 }
 
 export default function Breadcrumbs({
 	stack,
 	onBreadcrumbClick,
+	gameEnded,
 }: BreadcrumbsProps) {
 	const [open, setOpen] = React.useState(false);
 	const steps = stack.filter((item) => item.type === "actor").length - 1;
@@ -26,7 +28,7 @@ export default function Breadcrumbs({
 			>
 				<span className="breadcrumb-accordion-title">Steps</span>
 				<span style={{ flexShrink: 0 }}>
-					<span className="breadcrumb-accordion-steps">{`${stepsRemaining} step${stepsRemaining !== 1 ? "s" : ""} remaining`}</span>
+					<span className="breadcrumb-accordion-steps">{`${stepsRemaining} step${stepsRemaining !== 1 ? "s" : ""}${!gameEnded && " remaining"}`}</span>
 					<svg
 						className="breadcrumb-accordion-icon"
 						style={{

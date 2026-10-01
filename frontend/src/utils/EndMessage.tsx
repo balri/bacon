@@ -30,7 +30,11 @@ export default function EndMessage({
 				</p>
 			)}
 			{stack.length > 2 && (
-				<Breadcrumbs stack={stack} onBreadcrumbClick={undefined} />
+				<Breadcrumbs
+					stack={stack}
+					onBreadcrumbClick={undefined}
+					gameEnded={true}
+				/>
 			)}
 
 			<div className="end-overlay">

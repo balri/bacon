@@ -227,6 +227,7 @@ function App() {
 			<Breadcrumbs
 				stack={stack}
 				onBreadcrumbClick={handleBreadcrumbClick}
+				gameEnded={gameEnded}
 			/>
 			{current ? (
 				current.type === "actor" ? (
