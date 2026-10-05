@@ -31,6 +31,38 @@ describe("Breadcrumbs", () => {
 		expect(screen.queryByText("remaining")).not.toBeInTheDocument();
 	});
 
+	it("pluralizes the completed steps count", () => {
+		const multipleStepsStack = [
+			...stack,
+			{
+				type: "movie" as const,
+				data: { id: 4, title: "Movie Four" } as Movie,
+			},
+			{
+				type: "actor" as const,
+				data: { id: 5, name: "Actor Five" } as Actor,
+			},
+		];
+		render(<Breadcrumbs stack={multipleStepsStack} gameEnded={true} />);
+		expect(screen.getByText("2 steps")).toBeInTheDocument();
+	});
+
+	it("singularizes one remaining step", () => {
+		const oneStepRemainingStack = Array.from({ length: 11 }, (_, index) =>
+			index % 2 === 0
+				? {
+						type: "actor" as const,
+						data: { id: index, name: `Actor ${index}` } as Actor,
+					}
+				: {
+						type: "movie" as const,
+						data: { id: index, title: `Movie ${index}` } as Movie,
+					},
+		);
+		render(<Breadcrumbs stack={oneStepRemainingStack} gameEnded={false} />);
+		expect(screen.getByText("1 step remaining")).toBeInTheDocument();
+	});
+
 	it("does not show breadcrumbs list when accordion is closed", () => {
 		render(<Breadcrumbs stack={stack} gameEnded={false} />);
 		expect(screen.queryByText("Actor One")).not.toBeInTheDocument();

@@ -8,6 +8,10 @@ interface BreadcrumbsProps {
 	gameEnded: boolean;
 }
 
+function pluraliseStep(num: number): string {
+	return `step${num !== 1 ? "s" : ""}`;
+}
+
 export default function Breadcrumbs({
 	stack,
 	onBreadcrumbClick,
@@ -17,9 +21,9 @@ export default function Breadcrumbs({
 	const steps = stack.filter((item) => item.type === "actor").length - 1;
 	const stepsRemaining = steps > 0 ? SIX_DEGREES - steps : SIX_DEGREES;
 
-	let stepsMessage = `${stepsRemaining} step${stepsRemaining !== 1 ? "s" : ""} remaining`;
+	let stepsMessage = `${stepsRemaining} ${pluraliseStep(stepsRemaining)} remaining`;
 	if (gameEnded) {
-		stepsMessage = `${steps} steps`;
+		stepsMessage = `${steps} ${pluraliseStep(steps)}`;
 	}
 
 	return (
