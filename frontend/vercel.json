@@ -1,0 +1,8 @@
+{
+	"rewrites": [
+		{
+			"source": "/bacon/api/:path*",
+			"destination": "/api/bacon/:path*"
+		}
+	]
+}

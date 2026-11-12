@@ -22,6 +22,8 @@ export default [
 				window: "readonly",
 				document: "readonly",
 				fetch: "readonly",
+				process: "readonly",
+				console: "readonly",
 			},
 		},
 		plugins: {
