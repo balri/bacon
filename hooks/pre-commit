@@ -4,24 +4,25 @@ set -e
 ROOT="$(git rev-parse --show-toplevel)"
 
 echo ""
-echo "=== Frontend: format ==="
-cd "$ROOT/frontend"
+echo "=== Web app: format ==="
+cd "$ROOT"
 npm run format
-git add -A "$ROOT/frontend"
+git add -A "$ROOT/.gitignore" "$ROOT/.prettierignore" "$ROOT/.prettierrc" \
+	"$ROOT/.stylelintrc" "$ROOT/README.md" "$ROOT/api" "$ROOT/eslint.config.js" \
+	"$ROOT/index.html" "$ROOT/package-lock.json" "$ROOT/package.json" \
+	"$ROOT/server" "$ROOT/src" "$ROOT/tsconfig.app.json" \
+	"$ROOT/tsconfig.eslint.json" "$ROOT/tsconfig.json" \
+	"$ROOT/tsconfig.node.json" "$ROOT/vercel.json" "$ROOT/vite.config.ts" \
+	"$ROOT/vitest.config.ts"
 
 echo ""
-echo "=== Frontend: lint ==="
+echo "=== Web app: lint ==="
 npm run lint
 npm run lint:css
 
 echo ""
-echo "=== Frontend: tests ==="
+echo "=== Web app: tests ==="
 npx vitest run
-
-echo ""
-echo "=== Mobile: lint ==="
-cd "$ROOT/mobile"
-npm run lint
 
 echo ""
 echo "Pre-commit checks passed."

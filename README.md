@@ -39,7 +39,7 @@ keep using its current routes. The initial port includes:
 - `GET /bacon/api/actors/:movieId`
 - `GET /bacon/api/actor/:actorId`
 
-Set the Vercel project root directory to `frontend`.
+Use the repository root (`.`) as the Vercel project root directory.
 
 Configure these Vercel environment variables:
 
@@ -51,9 +51,9 @@ Configure these Vercel environment variables:
   newlines are supported)
 
 For local development, `npm run dev` proxies `/bacon/api` to the legacy backend
-at `http://localhost:3000`. To run the Vercel Functions locally instead, use
-the Vercel CLI from this directory (`vercel dev`) and configure the same
-environment variables.
+at `http://localhost:3000`. To run the Vercel Functions locally instead, run
+`vercel dev` from the repository root and configure the same environment
+variables.
 
 The mobile app's API base URL has not yet been migrated. The state-changing
 `prime-daily-actor` endpoint is also intentionally deferred until it has an
