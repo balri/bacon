@@ -1,9 +1,9 @@
 import { google } from "googleapis";
 
-import { getCache, setCache } from "./cache";
-import { getActor } from "./actorCredits";
-import { ExternalServiceError } from "./tmdb";
-import type { Actor } from "./types";
+import { getCache, setCache } from "./cache.js";
+import { getActor } from "./actorCredits.js";
+import { ExternalServiceError } from "./tmdb.js";
+import type { Actor } from "./types.js";
 
 const SHEET_RANGE = "DailyActor!A:G";
 const COLUMN_DATE = 1;

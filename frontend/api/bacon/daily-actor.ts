@@ -1,8 +1,8 @@
-import { createGetHandler } from "../../server/http";
+import { createGetHandler } from "../../server/http.js";
 import {
 	getBrisbaneDate,
 	getDailyActorFromSheet,
-} from "../../server/dailyActor";
+} from "../../server/dailyActor.js";
 
 export default createGetHandler(async (_request, response) => {
 	const actor = await getDailyActorFromSheet(getBrisbaneDate());

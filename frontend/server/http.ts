@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 
-import { ExternalServiceError } from "./tmdb";
+import { ExternalServiceError } from "./tmdb.js";
 
 type Handler = (
 	request: VercelRequest,

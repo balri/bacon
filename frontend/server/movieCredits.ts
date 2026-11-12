@@ -1,6 +1,6 @@
-import { getCache, setCache } from "./cache";
-import { fetchTmdb } from "./tmdb";
-import { EXCLUDED_GENRES, MAINSTREAM_GENRES, type Movie } from "./types";
+import { getCache, setCache } from "./cache.js";
+import { fetchTmdb } from "./tmdb.js";
+import { EXCLUDED_GENRES, MAINSTREAM_GENRES, type Movie } from "./types.js";
 
 function isMainstreamMovie(movie: Movie): boolean {
 	const hasMainstreamGenre =

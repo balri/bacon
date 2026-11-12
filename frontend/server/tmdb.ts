@@ -1,4 +1,4 @@
-import { TMDB_BASE_URL } from "./types";
+import { TMDB_BASE_URL } from "./types.js";
 
 export class ExternalServiceError extends Error {
 	readonly status?: number;

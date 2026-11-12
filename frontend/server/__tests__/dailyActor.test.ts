@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { getBrisbaneDate } from "../dailyActor";
+import { getBrisbaneDate } from "../dailyActor.js";
 
 describe("getBrisbaneDate", () => {
 	it("uses the Brisbane date when UTC is still on the previous day", () => {

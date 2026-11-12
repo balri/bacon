@@ -1,6 +1,6 @@
-import { getCache, setCache } from "./cache";
-import { ExternalServiceError, fetchTmdb } from "./tmdb";
-import type { Actor } from "./types";
+import { getCache, setCache } from "./cache.js";
+import { ExternalServiceError, fetchTmdb } from "./tmdb.js";
+import type { Actor } from "./types.js";
 
 export async function actorCredits(movieId: number): Promise<Actor[]> {
 	const cacheKey = `actors-${movieId}`;
