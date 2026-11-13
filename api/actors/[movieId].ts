@@ -1,5 +1,5 @@
-import { actorCredits } from "../../../server/actorCredits.js";
-import { createGetHandler, getNumericParam } from "../../../server/http.js";
+import { actorCredits } from "../../server/actorCredits.js";
+import { createGetHandler, getNumericParam } from "../../server/http.js";
 
 export default createGetHandler(async (request, response) => {
 	const movieId = getNumericParam(request, response, "movieId");

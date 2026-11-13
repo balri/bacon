@@ -12,7 +12,16 @@
 		"lint:css:fix": "stylelint 'src/**/*.css' --fix",
 		"lint:fix": "eslint \"api/**/*.{js,jsx,ts,tsx}\" \"server/**/*.{js,jsx,ts,tsx}\" \"src/**/*.{js,jsx,ts,tsx}\" --fix",
 		"preview": "vite preview",
-		"test": "vitest"
+		"prepare": "husky",
+		"test": "vitest",
+		"test:run": "vitest run"
+	},
+	"lint-staged": {
+		"**/*.{ts,tsx,js,jsx,json,css,md}": "prettier --write",
+		"api/**/*.{ts,tsx,js,jsx}": "eslint --max-warnings 0",
+		"server/**/*.{ts,tsx,js,jsx}": "eslint --max-warnings 0",
+		"src/**/*.{ts,tsx,js,jsx}": "eslint --max-warnings 0",
+		"**/*.css": "stylelint --max-warnings 0"
 	},
 	"dependencies": {
 		"googleapis": "^178.0.0",
@@ -42,7 +51,9 @@
 		"eslint-plugin-react-hooks": "^5.2.0",
 		"eslint-plugin-react-refresh": "^0.4.22",
 		"globals": "^16.4.0",
+		"husky": "^9.1.7",
 		"jsdom": "^27.1.0",
+		"lint-staged": "^16.4.0",
 		"prettier": "^3.6.2",
 		"stylelint-config-standard": "^39.0.1",
 		"stylelint-order": "^7.0.0",

@@ -1,6 +1,6 @@
 import type { Actor, Movie } from "./utils/types";
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || "/bacon/api";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
 
 export async function getDailyActor(): Promise<Actor | null> {
 	const res = await fetch(`${BASE_URL}/daily-actor`);

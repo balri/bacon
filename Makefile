@@ -1,6 +1,5 @@
 .PHONY: setup
 
 setup:
-	chmod +x hooks/pre-commit
-	ln -sf ../../hooks/pre-commit .git/hooks/pre-commit
+	npm run prepare
 	@echo "Git hooks installed."

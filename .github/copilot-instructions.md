@@ -1,54 +1,62 @@
 # Copilot Instructions for AI Agents
 
 ## Project Overview
-This monorepo contains three main components:
-- **Repository root**: React + TypeScript web app (Vite)
-- **mobile/**: Expo React Native app
-- **backend/**: (deprecated, see README)
-- **analysis/**: Python scripts for ratings and data import
+This repository is a Vite + React + TypeScript app for the Bacon movie/actor experience, with API functionality split between Vercel serverless functions and the legacy local server.
+
+- **Repository root**: React web app (`src/`, `index.html`, Vite config)
+- **api/**: Vercel Functions for the Bacon API (`api/`)
+- **server/**: Legacy backend/server code kept for compatibility and local proxying
+- **analysis/**: Python scripts for ratings/data import workflows
 
 ## Architecture & Data Flow
-- **src/** and **mobile/app/components/** mirror each other for UI components (e.g., ActorCard, MovieCard, Breadcrumbs).
-- API calls are centralized in `src/api.ts` and `mobile/lib/api.ts`.
-- Data flows from API modules to list/detail components (e.g., `MovieList`, `MovieView`).
-- Utility components (e.g., Loading, SuccessMessage) are reused for consistent UX.
+- The web app lives in `src/` and is the primary UI surface.
+- API routes under `api/` implement the current Bacon backend behavior and are served by Vercel.
+- `server/` remains for legacy support and local dev compatibility.
+- Data fetching should follow the established patterns in the web app and the API modules rather than introducing new ad hoc backend code.
+- Reusable UI pieces live under `src/utils/` and domain folders such as `src/actors/` and `src/movies/`.
 
 ## Developer Workflows
 ### Web app
+- **Install deps:** `npm install`
 - **Dev server:** `npm run dev`
+- **Build:** `npm run build`
 - **Tests:** `npm run test` (Vitest)
 - **Lint:** `npm run lint`
 - **Format:** `npm run format`
 
-### Mobile
-- **Start Metro Bundler:** `npx expo start`
-- **Run on iOS:** `npx expo start --ios`
-- **Run on Android:** `npx expo start --android`
-- **Lint:** `npx eslint . --fix`
-- **Format:** `npx prettier --write .`
+### API / Vercel work
+- **Local Vercel dev:** run `vercel dev` from the repository root
+- **Project root for Vercel:** use the repository root (`.`)
+- **Current API routes:** `/api/daily-actor`, `/api/movies/:actorId`, `/api/actors/:movieId`, `/api/actor/:actorId`
+- **Required env vars:** `TMDB_API_KEY`, `BACON_SHEET_ID`, `BACON_SERVICE_ACCOUNT_EMAIL`, `BACON_PRIVATE_KEY`
+- **Local compatibility:** `npm run dev` proxies `/api` to the legacy backend at `http://localhost:3000`.
 
 ## Project-Specific Patterns
-- **Component Structure:** Each domain (actors, movies, utils) has a folder with components and matching `__tests__` for unit tests.
-- **TypeScript:** Strict typing enforced in both frontend and mobile.
-- **Testing:** All major components have corresponding test files in `__tests__` folders.
-- **Styling:** Frontend uses global CSS (`index.css`); mobile uses `lib/styles.ts`.
-- **Breadcrumbs & Messages:** Use provided utility components for navigation and feedback.
+- **Component structure:** domain folders such as `src/actors/`, `src/movies/`, and `src/utils/` own their components and tests.
+- **TypeScript:** strict typing is expected throughout the app and API code.
+- **Testing:** major components and behaviors should have matching tests under `__tests__` folders.
+- **Styling:** frontend styling uses CSS in `src/` and should stay consistent with the existing design system.
+- **Integration:** keep API calls centralized and in the existing request patterns instead of scattering fetch logic across components.
 
 ## Integration Points
-- **API:** All data fetching should use the provided API modules.
-- **Assets:** Images for mobile are in `mobile/assets/images/`.
-- **No backend development:** See backend/README.md for deprecation notice.
+- **Primary frontend:** `src/`
+- **API implementation:** `api/`
+- **Legacy compatibility layer:** `server/`
+- **Analysis utilities:** `analysis/`
+- **No new backend work in a deprecated `backend/` directory:** the current API surface is in `api/` and `server/` only.
 
 ## Conventions
-- **File Naming:** PascalCase for components, camelCase for functions/variables.
-- **Tests:** Place in `__tests__` subfolders, name as `ComponentName.test.tsx`.
-- **Cross-platform UI:** Keep frontend and mobile components in sync when possible.
+- **File naming:** PascalCase for React components, camelCase for functions and variables.
+- **Tests:** keep tests in `__tests__` subfolders and name them `ComponentName.test.tsx` when component-level coverage is needed.
+- **Scope:** prefer changes that fit the current Vite + API architecture without introducing unrelated mobile or backend scaffolding.
 
 ## Key Files & Directories
-- `src/api.ts`, `mobile/lib/api.ts`: API logic
-- `src/actors/`, `src/movies/`, `src/utils/`: Main component domains
-- `mobile/app/components/`: Mobile UI components
-- `src/__tests__/`, `mobile/app/components/__tests__/`: Tests
+- `src/`: primary web app code
+- `src/actors/`, `src/movies/`, `src/utils/`: main UI domains
+- `api/`: Vercel Bacon API implementation
+- `server/`: legacy backend compatibility
+- `analysis/`: data import and rating scripts
+- `src/__tests__/`: frontend tests
 
 ---
-For questions or unclear conventions, ask for clarification or review recent PRs for examples.
+For questions or unclear conventions, ask for clarification or review recent PRs and README updates for examples.
