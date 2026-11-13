@@ -1,6 +1,9 @@
+import { Buffer } from "node:buffer";
+import { timingSafeEqual } from "node:crypto";
+
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 
-import { ExternalServiceError } from "./tmdb.js";
+import { ExternalServiceError, OperationTimeoutError } from "./tmdb.js";
 
 type Handler = (
 	request: VercelRequest,
@@ -18,15 +21,51 @@ export function createGetHandler(handler: Handler) {
 			await handler(request, response);
 		} catch (error) {
 			console.error("Bacon API request failed:", error);
-			const status = error instanceof ExternalServiceError ? 502 : 500;
+			const status =
+				error instanceof OperationTimeoutError
+					? 504
+					: error instanceof ExternalServiceError
+						? 502
+						: 500;
 			return response.status(status).json({
 				error:
-					status === 502
-						? "An upstream service request failed."
-						: "Internal server error.",
+					status === 504
+						? "The request exceeded its time limit."
+						: status === 502
+							? "An upstream service request failed."
+							: "Internal server error.",
 			});
 		}
 	};
+}
+
+export function requireCronAuthorization(
+	request: VercelRequest,
+	response: VercelResponse,
+): boolean {
+	const secret = process.env["CRON_SECRET"];
+	if (!secret) {
+		response
+			.status(500)
+			.json({ error: "Cron authorization is not configured." });
+		return false;
+	}
+
+	const authorization = request.headers.authorization;
+	const token =
+		typeof authorization === "string" && /^Bearer \S+$/.test(authorization)
+			? authorization.slice("Bearer ".length)
+			: "";
+	const supplied = Buffer.from(token);
+	const expected = Buffer.from(secret);
+	if (
+		supplied.length !== expected.length ||
+		!timingSafeEqual(supplied, expected)
+	) {
+		response.status(401).json({ error: "Unauthorized." });
+		return false;
+	}
+	return true;
 }
 
 export function getNumericParam(

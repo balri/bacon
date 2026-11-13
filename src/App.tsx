@@ -60,31 +60,36 @@ function App() {
 			setLoading(true);
 			(async () => {
 				const actor = await getDailyActor();
-				if (actor && actor.id === data.actorId) {
+				if (actor) {
 					setGameNumber(actor.game_number ?? null);
-					if (data.stack) {
-						setStack(data.stack);
+					if (actor.id === data.actorId) {
+						if (data.stack) {
+							setStack(data.stack);
+						} else {
+							setStack([{ type: "actor", data: actor }]);
+						}
+						if (data.completed) {
+							setEndMessage({
+								type: "success",
+								node: (
+									<SuccessMessage
+										firstActor={actor}
+										degrees={data.degrees || 0}
+										numSolved={data.numSolved || 1}
+										longestStreak={data.longestStreak || 1}
+										streak={data.streak || 1}
+									/>
+								),
+							});
+						} else {
+							setEndMessage({
+								type: "failure",
+								node: <FailureMessage firstActor={actor} />,
+							});
+						}
 					} else {
 						setStack([{ type: "actor", data: actor }]);
-					}
-					if (data.completed) {
-						setEndMessage({
-							type: "success",
-							node: (
-								<SuccessMessage
-									firstActor={actor}
-									degrees={data.degrees || 0}
-									numSolved={data.numSolved || 1}
-									longestStreak={data.longestStreak || 1}
-									streak={data.streak || 1}
-								/>
-							),
-						});
-					} else {
-						setEndMessage({
-							type: "failure",
-							node: <FailureMessage firstActor={actor} />,
-						});
+						setEndMessage(null);
 					}
 				}
 				setLoading(false);
@@ -176,7 +181,7 @@ function App() {
 		);
 	}
 
-	if (loading || (!current && !endMessage)) {
+	if (loading) {
 		return (
 			<div className="app-container">
 				<h1 className="main-title">🎬 Mmmm, Bacon 🥓</h1>

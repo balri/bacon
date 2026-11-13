@@ -10,7 +10,17 @@ export class ExternalServiceError extends Error {
 	}
 }
 
-export async function fetchTmdb<T>(path: string): Promise<T> {
+export class OperationTimeoutError extends Error {
+	constructor(message: string) {
+		super(message);
+		this.name = "OperationTimeoutError";
+	}
+}
+
+export async function fetchTmdb<T>(
+	path: string,
+	timeoutMs?: number,
+): Promise<T> {
 	const apiKey = process.env["TMDB_API_KEY"];
 	if (!apiKey) {
 		throw new Error("TMDB_API_KEY is not configured.");
@@ -21,8 +31,16 @@ export async function fetchTmdb<T>(path: string): Promise<T> {
 
 	let response: Response;
 	try {
-		response = await fetch(url);
+		response = await fetch(
+			url,
+			timeoutMs === undefined
+				? undefined
+				: { signal: AbortSignal.timeout(timeoutMs) },
+		);
 	} catch (error) {
+		if (error instanceof Error && error.name === "TimeoutError") {
+			throw new OperationTimeoutError("TMDB request timed out.");
+		}
 		throw new ExternalServiceError(
 			"TMDB",
 			error instanceof Error ? error.message : "Network request failed.",

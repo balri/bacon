@@ -90,6 +90,26 @@ describe("App", () => {
 		await screen.findByText(/No Connection Found/i);
 	});
 
+	it("starts a new game if today's saved game belongs to a different actor", async () => {
+		const cookie = await import("../utils/cookie");
+		vi.spyOn(cookie, "getAllCookieData").mockReturnValue({
+			"2026-04-11": { actorId: 999, completed: true, stack: [] },
+		});
+		vi.spyOn(cookie, "getCookieData").mockReturnValue({
+			actorId: 999,
+			completed: true,
+			stack: [],
+		});
+		vi.spyOn(cookie, "getTodayDateString").mockReturnValue("2026-04-11");
+
+		render(<App />);
+
+		await screen.findByText("Select a movie:");
+		expect(screen.getByText("Tom Hanks")).toBeInTheDocument();
+		expect(screen.queryByText(/Loading/i)).not.toBeInTheDocument();
+		expect(screen.queryByText(/congratulations/i)).not.toBeInTheDocument();
+	});
+
 	it("saves stack to cookie when Kevin Bacon is reached", async () => {
 		const cookie = await import("../utils/cookie");
 		const setCookieDataSpy = vi

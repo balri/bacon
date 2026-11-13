@@ -21,6 +21,7 @@ function isMainstreamMovie(movie: Movie): boolean {
 export async function movieCredits(
 	actorId: number,
 	filterMovies = true,
+	timeoutMs?: number,
 ): Promise<Movie[]> {
 	const cacheKey = `movies-${actorId}-${filterMovies ? "filtered" : "all"}`;
 	const cached = getCache<Movie[]>(cacheKey);
@@ -30,6 +31,7 @@ export async function movieCredits(
 
 	const data = await fetchTmdb<{ cast: Movie[] }>(
 		`/person/${actorId}/movie_credits`,
+		timeoutMs,
 	);
 
 	const movies = filterMovies
